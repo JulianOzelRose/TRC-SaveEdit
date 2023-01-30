@@ -17,13 +17,13 @@ From there, you can give yourself extra ammo, extra weapons, extra medipacks, an
 | 0x171               | Shotgun                   |
 | 0x172               | Grappling Gun             |
 | 0x173               | HK Gun                    |
-| 0x174               | Revolver                  |
+| 0x174               | Revolver/Deagle           |
 | 0x178               | Crowbar                   |
 | 0x194               | Small Medipacks           |
 | 0x196               | Large Medipacks           |
 | 0x198               | Flares                    |
 | 0x19C               | Uzi Ammo                  |
-| 0x19E               | Deagle/Revolver Ammo      |
+| 0x19E               | Revolver/Deagle Ammo      |
 | 0x1A0               | Shotgun Normal Ammo       |
 | 0x1A2               | Shotgun Wideshot Ammo     |
 | 0x1A4               | HK Ammo                   |
