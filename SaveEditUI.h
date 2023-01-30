@@ -402,7 +402,7 @@ namespace TRCSaveEdit {
 			}
 
 			int crowbarVal = GetSaveFileData(0x178);
-			if (crowbarVal == 0x1)
+			if (crowbarVal == 0x9)
 			{
 				crowbarCheckBox->Checked = true;
 			}
