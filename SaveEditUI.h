@@ -410,10 +410,6 @@ namespace TRCSaveEdit {
 			revolverAmmoTxtBox->Clear();
 			revolverAmmoTxtBox->AppendText(ssRevolverAmmo);
 		}
-		void SetNumSmallMedipacks(int num)
-		{
-			WriteToSaveFile(0x194, 5);
-		}
 	private: System::Windows::Forms::TextBox^ smallMedipacksTxtBox;
 	public:
 
