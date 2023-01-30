@@ -39,7 +39,6 @@ namespace TRCSaveEdit {
 		}
 		void SetSaveFile(String^ fileName)
 		{
-			saveFileName = fileName;
 			ssSavefileName = fileName;
 		}
 		int GetSaveFileData(int offset)
