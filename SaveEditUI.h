@@ -592,7 +592,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// smallMedipacksTxtBox
 			// 
-			this->smallMedipacksTxtBox->Location = System::Drawing::Point(122, 23);
+			this->smallMedipacksTxtBox->Location = System::Drawing::Point(122, 31);
 			this->smallMedipacksTxtBox->Name = L"smallMedipacksTxtBox";
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
@@ -602,7 +602,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(26, 23);
+			this->label3->Location = System::Drawing::Point(26, 34);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(90, 13);
 			this->label3->TabIndex = 6;
@@ -610,7 +610,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// lrgMedpacksTxtBox
 			// 
-			this->lrgMedpacksTxtBox->Location = System::Drawing::Point(122, 83);
+			this->lrgMedpacksTxtBox->Location = System::Drawing::Point(122, 91);
 			this->lrgMedpacksTxtBox->Name = L"lrgMedpacksTxtBox";
 			this->lrgMedpacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedpacksTxtBox->TabIndex = 7;
@@ -620,7 +620,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(24, 83);
+			this->label4->Location = System::Drawing::Point(24, 93);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 13);
 			this->label4->TabIndex = 8;
@@ -704,7 +704,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// numFlaresTxtBox
 			// 
-			this->numFlaresTxtBox->Location = System::Drawing::Point(122, 136);
+			this->numFlaresTxtBox->Location = System::Drawing::Point(122, 144);
 			this->numFlaresTxtBox->Name = L"numFlaresTxtBox";
 			this->numFlaresTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numFlaresTxtBox->TabIndex = 23;
@@ -713,7 +713,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// label12
 			// 
 			this->label12->AutoSize = true;
-			this->label12->Location = System::Drawing::Point(75, 139);
+			this->label12->Location = System::Drawing::Point(75, 146);
 			this->label12->Name = L"label12";
 			this->label12->Size = System::Drawing::Size(38, 13);
 			this->label12->TabIndex = 24;
