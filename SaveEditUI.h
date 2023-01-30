@@ -943,8 +943,8 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) { WriteToSaveFile(0x172, 0xD); }
 		else { WriteToSaveFile(0x172, 0); }
 
-		if (hkCheckBox->Enabled && hkCheckBox->Checked) { WriteToSaveFile(0x1A4, 0x9); }
-		else { WriteToSaveFile(0x1A4, 0); }
+		if (hkCheckBox->Enabled && hkCheckBox->Checked) { WriteToSaveFile(0x173, 0x9); }
+		else { WriteToSaveFile(0x173, 0); }
 		
 		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) { WriteToSaveFile(0x16F, 0x9); }
 		else { WriteToSaveFile(0x16F, 0); }
