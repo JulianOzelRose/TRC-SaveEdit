@@ -4,8 +4,7 @@ This is a standalone save game editor for Tomb Raider: Chronicles. It has been t
 From there, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked save game file with an HK gun in inventory on Streets of Rome, will result in the game crashing.
 
 ### Screenshot of TRC-SaveEdit
-![TRC-SaveEdit](https://user-images.githubusercontent.com/95890436/215334144-c576f363-bd15-41e5-b5ee-02aab905b4bb.PNG)
-
+![TRC-SaveEdit](https://user-images.githubusercontent.com/95890436/215510159-fd816318-7581-47db-8fa3-a1a5a8cfe829.png)
 
 ## Tomb Raider: Chronicles Save Game Hex Table ##
 | **File Offset**     | **Variable**              |
