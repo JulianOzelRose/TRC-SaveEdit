@@ -751,6 +751,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// saveBtn
 			// 
+			this->saveBtn->Enabled = false;
 			this->saveBtn->Location = System::Drawing::Point(433, 10);
 			this->saveBtn->Name = L"saveBtn";
 			this->saveBtn->Size = System::Drawing::Size(75, 23);
@@ -913,6 +914,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 				fileTxtBox->Clear();
 				fileTxtBox->AppendText(GetSaveFileName());
 				myStream->Close();
+				saveBtn->Enabled = true;
 				GetLvlName();
 				GetNumSmallMedipacks();
 				GetNumLrgMedipacks();
