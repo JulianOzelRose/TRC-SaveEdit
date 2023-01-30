@@ -1,8 +1,7 @@
 # TRC-SaveEdit
-This is a standalone save game editor for Tomb Raider: Chronicles. It has been tested and works on both the multi-patched verison of the game, as well as the Steam version. To use the program, simply navigate to the x64/Release folder on this repo, then download TRC-SaveEdit.exe. You can run the .exe from anywhere
-on your computer. It is not necessary to launch the file with administrator privileges. To select a save game to modify, click 'Browse', then navigate to your save game folder. If you are running the Steam version, your game directory should be under 'Steam\steamapps\common\Tomb Raider (V) Chronicles'.
+This is a standalone save game editor for Tomb Raider: Chronicles. It has been tested and works on both the multi-patched verison of the game, as well as the Steam version. To download the program, simply navigate to the x64/Release folder on this repo, then download TRC-SaveEdit.exe. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a save game to modify, click 'Browse', then navigate to your save game folder. If you are running the Steam version, your game directory should be under 'Steam\steamapps\common\Tomb Raider (V) Chronicles'.
 
-From there, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked save game file with an HK in inventory on Streets of Rome, will result in a crash.
+From there, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked save game file with an HK gun in inventory on Streets of Rome, will result in the game crashing.
 
 ### Screenshot of TRC-SaveEdit
 ![TRC-SaveEdit](https://user-images.githubusercontent.com/95890436/215334144-c576f363-bd15-41e5-b5ee-02aab905b4bb.PNG)
@@ -31,5 +30,5 @@ From there, you can give yourself extra ammo, extra weapons, extra medipacks, an
 | 0x1A6               | Grappling Gun Ammo        |
 | 0x1C3               | Number of Secrets         |
 
-For the weapons variables, a value of ```0``` means disabled, and a value of ```0x9``` will enable the weapon in inventory. For the HK and revolver guns,
-a value of ```0xD``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```0xFFFF``` will make them unlimited.
+For the weapons variables, a value of ```0``` means disabled, and a value of ```09``` will enable the weapon in inventory. For the HK and revolver guns,
+a value of ```0D``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```FFFF``` will make them unlimited.
