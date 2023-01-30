@@ -549,18 +549,18 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(22, 15);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(26, 13);
+			this->label1->Size = System::Drawing::Size(23, 13);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"File:";
+			this->label1->Text = L"File";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(15, 22);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(38, 13);
+			this->label2->Size = System::Drawing::Size(35, 13);
 			this->label2->TabIndex = 1;
-			this->label2->Text = L"Name:";
+			this->label2->Text = L"Name";
 			// 
 			// fileTxtBox
 			// 
@@ -639,9 +639,9 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label5->AutoSize = true;
 			this->label5->Location = System::Drawing::Point(383, 22);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(46, 13);
+			this->label5->Size = System::Drawing::Size(43, 13);
 			this->label5->TabIndex = 10;
-			this->label5->Text = L"Secrets:";
+			this->label5->Text = L"Secrets";
 			// 
 			// revolverAmmoTxtBox
 			// 
@@ -666,9 +666,9 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label7->AutoSize = true;
 			this->label7->Location = System::Drawing::Point(210, 22);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(73, 13);
+			this->label7->Size = System::Drawing::Size(72, 13);
 			this->label7->TabIndex = 14;
-			this->label7->Text = L"Save number:";
+			this->label7->Text = L"Save Number";
 			// 
 			// uziAmmoTxtBox
 			// 
