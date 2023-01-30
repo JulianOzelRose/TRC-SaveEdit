@@ -45,6 +45,9 @@
   <ItemGroup>
     <Image Include="TRC-SaveEdit.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\Release\TRC-SaveEdit.exe" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{E896908D-C3DE-46E6-AC10-9CE891A0EAEF}</ProjectGuid>
