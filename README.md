@@ -29,5 +29,5 @@ From there, you can give yourself extra ammo, extra weapons, extra medipacks, an
 | 0x1A6               | Grappling Gun Ammo        |
 | 0x1C3               | Number of Secrets         |
 
-For the weapons variables, a value of ```0``` means disabled, and a value of ```09``` will enable the weapon in inventory. For the HK and revolver guns,
-a value of ```0D``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```FFFF``` will make them unlimited.
+For the weapons variables, a value of ```0``` means disabled, and a value of ```0x9``` will enable the weapon in inventory. For the HK and revolver guns,
+a value of ```0xD``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```0xFFFF``` will make them unlimited.
