@@ -150,6 +150,23 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = true;
 			}
 
+			if (ssLvlName == "The base")
+			{
+				revolverCheckBox->Enabled = true;
+				revolverAmmoTxtBox->Enabled = true;
+				uziCheckBox->Enabled = true;
+				uziAmmoTxtBox->Enabled = true;
+				shotgunCheckBox->Enabled = false;
+				shotgunNormalAmmoTxtBox->Enabled = false;
+				shotgunWideshotAmmoTxtBox->Enabled = false;
+				grapplingGunCheckBox->Enabled = false;
+				grapplingGunAmmoTxtBox->Enabled = false;
+				hkCheckBox->Enabled = false;
+				hkAmmoTxtBox->Enabled = false;
+				crowbarCheckBox->Enabled = false;
+				pistolsCheckBox->Enabled = true;
+			}
+
 			if (ssLvlName == "The submarine")
 			{
 				revolverCheckBox->Enabled = false;
