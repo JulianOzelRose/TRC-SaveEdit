@@ -604,9 +604,9 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label3->AutoSize = true;
 			this->label3->Location = System::Drawing::Point(26, 34);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(90, 13);
+			this->label3->Size = System::Drawing::Size(87, 13);
 			this->label3->TabIndex = 6;
-			this->label3->Text = L"Small Medipacks:";
+			this->label3->Text = L"Small Medipacks";
 			// 
 			// lrgMedpacksTxtBox
 			// 
@@ -622,9 +622,9 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label4->AutoSize = true;
 			this->label4->Location = System::Drawing::Point(24, 93);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(92, 13);
+			this->label4->Size = System::Drawing::Size(89, 13);
 			this->label4->TabIndex = 8;
-			this->label4->Text = L"Large Medipacks:";
+			this->label4->Text = L"Large Medipacks";
 			// 
 			// numSecretsTxtBox
 			// 
@@ -715,9 +715,9 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label12->AutoSize = true;
 			this->label12->Location = System::Drawing::Point(75, 146);
 			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(38, 13);
+			this->label12->Size = System::Drawing::Size(35, 13);
 			this->label12->TabIndex = 24;
-			this->label12->Text = L"Flares:";
+			this->label12->Text = L"Flares";
 			// 
 			// groupBox2
 			// 
