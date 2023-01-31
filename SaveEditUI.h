@@ -389,30 +389,44 @@ namespace TRCSaveEdit {
 			int uziVal = GetSaveFileData(0x170);
 			if (uziVal == 0x9)
 				uziCheckBox->Checked = true;
+			else
+				uziCheckBox->Checked = false;
 
 			int shotgunVal = GetSaveFileData(0x171);
 			if (shotgunVal == 0x9)
 				shotgunCheckBox->Checked = true;
+			else
+				shotgunCheckBox->Checked = false;
 
 			int grapplingGunVal = GetSaveFileData(0x172);
 			if (grapplingGunVal == 0xD)
 				grapplingGunCheckBox->Checked = true;
+			else
+				grapplingGunCheckBox->Checked = false;
 
 			int hkVal = GetSaveFileData(0x173);
 			if (hkVal == 0x9 || hkVal == 0xD)
 				hkCheckBox->Checked = true;
+			else
+				hkCheckBox->Checked = false;
 
 			int revolverVal = GetSaveFileData(0x174);
 			if (revolverVal == 0x9 || revolverVal == 0xD)
 				revolverCheckBox->Checked = true;
+			else
+				revolverCheckBox->Checked = false;
 
 			int crowbarVal = GetSaveFileData(0x178);
 			if (crowbarVal == 0x9 || crowbarVal == 0x1)
 				crowbarCheckBox->Checked = true;
+			else
+				crowbarCheckBox->Checked = false;
 
 			int pistolsVal = GetSaveFileData(0x16F);
 			if (pistolsVal == 0x9)
 				pistolsCheckBox->Checked = true;
+			else
+				pistolsCheckBox->Checked = false;
 		}
 
 	private: System::Windows::Forms::TextBox^ smallMedipacksTxtBox;
