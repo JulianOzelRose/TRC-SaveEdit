@@ -340,14 +340,14 @@ namespace TRCSaveEdit {
 		}
 		void GetShotgunNormalAmmo()
 		{
-			String^ ssShotgunNormalAmmo = GetSaveFileData(0x1A0).ToString();
+			String^ ssShotgunNormalAmmo = (GetSaveFileData(0x1A0)/6).ToString();
 
 			shotgunNormalAmmoTxtBox->Clear();
 			shotgunNormalAmmoTxtBox->AppendText(ssShotgunNormalAmmo);
 		}
 		void GetShotgunWideshotAmmo()
 		{
-			String^ ssShotgunWideshotAmmo = GetSaveFileData(0x1A2).ToString();
+			String^ ssShotgunWideshotAmmo = (GetSaveFileData(0x1A2)/6).ToString();
 
 			shotgunWideshotAmmoTxtBox->Clear();
 			shotgunWideshotAmmoTxtBox->AppendText(ssShotgunWideshotAmmo);
@@ -928,8 +928,8 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 		WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
 		WriteToSaveFile(0x19C, int::Parse(uziAmmoTxtBox->Text));
 		WriteToSaveFile(0x19E, int::Parse(revolverAmmoTxtBox->Text));
-		WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text));
-		WriteToSaveFile(0x1A2, int::Parse(shotgunWideshotAmmoTxtBox->Text));
+		WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text)*6);
+		WriteToSaveFile(0x1A2, int::Parse(shotgunWideshotAmmoTxtBox->Text)*6);
 		WriteToSaveFile(0x1A4, int::Parse(hkAmmoTxtBox->Text));
 		WriteToSaveFile(0x1A6, int::Parse(grapplingGunAmmoTxtBox->Text));
 
