@@ -86,9 +86,7 @@ namespace TRCSaveEdit {
 			std::ifstream infile(sSaveFileName);
 
 			if (infile.good())
-			{
-				getline(infile, sLine);
-			}
+			{ getline(infile, sLine); }
 
 			infile.close();
 
@@ -372,45 +370,31 @@ namespace TRCSaveEdit {
 		{
 			int uziVal = GetSaveFileData(0x170);
 			if (uziVal == 0x9)
-			{
-				uziCheckBox->Checked = true;
-			}
+			{ uziCheckBox->Checked = true; }
 
 			int shotgunVal = GetSaveFileData(0x171);
 			if (shotgunVal == 0x9)
-			{
-				shotgunCheckBox->Checked = true;
-			}
+			{ shotgunCheckBox->Checked = true; }
 
 			int grapplingGunVal = GetSaveFileData(0x172);
 			if (grapplingGunVal == 0xD)
-			{
-				grapplingGunCheckBox->Checked = true;
-			}
+			{ grapplingGunCheckBox->Checked = true; }
 
 			int hkVal = GetSaveFileData(0x173);
 			if (hkVal == 0x9 || hkVal == 0xD)
-			{
-				hkCheckBox->Checked = true;
-			}
+			{ hkCheckBox->Checked = true; }
 
 			int revolverVal = GetSaveFileData(0x174);
 			if (revolverVal == 0x9 || revolverVal == 0xD)
-			{
-				revolverCheckBox->Checked = true;
-			}
+			{ revolverCheckBox->Checked = true; }
 
 			int crowbarVal = GetSaveFileData(0x178);
 			if (crowbarVal == 0x9)
-			{
-				crowbarCheckBox->Checked = true;
-			}
+			{ crowbarCheckBox->Checked = true; }
 
 			int pistolsVal = GetSaveFileData(0x16F);
 			if (pistolsVal == 0x9)
-			{
-				pistolsCheckBox->Checked = true;
-			}
+			{ pistolsCheckBox->Checked = true; }
 		}
 		void GetGrapplingGunAmmo()
 		{
