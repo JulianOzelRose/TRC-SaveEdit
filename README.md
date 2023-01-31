@@ -34,4 +34,4 @@ Once you have selected a save game file, you can give yourself extra ammo, extra
 | 0x1C3               | Number of Secrets         |
 
 For the weapons variables, a value of ```0``` means disabled, and a value of ```0x9``` will enable the weapon in inventory. For the HK and revolver guns,
-a value of ```0xD``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```0xFFFF``` will make them unlimited.
+a value of ```0xD``` will enable the gun along with the sight attached to it. Setting values like health and ammo to ```0xFFFF``` will make them unlimited. The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` seem to use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in-game.
