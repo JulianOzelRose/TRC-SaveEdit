@@ -9,7 +9,7 @@
 #include <fstream>
 #include <string>
 #include <msclr\marshal_cppstd.h>
-#include <sstream>
+//#include <sstream>
 
 namespace TRCSaveEdit {
 
@@ -37,53 +37,39 @@ namespace TRCSaveEdit {
 		{
 			InitializeComponent();
 		}
-		void SetSaveFile(String^ fileName)
+
+		void SetSaveFileName(String^ fileName)
 		{
-			saveFileName = fileName;
+			ssSavefileName = fileName;
 		}
+
+		String^ GetSaveFileName()
+		{
+			return ssSavefileName;
+		}
+
 		int GetSaveFileData(int offset)
 		{
-			String^ saveFileName = GetSaveFileName();
-			std::string sSaveFileName = marshal_as<std::string>(saveFileName);
-			std::fstream saveFile(sSaveFileName, std::ios::in | std::ios::out | std::ios::binary);
+			std::fstream saveFile(marshal_as<std::string>(GetSaveFileName()), std::ios::in | std::ios::out | std::ios::binary);
 			saveFile.seekp(offset);
 			int iData = saveFile.get();
 			saveFile.close();
 			return iData;
 		}
-		void WriteToSaveFile(int offset, int num) {
-			String^ saveFileName = GetSaveFileName();
-			std::string sSaveFileName = marshal_as<std::string>(saveFileName);
-			std::fstream saveFile(sSaveFileName, std::ios::in | std::ios::out | std::ios::binary);
+
+		void WriteToSaveFile(int offset, int num)
+		{
+			std::fstream saveFile(marshal_as<std::string>(GetSaveFileName()), std::ios::in | std::ios::out | std::ios::binary);
 			saveFile.seekg(offset, std::ios::beg);
-			char data[1] = { num };
-			saveFile.write(data, sizeof(data));
+			char cData[1] = {num};
+			saveFile.write(cData, sizeof(cData));
 			saveFile.close();
 		}
-		String^ GetSaveFileName()
-		{
-			return saveFileName;
-		}
-		void GetNumSmallMedipacks()
-		{
-			String^ ssNumSmallMedipacks = GetSaveFileData(0x194).ToString();
 
-			smallMedipacksTxtBox->Clear();
-			smallMedipacksTxtBox->AppendText(ssNumSmallMedipacks);
-		}
-		void GetNumLrgMedipacks()
-		{
-			String^ ssNumLrgMedipacks = GetSaveFileData(0x196).ToString();
-
-			lrgMedpacksTxtBox->Clear();
-			lrgMedpacksTxtBox->AppendText(ssNumLrgMedipacks);
-		}
 		void GetLvlName()
 		{
-			std::string sSaveFileName = marshal_as<std::string>(GetSaveFileName());
-			std::string sLine = "NULL";
-
-			std::ifstream infile(sSaveFileName);
+			std::ifstream infile(marshal_as<std::string>(GetSaveFileName()));
+			std::string sLine;
 
 			if (infile.good())
 				getline(infile, sLine);
@@ -95,6 +81,73 @@ namespace TRCSaveEdit {
 			lvlNameTxtBox->Clear();
 			lvlNameTxtBox->AppendText(ssLvlName);
 		}
+
+		void GetNumSecrets()
+		{
+			numSecretsTxtBox->Clear();
+			numSecretsTxtBox->AppendText(GetSaveFileData(0x1C3).ToString());
+		}
+
+		void GetSaveNum()
+		{
+			numSavesTxtBox->Clear();
+			numSavesTxtBox->AppendText(GetSaveFileData(0x4B).ToString());
+		}
+
+		void GetNumFlares()
+		{
+			numFlaresTxtBox->Clear();
+			numFlaresTxtBox->AppendText(GetSaveFileData(0x198).ToString());
+		}
+
+		void GetNumSmallMedipacks()
+		{
+			smallMedipacksTxtBox->Clear();
+			smallMedipacksTxtBox->AppendText(GetSaveFileData(0x194).ToString());
+		}
+
+		void GetNumLrgMedipacks()
+		{
+			lrgMedpacksTxtBox->Clear();
+			lrgMedpacksTxtBox->AppendText(GetSaveFileData(0x196).ToString());
+		}
+
+		void GetShotgunNormalAmmo()
+		{
+			shotgunNormalAmmoTxtBox->Clear();
+			shotgunNormalAmmoTxtBox->AppendText((GetSaveFileData(0x1A0)/6).ToString());
+		}
+
+		void GetShotgunWideshotAmmo()
+		{
+			shotgunWideshotAmmoTxtBox->Clear();
+			shotgunWideshotAmmoTxtBox->AppendText((GetSaveFileData(0x1A2)/6).ToString());
+		}
+
+		void GetUziAmmo()
+		{
+			uziAmmoTxtBox->Clear();
+			uziAmmoTxtBox->AppendText(GetSaveFileData(0x19C).ToString());
+		}
+
+		void GetHKAmmo()
+		{
+			hkAmmoTxtBox->Clear();
+			hkAmmoTxtBox->AppendText(GetSaveFileData(0x1A4).ToString());
+		}
+
+		void GetGrapplingGunAmmo()
+		{
+			grapplingGunAmmoTxtBox->Clear();
+			grapplingGunAmmoTxtBox->AppendText(GetSaveFileData(0x1A6).ToString());
+		}
+
+		void GetRevolverAmmo()
+		{
+			revolverAmmoTxtBox->Clear();
+			revolverAmmoTxtBox->AppendText(GetSaveFileData(0x19E).ToString());
+		}
+
 		void GetLvlInfo()
 		{
 			if (ssLvlName == "Streets of Rome")
@@ -102,10 +155,10 @@ namespace TRCSaveEdit {
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
 				uziCheckBox->Enabled = false;
-				uziAmmoTxtBox->Enabled = false;
+				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = false;
-				shotgunNormalAmmoTxtBox->Enabled = false;
-				shotgunWideshotAmmoTxtBox->Enabled = false;
+				shotgunNormalAmmoTxtBox->Enabled = true;
+				shotgunWideshotAmmoTxtBox->Enabled = true;
 				grapplingGunCheckBox->Enabled = false;
 				grapplingGunAmmoTxtBox->Enabled = false;
 				hkCheckBox->Enabled = false;
@@ -113,12 +166,13 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 			}
+
 			if (ssLvlName == "Trajan`s markets")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
 				uziCheckBox->Enabled = false;
-				uziAmmoTxtBox->Enabled = false;
+				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
 				shotgunWideshotAmmoTxtBox->Enabled = true;
@@ -132,13 +186,13 @@ namespace TRCSaveEdit {
 
 			if (ssLvlName == "The Colosseum")
 			{
-				revolverCheckBox->Enabled = false;
-				revolverAmmoTxtBox->Enabled = false;
+				revolverCheckBox->Enabled = true;
+				revolverAmmoTxtBox->Enabled = true;
 				uziCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
-				shotgunCheckBox->Enabled = false;
-				shotgunNormalAmmoTxtBox->Enabled = false;
-				shotgunWideshotAmmoTxtBox->Enabled = false;
+				shotgunCheckBox->Enabled = true;
+				shotgunNormalAmmoTxtBox->Enabled = true;
+				shotgunWideshotAmmoTxtBox->Enabled = true;
 				grapplingGunCheckBox->Enabled = false;
 				grapplingGunAmmoTxtBox->Enabled = false;
 				hkCheckBox->Enabled = false;
@@ -187,15 +241,15 @@ namespace TRCSaveEdit {
 				revolverAmmoTxtBox->Enabled = false;
 				uziCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
-				shotgunCheckBox->Enabled = false;
-				shotgunNormalAmmoTxtBox->Enabled = false;
-				shotgunWideshotAmmoTxtBox->Enabled = false;
+				shotgunCheckBox->Enabled = true;
+				shotgunNormalAmmoTxtBox->Enabled = true;
+				shotgunWideshotAmmoTxtBox->Enabled = true;
 				grapplingGunCheckBox->Enabled = false;
 				grapplingGunAmmoTxtBox->Enabled = false;
 				hkCheckBox->Enabled = false;
 				hkAmmoTxtBox->Enabled = false;
-				crowbarCheckBox->Enabled = false;
-				pistolsCheckBox->Enabled = false;
+				crowbarCheckBox->Enabled = true;
+				pistolsCheckBox->Enabled = true;
 			}
 
 			if (ssLvlName == "Sinking submarine")
@@ -204,9 +258,9 @@ namespace TRCSaveEdit {
 				revolverAmmoTxtBox->Enabled = true;
 				uziCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
-				shotgunCheckBox->Enabled = false;
-				shotgunNormalAmmoTxtBox->Enabled = false;
-				shotgunWideshotAmmoTxtBox->Enabled = false;
+				shotgunCheckBox->Enabled = true;
+				shotgunNormalAmmoTxtBox->Enabled = true;
+				shotgunWideshotAmmoTxtBox->Enabled = true;
 				grapplingGunCheckBox->Enabled = false;
 				grapplingGunAmmoTxtBox->Enabled = false;
 				hkCheckBox->Enabled = false;
@@ -317,55 +371,7 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = false;
 			}
 		}
-		void GetNumSecrets()
-		{
-			String^ ssNumSecrets = GetSaveFileData(0x1C3).ToString();
 
-			numSecretsTxtBox->Clear();
-			numSecretsTxtBox->AppendText(ssNumSecrets);
-		}
-		void GetSaveNum()
-		{
-			String^ ssNumSaves = GetSaveFileData(0x4B).ToString();
-
-			numSavesTxtBox->Clear();
-			numSavesTxtBox->AppendText(ssNumSaves);
-		}
-		void GetNumFlares()
-		{
-			String^ ssNumFlares = GetSaveFileData(0x198).ToString();
-
-			numFlaresTxtBox->Clear();
-			numFlaresTxtBox->AppendText(ssNumFlares);
-		}
-		void GetShotgunNormalAmmo()
-		{
-			String^ ssShotgunNormalAmmo = (GetSaveFileData(0x1A0)/6).ToString();
-
-			shotgunNormalAmmoTxtBox->Clear();
-			shotgunNormalAmmoTxtBox->AppendText(ssShotgunNormalAmmo);
-		}
-		void GetShotgunWideshotAmmo()
-		{
-			String^ ssShotgunWideshotAmmo = (GetSaveFileData(0x1A2)/6).ToString();
-
-			shotgunWideshotAmmoTxtBox->Clear();
-			shotgunWideshotAmmoTxtBox->AppendText(ssShotgunWideshotAmmo);
-		}
-		void GetUziAmmo()
-		{
-			String^ ssUziAmmo = GetSaveFileData(0x19C).ToString();
-
-			uziAmmoTxtBox->Clear();
-			uziAmmoTxtBox->AppendText(ssUziAmmo);
-		}
-		void GetHKAmmo()
-		{
-			String^ ssHkAmmo = GetSaveFileData(0x1A4).ToString();
-
-			hkAmmoTxtBox->Clear();
-			hkAmmoTxtBox->AppendText(ssHkAmmo);
-		}
 		void GetWeaponsInfo()
 		{
 			int uziVal = GetSaveFileData(0x170);
@@ -389,27 +395,14 @@ namespace TRCSaveEdit {
 				revolverCheckBox->Checked = true;
 
 			int crowbarVal = GetSaveFileData(0x178);
-			if (crowbarVal == 0x9)
+			if (crowbarVal == 0x9 || crowbarVal == 0x1)
 				crowbarCheckBox->Checked = true;
 
 			int pistolsVal = GetSaveFileData(0x16F);
 			if (pistolsVal == 0x9)
 				pistolsCheckBox->Checked = true;
 		}
-		void GetGrapplingGunAmmo()
-		{
-			String^ ssGrapplingGunAmmo = GetSaveFileData(0x1A6).ToString();
 
-			grapplingGunAmmoTxtBox->Clear();
-			grapplingGunAmmoTxtBox->AppendText(ssGrapplingGunAmmo);
-		}
-		void GetRevolverAmmo()
-		{
-			String^ ssRevolverAmmo = GetSaveFileData(0x19E).ToString();
-
-			revolverAmmoTxtBox->Clear();
-			revolverAmmoTxtBox->AppendText(ssRevolverAmmo);
-		}
 	private: System::Windows::Forms::TextBox^ smallMedipacksTxtBox;
 	public:
 
@@ -894,7 +887,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 		{
 			if ((myStream = openFileDialog1->OpenFile()) != nullptr)
 			{
-				SetSaveFile(openFileDialog1->FileName);
+				SetSaveFileName(openFileDialog1->FileName);
 				fileTxtBox->Clear();
 				fileTxtBox->AppendText(GetSaveFileName());
 				myStream->Close();
