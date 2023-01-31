@@ -164,6 +164,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "Trajan`s markets")
@@ -181,6 +182,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "The Colosseum")
@@ -198,6 +200,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "The base")
@@ -215,6 +218,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "The submarine")
@@ -232,6 +236,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "Deepsea dive")
@@ -249,6 +254,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "Sinking submarine")
@@ -264,8 +270,9 @@ namespace TRCSaveEdit {
 				grapplingGunAmmoTxtBox->Enabled = false;
 				hkCheckBox->Enabled = false;
 				hkAmmoTxtBox->Enabled = false;
-				crowbarCheckBox->Enabled = false;
+				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 
 			if (ssLvlName == "Gallows tree")
@@ -283,6 +290,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 
 			if (ssLvlName == "Labyrinth")
@@ -300,6 +308,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 
 			if (ssLvlName == "Old mill")
@@ -317,6 +326,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = false;
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 
 			if (ssLvlName == "The 13th floor")
@@ -334,6 +344,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = true;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 
 			if (ssLvlName == "Escape with the iris")
@@ -351,6 +362,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = true;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 
 			if (ssLvlName == "Red alert!")
@@ -368,6 +380,7 @@ namespace TRCSaveEdit {
 				hkAmmoTxtBox->Enabled = true;
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
+				numFlaresTxtBox->Enabled = false;
 			}
 		}
 
