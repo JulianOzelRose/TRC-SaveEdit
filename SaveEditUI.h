@@ -369,25 +369,32 @@ namespace TRCSaveEdit {
 		void GetWeaponsInfo()
 		{
 			int uziVal = GetSaveFileData(0x170);
-			if (uziVal == 0x9) { uziCheckBox->Checked = true; }
+			if (uziVal == 0x9)
+			{ uziCheckBox->Checked = true; }
 
 			int shotgunVal = GetSaveFileData(0x171);
-			if (shotgunVal == 0x9) { shotgunCheckBox->Checked = true; }
+			if (shotgunVal == 0x9)
+			{ shotgunCheckBox->Checked = true; }
 
 			int grapplingGunVal = GetSaveFileData(0x172);
-			if (grapplingGunVal == 0xD) { grapplingGunCheckBox->Checked = true; }
+			if (grapplingGunVal == 0xD)
+			{ grapplingGunCheckBox->Checked = true; }
 
 			int hkVal = GetSaveFileData(0x173);
-			if (hkVal == 0x9 || hkVal == 0xD) { hkCheckBox->Checked = true; }
+			if (hkVal == 0x9 || hkVal == 0xD)
+			{ hkCheckBox->Checked = true; }
 
 			int revolverVal = GetSaveFileData(0x174);
-			if (revolverVal == 0x9 || revolverVal == 0xD) { revolverCheckBox->Checked = true; }
+			if (revolverVal == 0x9 || revolverVal == 0xD)
+			{ revolverCheckBox->Checked = true; }
 
 			int crowbarVal = GetSaveFileData(0x178);
-			if (crowbarVal == 0x9) { crowbarCheckBox->Checked = true; }
+			if (crowbarVal == 0x9)
+			{ crowbarCheckBox->Checked = true; }
 
 			int pistolsVal = GetSaveFileData(0x16F);
-			if (pistolsVal == 0x9) { pistolsCheckBox->Checked = true; }
+			if (pistolsVal == 0x9)
+			{ pistolsCheckBox->Checked = true; }
 		}
 		void GetGrapplingGunAmmo()
 		{
@@ -918,7 +925,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 		WriteToSaveFile(0x196, int::Parse(lrgMedpacksTxtBox->Text));
 		WriteToSaveFile(0x198, int::Parse(numFlaresTxtBox->Text));
 		WriteToSaveFile(0x04B, int::Parse(numSavesTxtBox->Text));
-		WriteToSaveFile(0x1C3,  int::Parse(numSecretsTxtBox->Text));
+		WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
 		WriteToSaveFile(0x19C, int::Parse(uziAmmoTxtBox->Text));
 		WriteToSaveFile(0x19E, int::Parse(revolverAmmoTxtBox->Text));
 		WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text));
@@ -926,25 +933,32 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 		WriteToSaveFile(0x1A4, int::Parse(hkAmmoTxtBox->Text));
 		WriteToSaveFile(0x1A6, int::Parse(grapplingGunAmmoTxtBox->Text));
 
-		if (uziCheckBox->Enabled && uziCheckBox->Checked) { WriteToSaveFile(0x170, 0x9); }
+		if (uziCheckBox->Enabled && uziCheckBox->Checked)
+		{ WriteToSaveFile(0x170, 0x9); }
 		else { WriteToSaveFile(0x170, 0); }
 
-		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) { WriteToSaveFile(0x174, 0x9); }
+		if (revolverCheckBox->Enabled && revolverCheckBox->Checked)
+		{ WriteToSaveFile(0x174, 0x9); }
 		else { WriteToSaveFile(0x174, 0); }
 
-		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) { WriteToSaveFile(0x171, 0x9); }
+		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked)
+		{ WriteToSaveFile(0x171, 0x9); }
 		else { WriteToSaveFile(0x171, 0); }
 		
-		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) { WriteToSaveFile(0x172, 0xD); }
+		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked)
+		{ WriteToSaveFile(0x172, 0xD); }
 		else { WriteToSaveFile(0x172, 0); }
 
-		if (hkCheckBox->Enabled && hkCheckBox->Checked) { WriteToSaveFile(0x173, 0x9); }
+		if (hkCheckBox->Enabled && hkCheckBox->Checked)
+		{ WriteToSaveFile(0x173, 0x9); }
 		else { WriteToSaveFile(0x173, 0); }
 		
-		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) { WriteToSaveFile(0x16F, 0x9); }
+		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked)
+		{ WriteToSaveFile(0x16F, 0x9); }
 		else { WriteToSaveFile(0x16F, 0); }
 
-		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) { WriteToSaveFile(0x178, 0x9); }
+		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked)
+		{ WriteToSaveFile(0x178, 0x9); }
 		else { WriteToSaveFile(0x178, 0); }
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
