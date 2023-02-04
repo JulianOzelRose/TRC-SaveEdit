@@ -67,13 +67,13 @@ namespace TRCSaveEdit {
 
 		void GetLvlName()
 		{
-			std::ifstream infile(marshal_as<std::string>(GetSaveFileName()));
+			std::ifstream saveFile(marshal_as<std::string>(GetSaveFileName()));
 			std::string sLine;
 
-			if (infile.good())
-				getline(infile, sLine);
+			if (saveFile.good())
+				getline(saveFile, sLine);
 
-			infile.close();
+			saveFile.close();
 
 			ssLvlName = gcnew String(sLine.c_str());
 
