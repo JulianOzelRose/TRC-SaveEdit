@@ -107,8 +107,8 @@ namespace TRCSaveEdit {
 
 		void GetNumLrgMedipacks()
 		{
-			lrgMedpacksTxtBox->Clear();
-			lrgMedpacksTxtBox->AppendText(GetSaveFileData(0x196).ToString());
+			lrgMedipacksTxtBox->Clear();
+			lrgMedipacksTxtBox->AppendText(GetSaveFileData(0x196).ToString());
 		}
 
 		void GetShotgunNormalAmmo()
@@ -434,7 +434,8 @@ namespace TRCSaveEdit {
 
 	public:
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ lrgMedpacksTxtBox;
+private: System::Windows::Forms::TextBox^ lrgMedipacksTxtBox;
+
 	private: System::Windows::Forms::Label^ label4;
 private: System::Windows::Forms::TextBox^ numSecretsTxtBox;
 
@@ -516,7 +517,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->browseBtn = (gcnew System::Windows::Forms::Button());
 			this->smallMedipacksTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->lrgMedpacksTxtBox = (gcnew System::Windows::Forms::TextBox());
+			this->lrgMedipacksTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->numSecretsTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
@@ -611,14 +612,14 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"Small Medipacks";
 			// 
-			// lrgMedpacksTxtBox
+			// lrgMedipacksTxtBox
 			// 
-			this->lrgMedpacksTxtBox->Location = System::Drawing::Point(122, 91);
-			this->lrgMedpacksTxtBox->Name = L"lrgMedpacksTxtBox";
-			this->lrgMedpacksTxtBox->Size = System::Drawing::Size(42, 20);
-			this->lrgMedpacksTxtBox->TabIndex = 7;
-			this->lrgMedpacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->lrgMedpacksTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::lrgMedpacksTxtBox_TextChanged);
+			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(122, 91);
+			this->lrgMedipacksTxtBox->Name = L"lrgMedipacksTxtBox";
+			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
+			this->lrgMedipacksTxtBox->TabIndex = 7;
+			this->lrgMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->lrgMedipacksTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::lrgMedpacksTxtBox_TextChanged);
 			// 
 			// label4
 			// 
@@ -743,7 +744,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->groupBox3->Controls->Add(this->smallMedipacksTxtBox);
 			this->groupBox3->Controls->Add(this->numFlaresTxtBox);
 			this->groupBox3->Controls->Add(this->label3);
-			this->groupBox3->Controls->Add(this->lrgMedpacksTxtBox);
+			this->groupBox3->Controls->Add(this->lrgMedipacksTxtBox);
 			this->groupBox3->Controls->Add(this->label4);
 			this->groupBox3->Location = System::Drawing::Point(14, 122);
 			this->groupBox3->Name = L"groupBox3";
@@ -941,7 +942,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 	}
 	private: System::Void saveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		WriteToSaveFile(0x194, int::Parse(smallMedipacksTxtBox->Text));
-		WriteToSaveFile(0x196, int::Parse(lrgMedpacksTxtBox->Text));
+		WriteToSaveFile(0x196, int::Parse(lrgMedipacksTxtBox->Text));
 		WriteToSaveFile(0x198, int::Parse(numFlaresTxtBox->Text));
 		WriteToSaveFile(0x04B, int::Parse(numSavesTxtBox->Text));
 		WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
