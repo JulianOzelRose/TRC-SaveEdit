@@ -56,11 +56,11 @@ namespace TRCSaveEdit {
 			return iData;
 		}
 
-		void WriteToSaveFile(int offset, int num)
+		void WriteToSaveFile(int offset, int val)
 		{
 			std::fstream saveFile(marshal_as<std::string>(GetSaveFileName()), std::ios::in | std::ios::out | std::ios::binary);
 			saveFile.seekg(offset, std::ios::beg);
-			char cData[1] = {num};
+			char cData[1] = {val};
 			saveFile.write(cData, sizeof(cData));
 			saveFile.close();
 		}
