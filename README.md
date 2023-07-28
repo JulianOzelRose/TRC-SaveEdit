@@ -8,7 +8,8 @@ CD install directory: ```Program Files\Core Design\Tomb Raider Chronicles\```
 Once you have selected a save game file, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked save game file with an HK gun in inventory on Streets of Rome, will result in the game crashing. Once you are finished entering the desired changes, click ```Save``` to apply them to the save file.
 
 #### Screenshot of TRC-SaveEdit
-![TRC-SaveEdit](https://user-images.githubusercontent.com/95890436/215857010-98579055-6d70-4742-be19-dabf8b368bda.PNG)
+![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/9c92426f-394c-431f-9016-d8b217232cb7)
+
 
 
 ## Tomb Raider: Chronicles - Save Game Hex Table ##
