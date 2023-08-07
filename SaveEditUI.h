@@ -83,68 +83,200 @@ namespace TRCSaveEdit {
 
 		void GetNumSecrets()
 		{
+			int numSecrets = GetSaveFileData(0x1C3);
+
 			numSecretsTxtBox->Clear();
-			numSecretsTxtBox->AppendText(GetSaveFileData(0x1C3).ToString());
+			numSecretsTxtBox->AppendText(numSecrets.ToString());
 		}
 
 		void GetSaveNum()
 		{
+			int saveNum = 0;
+
+			if (GetSaveFileData(0x4B + 1) == 0)
+			{
+				saveNum = GetSaveFileData(0x4B);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x4B + 1);
+				int secondHalf = GetSaveFileData(0x4B);
+				saveNum = firstHalf * 256 + secondHalf;
+			}
+
 			numSavesTxtBox->Clear();
-			numSavesTxtBox->AppendText(GetSaveFileData(0x4B).ToString());
+			numSavesTxtBox->AppendText(saveNum.ToString());
 		}
 
 		void GetNumFlares()
 		{
+			int numFlares = 0;
+
+			if (GetSaveFileData(0x198 + 1) == 0)
+			{
+				numFlares = GetSaveFileData(0x198);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x198 + 1);
+				int secondHalf = GetSaveFileData(0x198);
+				numFlares = firstHalf * 256 + secondHalf;
+			}
+
 			numFlaresTxtBox->Clear();
-			numFlaresTxtBox->AppendText(GetSaveFileData(0x198).ToString());
+			numFlaresTxtBox->AppendText(numFlares.ToString());
 		}
 
 		void GetNumSmallMedipacks()
 		{
+			int numSmallMedipacks = 0;
+
+			if (GetSaveFileData(0x194 + 1) == 0)
+			{
+				numSmallMedipacks = GetSaveFileData(0x194);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x194 + 1);
+				int secondHalf = GetSaveFileData(0x194);
+				numSmallMedipacks = firstHalf * 256 + secondHalf;
+			}
+
 			smallMedipacksTxtBox->Clear();
-			smallMedipacksTxtBox->AppendText(GetSaveFileData(0x194).ToString());
+			smallMedipacksTxtBox->AppendText(numSmallMedipacks.ToString());
 		}
 
 		void GetNumLrgMedipacks()
 		{
+			int numLrgMedipacks = 0;
+
+			if (GetSaveFileData(0x196 + 1) == 0)
+			{
+				numLrgMedipacks = GetSaveFileData(0x196);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x196 + 1);
+				int secondHalf = GetSaveFileData(0x196);
+				numLrgMedipacks = firstHalf * 256 + secondHalf;
+			}
+
 			lrgMedipacksTxtBox->Clear();
-			lrgMedipacksTxtBox->AppendText(GetSaveFileData(0x196).ToString());
+			lrgMedipacksTxtBox->AppendText(numLrgMedipacks.ToString());
 		}
 
 		void GetShotgunNormalAmmo()
 		{
+			int shotgunNormalAmmo = 0;
+
+			if (GetSaveFileData(0x1A0 + 1) == 0)
+			{
+				shotgunNormalAmmo = GetSaveFileData(0x1A0);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x1A0 + 1);
+				int secondHalf = GetSaveFileData(0x1A0);
+				shotgunNormalAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			shotgunNormalAmmoTxtBox->Clear();
-			shotgunNormalAmmoTxtBox->AppendText((GetSaveFileData(0x1A0)/6).ToString());
+			shotgunNormalAmmoTxtBox->AppendText((shotgunNormalAmmo/6).ToString());
 		}
 
 		void GetShotgunWideshotAmmo()
 		{
+			int shotgunWideshotAmmo = 0;
+
+			if (GetSaveFileData(0x1A2 + 1) == 0)
+			{
+				shotgunWideshotAmmo = GetSaveFileData(0x1A2);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x1A2 + 1);
+				int secondHalf = GetSaveFileData(0x1A2);
+				shotgunWideshotAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			shotgunWideshotAmmoTxtBox->Clear();
-			shotgunWideshotAmmoTxtBox->AppendText((GetSaveFileData(0x1A2)/6).ToString());
+			shotgunWideshotAmmoTxtBox->AppendText((shotgunWideshotAmmo/6).ToString());
 		}
 
 		void GetUziAmmo()
 		{
+			int uziAmmo = 0;
+
+			if (GetSaveFileData(0x19C + 1) == 0)
+			{
+				uziAmmo = GetSaveFileData(0x19C);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x19C + 1);
+				int secondHalf = GetSaveFileData(0x19C);
+				uziAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			uziAmmoTxtBox->Clear();
-			uziAmmoTxtBox->AppendText(GetSaveFileData(0x19C).ToString());
+			uziAmmoTxtBox->AppendText(uziAmmo.ToString());
 		}
 
 		void GetHKAmmo()
 		{
+			int hkAmmo = 0;
+
+			if (GetSaveFileData(0x1A4 + 1) == 0)
+			{
+				hkAmmo = GetSaveFileData(0x1A4);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x1A4 + 1);
+				int secondHalf = GetSaveFileData(0x1A4);
+				hkAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			hkAmmoTxtBox->Clear();
-			hkAmmoTxtBox->AppendText(GetSaveFileData(0x1A4).ToString());
+			hkAmmoTxtBox->AppendText(hkAmmo.ToString());
 		}
 
 		void GetGrapplingGunAmmo()
 		{
+			int grapplingGunAmmo = 0;
+
+			if (GetSaveFileData(0x1A6 + 1) == 0)
+			{
+				grapplingGunAmmo = GetSaveFileData(0x1A6);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x1A6 + 1);
+				int secondHalf = GetSaveFileData(0x1A6);
+				grapplingGunAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			grapplingGunAmmoTxtBox->Clear();
-			grapplingGunAmmoTxtBox->AppendText(GetSaveFileData(0x1A6).ToString());
+			grapplingGunAmmoTxtBox->AppendText(grapplingGunAmmo.ToString());
 		}
 
 		void GetRevolverAmmo()
 		{
+			int revolverAmmo = 0;
+
+			if (GetSaveFileData(0x19E + 1) == 0)
+			{
+				revolverAmmo = GetSaveFileData(0x19E);
+			}
+			else
+			{
+				int firstHalf = GetSaveFileData(0x19E + 1);
+				int secondHalf = GetSaveFileData(0x19E);
+				revolverAmmo = firstHalf * 256 + secondHalf;
+			}
+
 			revolverAmmoTxtBox->Clear();
-			revolverAmmoTxtBox->AppendText(GetSaveFileData(0x19E).ToString());
+			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
 
 		void GetLvlInfo()
@@ -941,17 +1073,153 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 	private: System::Void lrgMedpacksTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void saveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		WriteToSaveFile(0x194, int::Parse(smallMedipacksTxtBox->Text));
-		WriteToSaveFile(0x196, int::Parse(lrgMedipacksTxtBox->Text));
-		WriteToSaveFile(0x198, int::Parse(numFlaresTxtBox->Text));
-		WriteToSaveFile(0x04B, int::Parse(numSavesTxtBox->Text));
-		WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
-		WriteToSaveFile(0x19C, int::Parse(uziAmmoTxtBox->Text));
-		WriteToSaveFile(0x19E, int::Parse(revolverAmmoTxtBox->Text));
-		WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text)*6);
-		WriteToSaveFile(0x1A2, int::Parse(shotgunWideshotAmmoTxtBox->Text)*6);
-		WriteToSaveFile(0x1A4, int::Parse(hkAmmoTxtBox->Text));
-		WriteToSaveFile(0x1A6, int::Parse(grapplingGunAmmoTxtBox->Text));
+
+		if (int::Parse(hkAmmoTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(hkAmmoTxtBox->Text) / 256;
+			int secondHalf = int::Parse(hkAmmoTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x1A4 + 1, firstHalf);
+			WriteToSaveFile(0x1A4, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x1A4, int::Parse(hkAmmoTxtBox->Text));
+			WriteToSaveFile(0x1A4 + 1, 0);
+		}
+
+		if (int::Parse(smallMedipacksTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(smallMedipacksTxtBox->Text) / 256;
+			int secondHalf = int::Parse(smallMedipacksTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x194 + 1, firstHalf);
+			WriteToSaveFile(0x194, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x194, int::Parse(smallMedipacksTxtBox->Text));
+			WriteToSaveFile(0x194 + 1, 0);
+		}
+
+		if (int::Parse(lrgMedipacksTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(lrgMedipacksTxtBox->Text) / 256;
+			int secondHalf = int::Parse(lrgMedipacksTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x196 + 1, firstHalf);
+			WriteToSaveFile(0x196, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x196, int::Parse(lrgMedipacksTxtBox->Text));
+			WriteToSaveFile(0x196 + 1, 0);
+		}
+
+		if (int::Parse(numSavesTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(numSavesTxtBox->Text) / 256;
+			int secondHalf = int::Parse(numSavesTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x04B + 1, firstHalf);
+			WriteToSaveFile(0x04B, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x04B, int::Parse(numSavesTxtBox->Text));
+			WriteToSaveFile(0x04B + 1, 0);
+		}
+
+		if (int::Parse(numFlaresTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(numFlaresTxtBox->Text) / 256;
+			int secondHalf = int::Parse(numFlaresTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x198 + 1, firstHalf);
+			WriteToSaveFile(0x198, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x198, int::Parse(numFlaresTxtBox->Text));
+			WriteToSaveFile(0x198 + 1, 0);
+		}
+
+		if (int::Parse(revolverAmmoTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(revolverAmmoTxtBox->Text) / 256;
+			int secondHalf = int::Parse(revolverAmmoTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x19E + 1, firstHalf);
+			WriteToSaveFile(0x19E, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x19E, int::Parse(revolverAmmoTxtBox->Text));
+			WriteToSaveFile(0x19E + 1, 0);
+		}
+
+		if (int::Parse(uziAmmoTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(uziAmmoTxtBox->Text) / 256;
+			int secondHalf = int::Parse(uziAmmoTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x19C + 1, firstHalf);
+			WriteToSaveFile(0x19C, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x19C, int::Parse(uziAmmoTxtBox->Text));
+			WriteToSaveFile(0x19C + 1, 0);
+		}
+
+		if (int::Parse(shotgunNormalAmmoTxtBox->Text) > 255)
+		{
+			int shotgunNormalAmmo = int::Parse(shotgunNormalAmmoTxtBox->Text) * 6;
+			int firstHalf = shotgunNormalAmmo / 256;
+			int secondHalf = shotgunNormalAmmo % 256;
+
+			WriteToSaveFile(0x1A0 + 1, firstHalf);
+			WriteToSaveFile(0x1A0, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text) * 6);
+			WriteToSaveFile(0x1A0 + 1, 0);
+		}
+
+		if (int::Parse(grapplingGunAmmoTxtBox->Text) > 255)
+		{
+			int firstHalf = int::Parse(grapplingGunAmmoTxtBox->Text) / 256;
+			int secondHalf = int::Parse(grapplingGunAmmoTxtBox->Text) % 256;
+
+			WriteToSaveFile(0x1A6 + 1, firstHalf);
+			WriteToSaveFile(0x1A6, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x1A6, int::Parse(grapplingGunAmmoTxtBox->Text));
+			WriteToSaveFile(0x1A6 + 1, 0);
+		}
+
+		if (int::Parse(shotgunWideshotAmmoTxtBox->Text) > 255)
+		{
+			int shotgunWideshotAmmo = int::Parse(shotgunWideshotAmmoTxtBox->Text) * 6;
+			int firstHalf = shotgunWideshotAmmo / 256;
+			int secondHalf = shotgunWideshotAmmo % 256;
+
+			WriteToSaveFile(0x1A2 + 1, firstHalf);
+			WriteToSaveFile(0x1A2, secondHalf);
+		}
+		else
+		{
+			WriteToSaveFile(0x1A2, int::Parse(shotgunWideshotAmmoTxtBox->Text) * 6);
+			WriteToSaveFile(0x1A2 + 1, 0);
+		}
+
+		if (int::Parse(numSecretsTxtBox->Text) > 36)
+			WriteToSaveFile(0x1C3, 36);
+		else
+			WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
 
 		if (uziCheckBox->Enabled && uziCheckBox->Checked)
 			WriteToSaveFile(0x170, 0x9);
