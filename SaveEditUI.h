@@ -1001,7 +1001,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			this->consoleTxtBox->Location = System::Drawing::Point(14, 317);
 			this->consoleTxtBox->Name = L"consoleTxtBox";
 			this->consoleTxtBox->ReadOnly = true;
-			this->consoleTxtBox->Size = System::Drawing::Size(490, 20);
+			this->consoleTxtBox->Size = System::Drawing::Size(494, 20);
 			this->consoleTxtBox->TabIndex = 30;
 			// 
 			// SaveEditUI
@@ -1074,187 +1074,195 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 	}
 	private: System::Void saveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		if (int::Parse(hkAmmoTxtBox->Text) > 255)
+		int newSmallMedipackVal = int::Parse(smallMedipacksTxtBox->Text);
+		int newLrgMedipackVal = int::Parse(lrgMedipacksTxtBox->Text);
+		int newFlaresVal = int::Parse(numFlaresTxtBox->Text);
+		int newSaveNumVal = int::Parse(numSavesTxtBox->Text);
+		int newSecretsVal = int::Parse(numSecretsTxtBox->Text);
+
+		int newRevolverAmmoVal = int::Parse(revolverAmmoTxtBox->Text);
+		int newUziAmmoVal = int::Parse(uziAmmoTxtBox->Text);
+		int newHkAmmoVal = int::Parse(hkAmmoTxtBox->Text);
+		int newGrapplingGunVal = int::Parse(grapplingGunAmmoTxtBox->Text);
+		int newShotgunNormalAmmoVal = int::Parse(shotgunNormalAmmoTxtBox->Text);
+		int newShotgunWideshotAmmoVal = int::Parse(shotgunWideshotAmmoTxtBox->Text);
+		
+		if (newSmallMedipackVal > 65535) newSmallMedipackVal = 65535;
+		if (newLrgMedipackVal > 65535) newLrgMedipackVal = 65535;
+		if (newFlaresVal > 65535) newFlaresVal = 65535;
+		if (newSecretsVal > 36) newSecretsVal = 36;
+
+		if (newRevolverAmmoVal > 65535) newRevolverAmmoVal = 65535;
+		if (newUziAmmoVal > 65535) newUziAmmoVal = 65535;
+		if (newHkAmmoVal > 65535) newHkAmmoVal = 65535;
+		if (newGrapplingGunVal > 65535) newGrapplingGunVal = 65535;
+		if (newShotgunNormalAmmoVal > 10922) newShotgunNormalAmmoVal = 10922;
+		if (newShotgunWideshotAmmoVal > 10922) newShotgunWideshotAmmoVal = 10922;
+
+		if (newHkAmmoVal > 255)
 		{
-			int firstHalf = int::Parse(hkAmmoTxtBox->Text) / 256;
-			int secondHalf = int::Parse(hkAmmoTxtBox->Text) % 256;
+			int firstHalf = newHkAmmoVal / 256;
+			int secondHalf = newHkAmmoVal % 256;
 
 			WriteToSaveFile(0x1A4 + 1, firstHalf);
 			WriteToSaveFile(0x1A4, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x1A4, int::Parse(hkAmmoTxtBox->Text));
+			WriteToSaveFile(0x1A4, newHkAmmoVal);
 			WriteToSaveFile(0x1A4 + 1, 0);
 		}
 
-		if (int::Parse(smallMedipacksTxtBox->Text) > 255)
+		if (newSmallMedipackVal > 255)
 		{
-			int firstHalf = int::Parse(smallMedipacksTxtBox->Text) / 256;
-			int secondHalf = int::Parse(smallMedipacksTxtBox->Text) % 256;
+			int firstHalf = newSmallMedipackVal / 256;
+			int secondHalf = newSmallMedipackVal % 256;
 
 			WriteToSaveFile(0x194 + 1, firstHalf);
 			WriteToSaveFile(0x194, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x194, int::Parse(smallMedipacksTxtBox->Text));
+			WriteToSaveFile(0x194, newSmallMedipackVal);
 			WriteToSaveFile(0x194 + 1, 0);
 		}
 
-		if (int::Parse(lrgMedipacksTxtBox->Text) > 255)
+		if (newLrgMedipackVal > 255)
 		{
-			int firstHalf = int::Parse(lrgMedipacksTxtBox->Text) / 256;
-			int secondHalf = int::Parse(lrgMedipacksTxtBox->Text) % 256;
+			int firstHalf = newLrgMedipackVal / 256;
+			int secondHalf = newLrgMedipackVal % 256;
 
 			WriteToSaveFile(0x196 + 1, firstHalf);
 			WriteToSaveFile(0x196, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x196, int::Parse(lrgMedipacksTxtBox->Text));
+			WriteToSaveFile(0x196, newLrgMedipackVal);
 			WriteToSaveFile(0x196 + 1, 0);
 		}
 
-		if (int::Parse(numSavesTxtBox->Text) > 255)
+		if (newSaveNumVal > 255)
 		{
-			int firstHalf = int::Parse(numSavesTxtBox->Text) / 256;
-			int secondHalf = int::Parse(numSavesTxtBox->Text) % 256;
+			int firstHalf = newSaveNumVal / 256;
+			int secondHalf = newSaveNumVal % 256;
 
 			WriteToSaveFile(0x04B + 1, firstHalf);
 			WriteToSaveFile(0x04B, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x04B, int::Parse(numSavesTxtBox->Text));
+			WriteToSaveFile(0x04B, newSaveNumVal);
 			WriteToSaveFile(0x04B + 1, 0);
 		}
 
-		if (int::Parse(numFlaresTxtBox->Text) > 255)
+		if (newFlaresVal > 255)
 		{
-			int firstHalf = int::Parse(numFlaresTxtBox->Text) / 256;
-			int secondHalf = int::Parse(numFlaresTxtBox->Text) % 256;
+			int firstHalf = newFlaresVal / 256;
+			int secondHalf = newFlaresVal % 256;
 
 			WriteToSaveFile(0x198 + 1, firstHalf);
 			WriteToSaveFile(0x198, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x198, int::Parse(numFlaresTxtBox->Text));
+			WriteToSaveFile(0x198, newFlaresVal);
 			WriteToSaveFile(0x198 + 1, 0);
 		}
 
-		if (int::Parse(revolverAmmoTxtBox->Text) > 255)
+		if (newRevolverAmmoVal > 255)
 		{
-			int firstHalf = int::Parse(revolverAmmoTxtBox->Text) / 256;
-			int secondHalf = int::Parse(revolverAmmoTxtBox->Text) % 256;
+			int firstHalf = newRevolverAmmoVal / 256;
+			int secondHalf = newRevolverAmmoVal % 256;
 
 			WriteToSaveFile(0x19E + 1, firstHalf);
 			WriteToSaveFile(0x19E, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x19E, int::Parse(revolverAmmoTxtBox->Text));
+			WriteToSaveFile(0x19E, newRevolverAmmoVal);
 			WriteToSaveFile(0x19E + 1, 0);
 		}
 
-		if (int::Parse(uziAmmoTxtBox->Text) > 255)
+		if (newUziAmmoVal > 255)
 		{
-			int firstHalf = int::Parse(uziAmmoTxtBox->Text) / 256;
-			int secondHalf = int::Parse(uziAmmoTxtBox->Text) % 256;
+			int firstHalf = newUziAmmoVal / 256;
+			int secondHalf = newUziAmmoVal % 256;
 
 			WriteToSaveFile(0x19C + 1, firstHalf);
 			WriteToSaveFile(0x19C, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x19C, int::Parse(uziAmmoTxtBox->Text));
+			WriteToSaveFile(0x19C, newUziAmmoVal);
 			WriteToSaveFile(0x19C + 1, 0);
 		}
 
-		if (int::Parse(shotgunNormalAmmoTxtBox->Text) > 255)
+		newShotgunNormalAmmoVal = newShotgunNormalAmmoVal * 6;
+		if (newShotgunNormalAmmoVal > 255)
 		{
-			int shotgunNormalAmmo = int::Parse(shotgunNormalAmmoTxtBox->Text) * 6;
-			int firstHalf = shotgunNormalAmmo / 256;
-			int secondHalf = shotgunNormalAmmo % 256;
+			int firstHalf = newShotgunNormalAmmoVal / 256;
+			int secondHalf = newShotgunNormalAmmoVal % 256;
 
 			WriteToSaveFile(0x1A0 + 1, firstHalf);
 			WriteToSaveFile(0x1A0, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x1A0, int::Parse(shotgunNormalAmmoTxtBox->Text) * 6);
+			WriteToSaveFile(0x1A0, newShotgunNormalAmmoVal);
 			WriteToSaveFile(0x1A0 + 1, 0);
 		}
 
-		if (int::Parse(grapplingGunAmmoTxtBox->Text) > 255)
+		newShotgunWideshotAmmoVal = newShotgunWideshotAmmoVal * 6;
+		if (newShotgunWideshotAmmoVal > 255)
 		{
-			int firstHalf = int::Parse(grapplingGunAmmoTxtBox->Text) / 256;
-			int secondHalf = int::Parse(grapplingGunAmmoTxtBox->Text) % 256;
-
-			WriteToSaveFile(0x1A6 + 1, firstHalf);
-			WriteToSaveFile(0x1A6, secondHalf);
-		}
-		else
-		{
-			WriteToSaveFile(0x1A6, int::Parse(grapplingGunAmmoTxtBox->Text));
-			WriteToSaveFile(0x1A6 + 1, 0);
-		}
-
-		if (int::Parse(shotgunWideshotAmmoTxtBox->Text) > 255)
-		{
-			int shotgunWideshotAmmo = int::Parse(shotgunWideshotAmmoTxtBox->Text) * 6;
-			int firstHalf = shotgunWideshotAmmo / 256;
-			int secondHalf = shotgunWideshotAmmo % 256;
+			int firstHalf = newShotgunWideshotAmmoVal / 256;
+			int secondHalf = newShotgunWideshotAmmoVal % 256;
 
 			WriteToSaveFile(0x1A2 + 1, firstHalf);
 			WriteToSaveFile(0x1A2, secondHalf);
 		}
 		else
 		{
-			WriteToSaveFile(0x1A2, int::Parse(shotgunWideshotAmmoTxtBox->Text) * 6);
+			WriteToSaveFile(0x1A2, newShotgunWideshotAmmoVal);
 			WriteToSaveFile(0x1A2 + 1, 0);
 		}
 
-		if (int::Parse(numSecretsTxtBox->Text) > 36)
-			WriteToSaveFile(0x1C3, 36);
-		else
-			WriteToSaveFile(0x1C3, int::Parse(numSecretsTxtBox->Text));
+		if (newGrapplingGunVal > 255)
+		{
+			int firstHalf = newGrapplingGunVal / 256;
+			int secondHalf = newGrapplingGunVal % 256;
 
-		if (uziCheckBox->Enabled && uziCheckBox->Checked)
-			WriteToSaveFile(0x170, 0x9);
+			WriteToSaveFile(0x1A6 + 1, firstHalf);
+			WriteToSaveFile(0x1A6, secondHalf);
+		}
 		else
-			WriteToSaveFile(0x170, 0);
+		{
+			WriteToSaveFile(0x1A6, newGrapplingGunVal);
+			WriteToSaveFile(0x1A6 + 1, 0);
+		}
 
-		if (revolverCheckBox->Enabled && revolverCheckBox->Checked)
-			WriteToSaveFile(0x174, 0x9);
-		else
-			WriteToSaveFile(0x174, 0);
+		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(0x170, 0x9);
+		else WriteToSaveFile(0x170, 0);
 
-		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked)
-			WriteToSaveFile(0x171, 0x9);
-		else
-			WriteToSaveFile(0x171, 0);
+		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(0x174, 0x9);
+		else WriteToSaveFile(0x174, 0);
+
+		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteToSaveFile(0x171, 0x9);
+		else WriteToSaveFile(0x171, 0);
 		
-		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked)
-			WriteToSaveFile(0x172, 0xD);
-		else
-			WriteToSaveFile(0x172, 0);
+		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) WriteToSaveFile(0x172, 0xD);
+		else WriteToSaveFile(0x172, 0);
 
-		if (hkCheckBox->Enabled && hkCheckBox->Checked)
-			WriteToSaveFile(0x173, 0x9);
-		else
-			WriteToSaveFile(0x173, 0);
+		if (hkCheckBox->Enabled && hkCheckBox->Checked) WriteToSaveFile(0x173, 0x9);
+		else WriteToSaveFile(0x173, 0);
 		
-		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked)
-			WriteToSaveFile(0x16F, 0x9);
-		else
-			WriteToSaveFile(0x16F, 0);
+		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) WriteToSaveFile(0x16F, 0x9);
+		else WriteToSaveFile(0x16F, 0);
 
-		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked)
-			WriteToSaveFile(0x178, 0x9);
-		else
-			WriteToSaveFile(0x178, 0);
+		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(0x178, 0x9);
+		else WriteToSaveFile(0x178, 0);
+
+		WriteToSaveFile(0x1C3, newSecretsVal);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 		consoleTxtBox->Clear();
