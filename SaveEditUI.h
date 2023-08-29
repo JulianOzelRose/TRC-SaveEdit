@@ -683,7 +683,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(22, 15);
+			this->label1->Location = System::Drawing::Point(22, 23);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(23, 13);
 			this->label1->TabIndex = 0;
@@ -700,7 +700,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// fileTxtBox
 			// 
-			this->fileTxtBox->Location = System::Drawing::Point(54, 12);
+			this->fileTxtBox->Location = System::Drawing::Point(54, 20);
 			this->fileTxtBox->Name = L"fileTxtBox";
 			this->fileTxtBox->ReadOnly = true;
 			this->fileTxtBox->Size = System::Drawing::Size(294, 20);
@@ -718,7 +718,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// browseBtn
 			// 
-			this->browseBtn->Location = System::Drawing::Point(355, 10);
+			this->browseBtn->Location = System::Drawing::Point(355, 18);
 			this->browseBtn->Name = L"browseBtn";
 			this->browseBtn->Size = System::Drawing::Size(75, 23);
 			this->browseBtn->TabIndex = 4;
@@ -781,7 +781,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// revolverAmmoTxtBox
 			// 
-			this->revolverAmmoTxtBox->Location = System::Drawing::Point(118, 60);
+			this->revolverAmmoTxtBox->Location = System::Drawing::Point(118, 71);
 			this->revolverAmmoTxtBox->Name = L"revolverAmmoTxtBox";
 			this->revolverAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->revolverAmmoTxtBox->TabIndex = 11;
@@ -808,7 +808,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// uziAmmoTxtBox
 			// 
-			this->uziAmmoTxtBox->Location = System::Drawing::Point(118, 86);
+			this->uziAmmoTxtBox->Location = System::Drawing::Point(118, 93);
 			this->uziAmmoTxtBox->Name = L"uziAmmoTxtBox";
 			this->uziAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->uziAmmoTxtBox->TabIndex = 15;
@@ -816,7 +816,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// hkAmmoTxtBox
 			// 
-			this->hkAmmoTxtBox->Location = System::Drawing::Point(118, 110);
+			this->hkAmmoTxtBox->Location = System::Drawing::Point(118, 115);
 			this->hkAmmoTxtBox->Name = L"hkAmmoTxtBox";
 			this->hkAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->hkAmmoTxtBox->TabIndex = 17;
@@ -832,7 +832,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// shotgunNormalAmmoTxtBox
 			// 
-			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(190, 159);
+			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(187, 159);
 			this->shotgunNormalAmmoTxtBox->Name = L"shotgunNormalAmmoTxtBox";
 			this->shotgunNormalAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->shotgunNormalAmmoTxtBox->TabIndex = 20;
@@ -888,7 +888,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// saveBtn
 			// 
 			this->saveBtn->Enabled = false;
-			this->saveBtn->Location = System::Drawing::Point(433, 10);
+			this->saveBtn->Location = System::Drawing::Point(433, 18);
 			this->saveBtn->Name = L"saveBtn";
 			this->saveBtn->Size = System::Drawing::Size(75, 23);
 			this->saveBtn->TabIndex = 28;
@@ -921,7 +921,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// pistolsCheckBox
 			// 
 			this->pistolsCheckBox->AutoSize = true;
-			this->pistolsCheckBox->Location = System::Drawing::Point(10, 42);
+			this->pistolsCheckBox->Location = System::Drawing::Point(10, 48);
 			this->pistolsCheckBox->Name = L"pistolsCheckBox";
 			this->pistolsCheckBox->Size = System::Drawing::Size(56, 17);
 			this->pistolsCheckBox->TabIndex = 23;
@@ -930,7 +930,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			// grapplingGunAmmoTxtBox
 			// 
-			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(118, 136);
+			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(118, 137);
 			this->grapplingGunAmmoTxtBox->Name = L"grapplingGunAmmoTxtBox";
 			this->grapplingGunAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->grapplingGunAmmoTxtBox->TabIndex = 22;
@@ -939,7 +939,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// grapplingGunCheckBox
 			// 
 			this->grapplingGunCheckBox->AutoSize = true;
-			this->grapplingGunCheckBox->Location = System::Drawing::Point(10, 136);
+			this->grapplingGunCheckBox->Location = System::Drawing::Point(10, 140);
 			this->grapplingGunCheckBox->Name = L"grapplingGunCheckBox";
 			this->grapplingGunCheckBox->Size = System::Drawing::Size(94, 17);
 			this->grapplingGunCheckBox->TabIndex = 4;
@@ -949,7 +949,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// shotgunCheckBox
 			// 
 			this->shotgunCheckBox->AutoSize = true;
-			this->shotgunCheckBox->Location = System::Drawing::Point(10, 159);
+			this->shotgunCheckBox->Location = System::Drawing::Point(10, 163);
 			this->shotgunCheckBox->Name = L"shotgunCheckBox";
 			this->shotgunCheckBox->Size = System::Drawing::Size(66, 17);
 			this->shotgunCheckBox->TabIndex = 3;
@@ -959,7 +959,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// crowbarCheckBox
 			// 
 			this->crowbarCheckBox->AutoSize = true;
-			this->crowbarCheckBox->Location = System::Drawing::Point(11, 19);
+			this->crowbarCheckBox->Location = System::Drawing::Point(10, 25);
 			this->crowbarCheckBox->Name = L"crowbarCheckBox";
 			this->crowbarCheckBox->Size = System::Drawing::Size(65, 17);
 			this->crowbarCheckBox->TabIndex = 21;
@@ -969,7 +969,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// hkCheckBox
 			// 
 			this->hkCheckBox->AutoSize = true;
-			this->hkCheckBox->Location = System::Drawing::Point(10, 111);
+			this->hkCheckBox->Location = System::Drawing::Point(10, 117);
 			this->hkCheckBox->Name = L"hkCheckBox";
 			this->hkCheckBox->Size = System::Drawing::Size(41, 17);
 			this->hkCheckBox->TabIndex = 2;
@@ -979,7 +979,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// uziCheckBox
 			// 
 			this->uziCheckBox->AutoSize = true;
-			this->uziCheckBox->Location = System::Drawing::Point(10, 86);
+			this->uziCheckBox->Location = System::Drawing::Point(10, 94);
 			this->uziCheckBox->Name = L"uziCheckBox";
 			this->uziCheckBox->Size = System::Drawing::Size(41, 17);
 			this->uziCheckBox->TabIndex = 1;
@@ -989,7 +989,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// revolverCheckBox
 			// 
 			this->revolverCheckBox->AutoSize = true;
-			this->revolverCheckBox->Location = System::Drawing::Point(10, 63);
+			this->revolverCheckBox->Location = System::Drawing::Point(10, 71);
 			this->revolverCheckBox->Name = L"revolverCheckBox";
 			this->revolverCheckBox->Size = System::Drawing::Size(108, 17);
 			this->revolverCheckBox->TabIndex = 0;
@@ -1008,7 +1008,7 @@ private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(520, 341);
+			this->ClientSize = System::Drawing::Size(518, 344);
 			this->Controls->Add(this->consoleTxtBox);
 			this->Controls->Add(this->groupBox4);
 			this->Controls->Add(this->saveBtn);
