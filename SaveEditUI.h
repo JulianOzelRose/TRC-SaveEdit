@@ -24,13 +24,54 @@ namespace TRCSaveEdit {
 	public ref class SaveEditUI : public System::Windows::Forms::Form
 	{
 	private:
+		// Strings
 		String^ ssSavefileName;
+		String^ ssLvlName;
+		String^ saveFileName;
+		// Offsets
+		int saveNumOffset = 0x04B;
+		int pistolsOffset = 0x16F;
+		int uziOffset = 0x170;
+		int shotgunOffset = 0x171;
+		int grapplingGunOffset = 0x172;
+		int hkOffset = 0x173;
+		int revolverOffset = 0x174;
+		int crowbarOffset = 0x178;
+		int smallMedipacksOffset = 0x194;
+		int lrgMedipacksOffset = 0x196;
+		int numFlaresOffset = 0x198;
+		int uziAmmoOffset = 0x19C;
+		int revolverAmmoOffset = 0x19E;
+		int shotgunNormalAmmoOffset = 0x1A0;
+		int shotgunWideshotAmmoOffset = 0x1A2;
+		int hkAmmoOffset = 0x1A4;
+		int grapplingGunAmmoOffset = 0x1A6;
+		int numSecretsOffset = 0x1C3;
+
 	private: System::Windows::Forms::CheckBox^ pistolsCheckBox;
-		   String^ ssLvlName;
 	public:
 		SaveEditUI(void)
 		{
 			InitializeComponent();
+
+			numSavesTxtBox->Enabled = false;
+			numSecretsTxtBox->Enabled = false;
+			smallMedipacksTxtBox->Enabled = false;
+			lrgMedipacksTxtBox->Enabled = false;
+			revolverCheckBox->Enabled = false;
+			revolverAmmoTxtBox->Enabled = false;
+			uziCheckBox->Enabled = false;
+			uziAmmoTxtBox->Enabled = false;
+			shotgunCheckBox->Enabled = false;
+			shotgunNormalAmmoTxtBox->Enabled = false;
+			shotgunWideshotAmmoTxtBox->Enabled = false;
+			grapplingGunCheckBox->Enabled = false;
+			grapplingGunAmmoTxtBox->Enabled = false;
+			hkCheckBox->Enabled = false;
+			hkAmmoTxtBox->Enabled = false;
+			crowbarCheckBox->Enabled = false;
+			pistolsCheckBox->Enabled = false;
+			numFlaresTxtBox->Enabled = false;
 		}
 
 		void SetSaveFileName(String^ fileName)
@@ -113,7 +154,7 @@ namespace TRCSaveEdit {
 
 		void GetNumSecrets()
 		{
-			int numSecrets = GetSaveFileData(0x1C3);
+			int numSecrets = GetSaveFileData(numSecretsOffset);
 
 			numSecretsTxtBox->Clear();
 			numSecretsTxtBox->AppendText(numSecrets.ToString());
@@ -121,7 +162,7 @@ namespace TRCSaveEdit {
 
 		void GetSaveNum()
 		{
-			int saveNum = GetValue(0x4B);
+			int saveNum = GetValue(saveNumOffset);
 
 			numSavesTxtBox->Clear();
 			numSavesTxtBox->AppendText(saveNum.ToString());
@@ -129,7 +170,7 @@ namespace TRCSaveEdit {
 
 		void GetNumFlares()
 		{
-			int numFlares = GetValue(0x198);
+			int numFlares = GetValue(numFlaresOffset);
 
 			numFlaresTxtBox->Clear();
 			numFlaresTxtBox->AppendText(numFlares.ToString());
@@ -137,7 +178,7 @@ namespace TRCSaveEdit {
 
 		void GetNumSmallMedipacks()
 		{
-			int numSmallMedipacks = GetValue(0x194);
+			int numSmallMedipacks = GetValue(smallMedipacksOffset);
 
 			smallMedipacksTxtBox->Clear();
 			smallMedipacksTxtBox->AppendText(numSmallMedipacks.ToString());
@@ -145,7 +186,7 @@ namespace TRCSaveEdit {
 
 		void GetNumLrgMedipacks()
 		{
-			int numLrgMedipacks = GetValue(0x196);
+			int numLrgMedipacks = GetValue(lrgMedipacksOffset);
 
 			lrgMedipacksTxtBox->Clear();
 			lrgMedipacksTxtBox->AppendText(numLrgMedipacks.ToString());
@@ -153,7 +194,7 @@ namespace TRCSaveEdit {
 
 		void GetShotgunNormalAmmo()
 		{
-			int shotgunNormalAmmo = GetValue(0x1A0);
+			int shotgunNormalAmmo = GetValue(shotgunNormalAmmoOffset);
 
 			shotgunNormalAmmoTxtBox->Clear();
 			shotgunNormalAmmoTxtBox->AppendText((shotgunNormalAmmo / 6).ToString());
@@ -161,7 +202,7 @@ namespace TRCSaveEdit {
 
 		void GetShotgunWideshotAmmo()
 		{
-			int shotgunWideshotAmmo = GetValue(0x1A2);
+			int shotgunWideshotAmmo = GetValue(shotgunWideshotAmmoOffset);
 
 			shotgunWideshotAmmoTxtBox->Clear();
 			shotgunWideshotAmmoTxtBox->AppendText((shotgunWideshotAmmo / 6).ToString());
@@ -169,7 +210,7 @@ namespace TRCSaveEdit {
 
 		void GetUziAmmo()
 		{
-			int uziAmmo = GetValue(0x19C);
+			int uziAmmo = GetValue(uziAmmoOffset);
 
 			uziAmmoTxtBox->Clear();
 			uziAmmoTxtBox->AppendText(uziAmmo.ToString());
@@ -177,7 +218,7 @@ namespace TRCSaveEdit {
 
 		void GetHKAmmo()
 		{
-			int hkAmmo = GetValue(0x1A4);
+			int hkAmmo = GetValue(hkAmmoOffset);
 
 			hkAmmoTxtBox->Clear();
 			hkAmmoTxtBox->AppendText(hkAmmo.ToString());
@@ -185,7 +226,7 @@ namespace TRCSaveEdit {
 
 		void GetGrapplingGunAmmo()
 		{
-			int grapplingGunAmmo = GetValue(0x1A6);
+			int grapplingGunAmmo = GetValue(grapplingGunAmmoOffset);
 
 			grapplingGunAmmoTxtBox->Clear();
 			grapplingGunAmmoTxtBox->AppendText(grapplingGunAmmo.ToString());
@@ -193,7 +234,7 @@ namespace TRCSaveEdit {
 
 		void GetRevolverAmmo()
 		{
-			int revolverAmmo = GetValue(0x19E);
+			int revolverAmmo = GetValue(revolverAmmoOffset);
 
 			revolverAmmoTxtBox->Clear();
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
@@ -438,13 +479,13 @@ namespace TRCSaveEdit {
 
 		void GetWeaponsInfo()
 		{
-			int uziVal = GetSaveFileData(0x170);
-			int shotgunVal = GetSaveFileData(0x171);
-			int grapplingGunVal = GetSaveFileData(0x172);
-			int hkVal = GetSaveFileData(0x173);
-			int revolverVal = GetSaveFileData(0x174);
-			int crowbarVal = GetSaveFileData(0x178);
-			int pistolsVal = GetSaveFileData(0x16F);
+			int uziVal = GetSaveFileData(uziOffset);
+			int shotgunVal = GetSaveFileData(shotgunOffset);
+			int grapplingGunVal = GetSaveFileData(grapplingGunOffset);
+			int hkVal = GetSaveFileData(hkOffset);
+			int revolverVal = GetSaveFileData(revolverOffset);
+			int crowbarVal = GetSaveFileData(crowbarOffset);
+			int pistolsVal = GetSaveFileData(pistolsOffset);
 
 			if (uziVal == 0x9) uziCheckBox->Checked = true;
 			else uziCheckBox->Checked = false;
@@ -497,7 +538,7 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::TextBox^ consoleTxtBox;
 	private: System::Windows::Forms::CheckBox^ crowbarCheckBox;
 	private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
-		   String^ saveFileName;
+
 	protected:
 		~SaveEditUI()
 		{
@@ -585,10 +626,10 @@ namespace TRCSaveEdit {
 			// 
 			// fileTxtBox
 			// 
-			this->fileTxtBox->Location = System::Drawing::Point(54, 22);
+			this->fileTxtBox->Location = System::Drawing::Point(50, 22);
 			this->fileTxtBox->Name = L"fileTxtBox";
 			this->fileTxtBox->ReadOnly = true;
-			this->fileTxtBox->Size = System::Drawing::Size(294, 20);
+			this->fileTxtBox->Size = System::Drawing::Size(298, 20);
 			this->fileTxtBox->TabIndex = 2;
 			// 
 			// lvlNameTxtBox
@@ -599,11 +640,10 @@ namespace TRCSaveEdit {
 			this->lvlNameTxtBox->Size = System::Drawing::Size(109, 20);
 			this->lvlNameTxtBox->TabIndex = 3;
 			this->lvlNameTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->lvlNameTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::lvlNameTxtBox_TextChanged);
 			// 
 			// browseBtn
 			// 
-			this->browseBtn->Location = System::Drawing::Point(355, 20);
+			this->browseBtn->Location = System::Drawing::Point(353, 20);
 			this->browseBtn->Name = L"browseBtn";
 			this->browseBtn->Size = System::Drawing::Size(75, 23);
 			this->browseBtn->TabIndex = 4;
@@ -618,7 +658,6 @@ namespace TRCSaveEdit {
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
 			this->smallMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->smallMedipacksTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::smallMedipacksTxtBox_TextChanged);
 			// 
 			// label3
 			// 
@@ -631,17 +670,16 @@ namespace TRCSaveEdit {
 			// 
 			// lrgMedipacksTxtBox
 			// 
-			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(122, 91);
+			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(122, 90);
 			this->lrgMedipacksTxtBox->Name = L"lrgMedipacksTxtBox";
 			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedipacksTxtBox->TabIndex = 7;
 			this->lrgMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->lrgMedipacksTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::lrgMedpacksTxtBox_TextChanged);
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(24, 93);
+			this->label4->Location = System::Drawing::Point(24, 92);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 13);
 			this->label4->TabIndex = 8;
@@ -666,12 +704,11 @@ namespace TRCSaveEdit {
 			// 
 			// revolverAmmoTxtBox
 			// 
-			this->revolverAmmoTxtBox->Location = System::Drawing::Point(121, 72);
+			this->revolverAmmoTxtBox->Location = System::Drawing::Point(122, 72);
 			this->revolverAmmoTxtBox->Name = L"revolverAmmoTxtBox";
 			this->revolverAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->revolverAmmoTxtBox->TabIndex = 11;
 			this->revolverAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->revolverAmmoTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::revolverAmmoTxtBox_TextChanged);
 			// 
 			// numSavesTxtBox
 			// 
@@ -680,7 +717,6 @@ namespace TRCSaveEdit {
 			this->numSavesTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSavesTxtBox->TabIndex = 13;
 			this->numSavesTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->numSavesTxtBox->TextChanged += gcnew System::EventHandler(this, &SaveEditUI::numSavesTxtBox_TextChanged);
 			// 
 			// label7
 			// 
@@ -693,7 +729,7 @@ namespace TRCSaveEdit {
 			// 
 			// uziAmmoTxtBox
 			// 
-			this->uziAmmoTxtBox->Location = System::Drawing::Point(121, 94);
+			this->uziAmmoTxtBox->Location = System::Drawing::Point(122, 94);
 			this->uziAmmoTxtBox->Name = L"uziAmmoTxtBox";
 			this->uziAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->uziAmmoTxtBox->TabIndex = 15;
@@ -701,7 +737,7 @@ namespace TRCSaveEdit {
 			// 
 			// hkAmmoTxtBox
 			// 
-			this->hkAmmoTxtBox->Location = System::Drawing::Point(121, 116);
+			this->hkAmmoTxtBox->Location = System::Drawing::Point(122, 116);
 			this->hkAmmoTxtBox->Name = L"hkAmmoTxtBox";
 			this->hkAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->hkAmmoTxtBox->TabIndex = 17;
@@ -709,7 +745,7 @@ namespace TRCSaveEdit {
 			// 
 			// shotgunWideshotAmmoTxtBox
 			// 
-			this->shotgunWideshotAmmoTxtBox->Location = System::Drawing::Point(121, 160);
+			this->shotgunWideshotAmmoTxtBox->Location = System::Drawing::Point(191, 160);
 			this->shotgunWideshotAmmoTxtBox->Name = L"shotgunWideshotAmmoTxtBox";
 			this->shotgunWideshotAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->shotgunWideshotAmmoTxtBox->TabIndex = 19;
@@ -717,7 +753,7 @@ namespace TRCSaveEdit {
 			// 
 			// shotgunNormalAmmoTxtBox
 			// 
-			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(190, 160);
+			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(122, 160);
 			this->shotgunNormalAmmoTxtBox->Name = L"shotgunNormalAmmoTxtBox";
 			this->shotgunNormalAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->shotgunNormalAmmoTxtBox->TabIndex = 20;
@@ -773,7 +809,7 @@ namespace TRCSaveEdit {
 			// saveBtn
 			// 
 			this->saveBtn->Enabled = false;
-			this->saveBtn->Location = System::Drawing::Point(433, 20);
+			this->saveBtn->Location = System::Drawing::Point(431, 20);
 			this->saveBtn->Name = L"saveBtn";
 			this->saveBtn->Size = System::Drawing::Size(75, 23);
 			this->saveBtn->TabIndex = 28;
@@ -815,7 +851,7 @@ namespace TRCSaveEdit {
 			// 
 			// grapplingGunAmmoTxtBox
 			// 
-			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(121, 138);
+			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(122, 138);
 			this->grapplingGunAmmoTxtBox->Name = L"grapplingGunAmmoTxtBox";
 			this->grapplingGunAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->grapplingGunAmmoTxtBox->TabIndex = 22;
@@ -826,9 +862,9 @@ namespace TRCSaveEdit {
 			this->grapplingGunCheckBox->AutoSize = true;
 			this->grapplingGunCheckBox->Location = System::Drawing::Point(10, 140);
 			this->grapplingGunCheckBox->Name = L"grapplingGunCheckBox";
-			this->grapplingGunCheckBox->Size = System::Drawing::Size(94, 17);
+			this->grapplingGunCheckBox->Size = System::Drawing::Size(97, 17);
 			this->grapplingGunCheckBox->TabIndex = 4;
-			this->grapplingGunCheckBox->Text = L"Grappling Gun";
+			this->grapplingGunCheckBox->Text = L"Grappling Gun:";
 			this->grapplingGunCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// shotgunCheckBox
@@ -836,9 +872,9 @@ namespace TRCSaveEdit {
 			this->shotgunCheckBox->AutoSize = true;
 			this->shotgunCheckBox->Location = System::Drawing::Point(10, 163);
 			this->shotgunCheckBox->Name = L"shotgunCheckBox";
-			this->shotgunCheckBox->Size = System::Drawing::Size(66, 17);
+			this->shotgunCheckBox->Size = System::Drawing::Size(69, 17);
 			this->shotgunCheckBox->TabIndex = 3;
-			this->shotgunCheckBox->Text = L"Shotgun";
+			this->shotgunCheckBox->Text = L"Shotgun:";
 			this->shotgunCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// crowbarCheckBox
@@ -856,9 +892,9 @@ namespace TRCSaveEdit {
 			this->hkCheckBox->AutoSize = true;
 			this->hkCheckBox->Location = System::Drawing::Point(10, 117);
 			this->hkCheckBox->Name = L"hkCheckBox";
-			this->hkCheckBox->Size = System::Drawing::Size(41, 17);
+			this->hkCheckBox->Size = System::Drawing::Size(44, 17);
 			this->hkCheckBox->TabIndex = 2;
-			this->hkCheckBox->Text = L"HK";
+			this->hkCheckBox->Text = L"HK:";
 			this->hkCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// uziCheckBox
@@ -866,9 +902,9 @@ namespace TRCSaveEdit {
 			this->uziCheckBox->AutoSize = true;
 			this->uziCheckBox->Location = System::Drawing::Point(10, 94);
 			this->uziCheckBox->Name = L"uziCheckBox";
-			this->uziCheckBox->Size = System::Drawing::Size(41, 17);
+			this->uziCheckBox->Size = System::Drawing::Size(44, 17);
 			this->uziCheckBox->TabIndex = 1;
-			this->uziCheckBox->Text = L"Uzi";
+			this->uziCheckBox->Text = L"Uzi:";
 			this->uziCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// revolverCheckBox
@@ -876,9 +912,9 @@ namespace TRCSaveEdit {
 			this->revolverCheckBox->AutoSize = true;
 			this->revolverCheckBox->Location = System::Drawing::Point(10, 71);
 			this->revolverCheckBox->Name = L"revolverCheckBox";
-			this->revolverCheckBox->Size = System::Drawing::Size(108, 17);
+			this->revolverCheckBox->Size = System::Drawing::Size(111, 17);
 			this->revolverCheckBox->TabIndex = 0;
-			this->revolverCheckBox->Text = L"Revolver/Deagle";
+			this->revolverCheckBox->Text = L"Revolver/Deagle:";
 			this->revolverCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// consoleTxtBox
@@ -906,7 +942,7 @@ namespace TRCSaveEdit {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"SaveEditUI";
-			this->Text = L"Tomb Raider: Chronicles - Savegame Editor";
+			this->Text = L"Tomb Raider Chronicles - Savegame Editor";
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
 			this->groupBox3->ResumeLayout(false);
@@ -935,7 +971,13 @@ namespace TRCSaveEdit {
 				fileTxtBox->Clear();
 				fileTxtBox->AppendText(GetSaveFileName());
 				myStream->Close();
+
 				saveBtn->Enabled = true;
+				numSavesTxtBox->Enabled = true;
+				numSecretsTxtBox->Enabled = true;
+				smallMedipacksTxtBox->Enabled = true;
+				lrgMedipacksTxtBox->Enabled = true;
+
 				GetLvlName();
 				GetNumSmallMedipacks();
 				GetNumLrgMedipacks();
@@ -950,12 +992,11 @@ namespace TRCSaveEdit {
 				GetGrapplingGunAmmo();
 				GetWeaponsInfo();
 				GetLvlInfo();
+
 				consoleTxtBox->Clear();
 				consoleTxtBox->AppendText("Loaded save file: " + openFileDialog1->SafeFileName);
 			}
 		}
-	}
-	private: System::Void lrgMedpacksTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void saveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 
@@ -984,54 +1025,43 @@ namespace TRCSaveEdit {
 		if (newShotgunNormalAmmoVal > 10922) newShotgunNormalAmmoVal = 10922;
 		if (newShotgunWideshotAmmoVal > 10922) newShotgunWideshotAmmoVal = 10922;
 
-		newShotgunNormalAmmoVal = newShotgunNormalAmmoVal * 6;
-		newShotgunWideshotAmmoVal = newShotgunWideshotAmmoVal * 6;
+		WriteValue(hkAmmoOffset, newHkAmmoVal);
+		WriteValue(smallMedipacksOffset, newSmallMedipackVal);
+		WriteValue(lrgMedipacksOffset, newLrgMedipackVal);
+		WriteValue(saveNumOffset, newSaveNumVal);
+		WriteValue(numFlaresOffset, newFlaresVal);
+		WriteValue(revolverAmmoOffset, newRevolverAmmoVal);
+		WriteValue(uziAmmoOffset, newUziAmmoVal);
+		WriteValue(shotgunNormalAmmoOffset, newShotgunNormalAmmoVal * 6);
+		WriteValue(shotgunWideshotAmmoOffset, newShotgunWideshotAmmoVal * 6);
+		WriteValue(grapplingGunAmmoOffset, newGrapplingGunVal);
 
-		WriteValue(0x1A4, newHkAmmoVal);
-		WriteValue(0x194, newSmallMedipackVal);
-		WriteValue(0x196, newLrgMedipackVal);
-		WriteValue(0x04B, newSaveNumVal);
-		WriteValue(0x198, newFlaresVal);
-		WriteValue(0x19E, newRevolverAmmoVal);
-		WriteValue(0x19C, newUziAmmoVal);
-		WriteValue(0x1A0, newShotgunNormalAmmoVal);
-		WriteValue(0x1A2, newShotgunWideshotAmmoVal);
-		WriteValue(0x1A6, newGrapplingGunVal);
+		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(uziOffset, 0x9);
+		else WriteToSaveFile(uziOffset, 0);
 
-		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(0x170, 0x9);
-		else WriteToSaveFile(0x170, 0);
+		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(revolverOffset, 0x9);
+		else WriteToSaveFile(revolverOffset, 0);
 
-		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(0x174, 0x9);
-		else WriteToSaveFile(0x174, 0);
+		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteToSaveFile(shotgunOffset, 0x9);
+		else WriteToSaveFile(shotgunOffset, 0);
 
-		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteToSaveFile(0x171, 0x9);
-		else WriteToSaveFile(0x171, 0);
+		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) WriteToSaveFile(grapplingGunOffset, 0xD);
+		else WriteToSaveFile(grapplingGunOffset, 0);
 
-		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) WriteToSaveFile(0x172, 0xD);
-		else WriteToSaveFile(0x172, 0);
+		if (hkCheckBox->Enabled && hkCheckBox->Checked) WriteToSaveFile(hkOffset, 0x9);
+		else WriteToSaveFile(hkOffset, 0);
 
-		if (hkCheckBox->Enabled && hkCheckBox->Checked) WriteToSaveFile(0x173, 0x9);
-		else WriteToSaveFile(0x173, 0);
+		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) WriteToSaveFile(pistolsOffset, 0x9);
+		else WriteToSaveFile(pistolsOffset, 0);
 
-		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) WriteToSaveFile(0x16F, 0x9);
-		else WriteToSaveFile(0x16F, 0);
+		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(crowbarOffset, 0x9);
+		else WriteToSaveFile(crowbarOffset, 0);
 
-		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(0x178, 0x9);
-		else WriteToSaveFile(0x178, 0);
-
-		WriteToSaveFile(0x1C3, newSecretsVal);
+		WriteToSaveFile(numSecretsOffset, newSecretsVal);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 		consoleTxtBox->Clear();
 		consoleTxtBox->AppendText("Patched save file!");
-	}
-	private: System::Void revolverAmmoTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void smallMedipacksTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void numSavesTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void lvlNameTxtBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	};
 }
