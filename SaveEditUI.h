@@ -37,7 +37,6 @@ namespace TRCSaveEdit {
 		const int hkOffset = 0x173;
 		const int revolverOffset = 0x174;
 		const int crowbarOffset = 0x178;
-		const int healthOffset = 0x4F4;
 		const int smallMedipackOffset = 0x194;
 		const int lrgMedipackOffset = 0x196;
 		const int numFlaresOffset = 0x198;
@@ -48,9 +47,12 @@ namespace TRCSaveEdit {
 		const int hkAmmoOffset = 0x1A4;
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
+		int healthOffset = -1;
+		bool isHealthAddressValid = false;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::TrackBar^ healthBar;
 	private: System::Windows::Forms::Label^ healthLabel;
+	private: System::Windows::Forms::Label^ healthErrorLabel;
 
 	private: System::Windows::Forms::CheckBox^ pistolsCheckBox;
 	public:
@@ -77,6 +79,8 @@ namespace TRCSaveEdit {
 			pistolsCheckBox->Enabled = false;
 			numFlaresTxtBox->Enabled = false;
 			healthBar->Enabled = false;
+			healthErrorLabel->Visible = false;
+			healthLabel->Visible = true;
 		}
 
 		void SetSaveFileName(String^ fileName)
@@ -249,9 +253,24 @@ namespace TRCSaveEdit {
 		{
 			const int maxHealth = 1000;
 			int health = GetValue(healthOffset);
-			double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
-			healthBar->Value = static_cast<int>(std::round(healthPercentage));
-			healthLabel->Text = healthPercentage.ToString("0.0") + "%";
+
+			if (health <= 0 || health > 1000 || healthOffset == -1)
+			{
+				isHealthAddressValid = false;
+				healthBar->Enabled = false;
+				healthErrorLabel->Visible = true;
+				healthBar->Value = 0;
+				healthLabel->Visible = false;
+			}
+			else
+			{
+				isHealthAddressValid = true;
+				healthBar->Enabled = true;
+				double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
+				healthBar->Value = static_cast<int>(std::round(healthPercentage));
+				healthLabel->Visible = true;
+				healthLabel->Text = healthPercentage.ToString("0.0") + "%";
+			}
 		}
 
 		void GetLvlInfo()
@@ -272,6 +291,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x4F4;
 			}
 
 			else if (ssLvlName == "Trajan`s markets")
@@ -290,6 +310,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x542;
 			}
 
 			else if (ssLvlName == "The Colosseum")
@@ -308,6 +329,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x4D2;
 			}
 
 			else if (ssLvlName == "The base")
@@ -326,6 +348,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x55A;
 			}
 
 			else if (ssLvlName == "The submarine")
@@ -344,6 +367,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x520;
 			}
 
 			else if (ssLvlName == "Deepsea dive")
@@ -362,6 +386,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x644;
 			}
 
 			else if (ssLvlName == "Sinking submarine")
@@ -380,6 +405,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = 0x5CE;
 			}
 
 			else if (ssLvlName == "Gallows tree")
@@ -398,6 +424,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x4F0;
 			}
 
 			else if (ssLvlName == "Labyrinth")
@@ -416,6 +443,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x538;
 			}
 
 			else if (ssLvlName == "Old mill")
@@ -434,6 +462,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x512;
 			}
 
 			else if (ssLvlName == "The 13th floor")
@@ -452,6 +481,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x52A;
 			}
 
 			else if (ssLvlName == "Escape with the iris")
@@ -470,6 +500,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x6F6;
 			}
 
 			else if (ssLvlName == "Red alert!")
@@ -488,6 +519,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+				healthOffset = 0x52E;
 			}
 
 			else
@@ -506,6 +538,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				healthOffset = -1;
 			}
 		}
 
@@ -636,6 +669,7 @@ namespace TRCSaveEdit {
 			this->revolverCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->consoleTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->healthErrorLabel = (gcnew System::Windows::Forms::Label());
 			this->healthLabel = (gcnew System::Windows::Forms::Label());
 			this->healthBar = (gcnew System::Windows::Forms::TrackBar());
 			this->groupBox2->SuspendLayout();
@@ -966,6 +1000,7 @@ namespace TRCSaveEdit {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->healthErrorLabel);
 			this->groupBox1->Controls->Add(this->healthLabel);
 			this->groupBox1->Controls->Add(this->healthBar);
 			this->groupBox1->Location = System::Drawing::Point(14, 242);
@@ -974,6 +1009,16 @@ namespace TRCSaveEdit {
 			this->groupBox1->TabIndex = 31;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Health";
+			// 
+			// healthErrorLabel
+			// 
+			this->healthErrorLabel->AutoSize = true;
+			this->healthErrorLabel->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->healthErrorLabel->Location = System::Drawing::Point(33, 50);
+			this->healthErrorLabel->Name = L"healthErrorLabel";
+			this->healthErrorLabel->Size = System::Drawing::Size(136, 13);
+			this->healthErrorLabel->TabIndex = 32;
+			this->healthErrorLabel->Text = L"Unable to find health bytes.";
 			// 
 			// healthLabel
 			// 
@@ -1050,8 +1095,11 @@ namespace TRCSaveEdit {
 				smallMedipacksTxtBox->Enabled = true;
 				lrgMedipacksTxtBox->Enabled = true;
 				healthBar->Enabled = true;
+				healthErrorLabel->Visible = false;
+				healthLabel->Visible = true;
 
 				GetLvlName();
+				GetLvlInfo();
 				GetNumSmallMedipacks();
 				GetNumLrgMedipacks();
 				GetNumSecrets();
@@ -1065,7 +1113,6 @@ namespace TRCSaveEdit {
 				GetGrapplingGunAmmo();
 				GetWeaponsInfo();
 				GetHealthValue();
-				GetLvlInfo();
 
 				consoleTxtBox->Clear();
 				consoleTxtBox->AppendText("Loaded save file: " + openFileDialog1->SafeFileName);
@@ -1134,7 +1181,7 @@ namespace TRCSaveEdit {
 
 		const int maxHealth = 1000;
 		int newHealth = (int)(newHealthPercentage / 100.0 * maxHealth);
-		WriteValue(healthOffset, newHealth);
+		if (isHealthAddressValid) WriteValue(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 		consoleTxtBox->Clear();
