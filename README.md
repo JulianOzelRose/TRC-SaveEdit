@@ -36,4 +36,3 @@ The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multipli
 | 0x1A4               | HK Ammo                   |
 | 0x1A6               | Grappling Gun Ammo        |
 | 0x1C3               | Number of Secrets         |
-| 0x4F4               | Health                    |
