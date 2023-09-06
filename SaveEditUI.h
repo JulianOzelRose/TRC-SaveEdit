@@ -9,6 +9,8 @@
 #include <fstream>
 #include <string>
 #include <msclr\marshal_cppstd.h>
+#include <vector>
+#include <vcclr.h> // Include for gcroot
 
 namespace TRCSaveEdit {
 
@@ -20,6 +22,7 @@ namespace TRCSaveEdit {
 	using namespace System::Drawing;
 	using namespace System::IO;
 	using namespace msclr::interop;
+	using namespace System::Diagnostics;
 
 	public ref class SaveEditUI : public System::Windows::Forms::Form
 	{
@@ -48,7 +51,7 @@ namespace TRCSaveEdit {
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
 		int healthOffset = -1;
-		bool isHealthAddressValid = false;
+		std::vector<int>* healthOffsets;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::TrackBar^ healthBar;
 	private: System::Windows::Forms::Label^ healthLabel;
@@ -249,14 +252,57 @@ namespace TRCSaveEdit {
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
 
+		void SetValidHealthOffsets(std::vector<int>& offsets)
+		{
+			if (!healthOffsets)
+			{
+				healthOffsets = new std::vector<int>();
+			}
+			else
+			{
+				healthOffsets->clear();
+			}
+
+			for (int i = 0; i < offsets.size(); i++)
+			{
+				healthOffsets->push_back(offsets[i]);
+			}
+		}
+
+		int GetHealthOffset()
+		{
+			if (healthOffsets == nullptr)
+			{
+				return -1;
+			}
+
+			else if (healthOffsets->size() == 1)
+			{
+				return (*healthOffsets)[0];
+			}
+
+			for (int i = 0; i < healthOffsets->size(); i++)
+			{
+				int healthValue = GetValue((*healthOffsets)[i]);
+				int surroundingData = GetValue((*healthOffsets)[i] + 2);
+
+				if (healthValue > 0 && healthValue <= 1000 && surroundingData == 0)
+				{
+					return (*healthOffsets)[i];
+				}
+			}
+
+			return -1;
+		}
+
 		void GetHealthValue()
 		{
 			const int maxHealth = 1000;
+			healthOffset = GetHealthOffset();
 			int health = GetValue(healthOffset);
 
-			if (health <= 0 || health > 1000 || healthOffset == -1)
+			if (healthOffset == -1)
 			{
-				isHealthAddressValid = false;
 				healthBar->Enabled = false;
 				healthErrorLabel->Visible = true;
 				healthBar->Value = 0;
@@ -264,7 +310,6 @@ namespace TRCSaveEdit {
 			}
 			else
 			{
-				isHealthAddressValid = true;
 				healthBar->Enabled = true;
 				double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
 				healthBar->Value = static_cast<int>(std::round(healthPercentage));
@@ -291,7 +336,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x4F4;
+				std::vector<int> validHealthOffsets = { 0x4F4 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Trajan`s markets")
@@ -310,7 +356,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x542;
+				std::vector<int> validHealthOffsets = { 0x542, 0x556, 0x57F, 0x5C3, 0x5D5, 0x5D7 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "The Colosseum")
@@ -329,7 +376,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x4D2;
+				std::vector<int> validHealthOffsets = { 0x4D2, 0x4D4, 0x4E8 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "The base")
@@ -348,7 +396,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x55A;
+				std::vector<int> validHealthOffsets = { 0x55A, 0x556, 0x57A, 0x5AF, 0x605, 0x611, 0x6A9, 0x707 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "The submarine")
@@ -367,7 +416,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x520;
+				std::vector<int> validHealthOffsets = { 0x520, 0x568, 0x598, 0x59A };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Deepsea dive")
@@ -386,7 +436,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x644;
+				std::vector<int> validHealthOffsets = { 0x644, 0x69A, 0x6DC, 0x6B1 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Sinking submarine")
@@ -405,7 +456,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = 0x5CE;
+				std::vector<int> validHealthOffsets = { 0x5D2, 0x5F5, 0x60D, 0x645, 0x669, 0x66B };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Gallows tree")
@@ -424,7 +476,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x4F0;
+				std::vector<int> validHealthOffsets = { 0x4F0, 0x501, 0x52D };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Labyrinth")
@@ -443,7 +496,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x538;
+				std::vector<int> validHealthOffsets = { 0x538, 0x54A, 0x54C, 0x61A };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Old mill")
@@ -462,7 +516,9 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x512;
+				std::vector<int> validHealthOffsets = { 0x512, 0x5B8, 0x5CE, 0x624 };
+				SetValidHealthOffsets(validHealthOffsets);
+
 			}
 
 			else if (ssLvlName == "The 13th floor")
@@ -481,7 +537,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x52A;
+				std::vector<int> validHealthOffsets = { 0x52A };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Escape with the iris")
@@ -500,7 +557,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x6F6;
+				std::vector<int> validHealthOffsets = { 0x6F6, 0x76C, 0x808, 0xA98, 0xAAA, 0xB04, 0xB3E, 0xB6E, 0xBBC, 0xBBE, 0xC04, 0xC18, 0xC20 };
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 
 			else if (ssLvlName == "Red alert!")
@@ -519,7 +577,9 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				healthOffset = 0x52E;
+				std::vector<int> validHealthOffsets = { 0x52E, 0x58A };
+				SetValidHealthOffsets(validHealthOffsets);
+
 			}
 
 			else
@@ -539,6 +599,8 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
 				healthOffset = -1;
+				std::vector<int> validHealthOffsets = {};
+				SetValidHealthOffsets(validHealthOffsets);
 			}
 		}
 
@@ -682,7 +744,7 @@ namespace TRCSaveEdit {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(22, 25);
+			this->label1->Location = System::Drawing::Point(11, 17);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(26, 13);
 			this->label1->TabIndex = 0;
@@ -699,10 +761,10 @@ namespace TRCSaveEdit {
 			// 
 			// fileTxtBox
 			// 
-			this->fileTxtBox->Location = System::Drawing::Point(50, 22);
+			this->fileTxtBox->Location = System::Drawing::Point(37, 14);
 			this->fileTxtBox->Name = L"fileTxtBox";
 			this->fileTxtBox->ReadOnly = true;
-			this->fileTxtBox->Size = System::Drawing::Size(298, 20);
+			this->fileTxtBox->Size = System::Drawing::Size(307, 20);
 			this->fileTxtBox->TabIndex = 2;
 			// 
 			// lvlNameTxtBox
@@ -710,13 +772,13 @@ namespace TRCSaveEdit {
 			this->lvlNameTxtBox->Location = System::Drawing::Point(57, 19);
 			this->lvlNameTxtBox->Name = L"lvlNameTxtBox";
 			this->lvlNameTxtBox->ReadOnly = true;
-			this->lvlNameTxtBox->Size = System::Drawing::Size(109, 20);
+			this->lvlNameTxtBox->Size = System::Drawing::Size(161, 20);
 			this->lvlNameTxtBox->TabIndex = 3;
 			this->lvlNameTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// browseButton
 			// 
-			this->browseButton->Location = System::Drawing::Point(353, 20);
+			this->browseButton->Location = System::Drawing::Point(349, 12);
 			this->browseButton->Name = L"browseButton";
 			this->browseButton->Size = System::Drawing::Size(75, 23);
 			this->browseButton->TabIndex = 4;
@@ -726,7 +788,7 @@ namespace TRCSaveEdit {
 			// 
 			// smallMedipacksTxtBox
 			// 
-			this->smallMedipacksTxtBox->Location = System::Drawing::Point(169, 25);
+			this->smallMedipacksTxtBox->Location = System::Drawing::Point(176, 25);
 			this->smallMedipacksTxtBox->Name = L"smallMedipacksTxtBox";
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
@@ -735,7 +797,7 @@ namespace TRCSaveEdit {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(6, 29);
+			this->label3->Location = System::Drawing::Point(18, 28);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(90, 13);
 			this->label3->TabIndex = 6;
@@ -743,7 +805,7 @@ namespace TRCSaveEdit {
 			// 
 			// lrgMedipacksTxtBox
 			// 
-			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(169, 50);
+			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(176, 50);
 			this->lrgMedipacksTxtBox->Name = L"lrgMedipacksTxtBox";
 			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedipacksTxtBox->TabIndex = 7;
@@ -752,7 +814,7 @@ namespace TRCSaveEdit {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(6, 53);
+			this->label4->Location = System::Drawing::Point(18, 52);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 13);
 			this->label4->TabIndex = 8;
@@ -760,7 +822,7 @@ namespace TRCSaveEdit {
 			// 
 			// numSecretsTxtBox
 			// 
-			this->numSecretsTxtBox->Location = System::Drawing::Point(435, 19);
+			this->numSecretsTxtBox->Location = System::Drawing::Point(445, 19);
 			this->numSecretsTxtBox->Name = L"numSecretsTxtBox";
 			this->numSecretsTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSecretsTxtBox->TabIndex = 9;
@@ -769,7 +831,7 @@ namespace TRCSaveEdit {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(383, 22);
+			this->label5->Location = System::Drawing::Point(393, 22);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(46, 13);
 			this->label5->TabIndex = 10;
@@ -785,7 +847,7 @@ namespace TRCSaveEdit {
 			// 
 			// numSavesTxtBox
 			// 
-			this->numSavesTxtBox->Location = System::Drawing::Point(289, 19);
+			this->numSavesTxtBox->Location = System::Drawing::Point(323, 19);
 			this->numSavesTxtBox->Name = L"numSavesTxtBox";
 			this->numSavesTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSavesTxtBox->TabIndex = 13;
@@ -794,7 +856,7 @@ namespace TRCSaveEdit {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(210, 22);
+			this->label7->Location = System::Drawing::Point(244, 22);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(75, 13);
 			this->label7->TabIndex = 14;
@@ -834,7 +896,7 @@ namespace TRCSaveEdit {
 			// 
 			// numFlaresTxtBox
 			// 
-			this->numFlaresTxtBox->Location = System::Drawing::Point(169, 76);
+			this->numFlaresTxtBox->Location = System::Drawing::Point(176, 76);
 			this->numFlaresTxtBox->Name = L"numFlaresTxtBox";
 			this->numFlaresTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numFlaresTxtBox->TabIndex = 23;
@@ -843,7 +905,7 @@ namespace TRCSaveEdit {
 			// label12
 			// 
 			this->label12->AutoSize = true;
-			this->label12->Location = System::Drawing::Point(6, 76);
+			this->label12->Location = System::Drawing::Point(18, 75);
 			this->label12->Name = L"label12";
 			this->label12->Size = System::Drawing::Size(38, 13);
 			this->label12->TabIndex = 24;
@@ -857,9 +919,9 @@ namespace TRCSaveEdit {
 			this->groupBox2->Controls->Add(this->label7);
 			this->groupBox2->Controls->Add(this->lvlNameTxtBox);
 			this->groupBox2->Controls->Add(this->label2);
-			this->groupBox2->Location = System::Drawing::Point(17, 59);
+			this->groupBox2->Location = System::Drawing::Point(9, 42);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(490, 51);
+			this->groupBox2->Size = System::Drawing::Size(493, 51);
 			this->groupBox2->TabIndex = 26;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Level";
@@ -872,7 +934,7 @@ namespace TRCSaveEdit {
 			this->groupBox3->Controls->Add(this->label3);
 			this->groupBox3->Controls->Add(this->lrgMedipacksTxtBox);
 			this->groupBox3->Controls->Add(this->label4);
-			this->groupBox3->Location = System::Drawing::Point(14, 122);
+			this->groupBox3->Location = System::Drawing::Point(9, 101);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(224, 114);
 			this->groupBox3->TabIndex = 27;
@@ -882,7 +944,7 @@ namespace TRCSaveEdit {
 			// saveButton
 			// 
 			this->saveButton->Enabled = false;
-			this->saveButton->Location = System::Drawing::Point(431, 20);
+			this->saveButton->Location = System::Drawing::Point(427, 12);
 			this->saveButton->Name = L"saveButton";
 			this->saveButton->Size = System::Drawing::Size(75, 23);
 			this->saveButton->TabIndex = 28;
@@ -905,7 +967,7 @@ namespace TRCSaveEdit {
 			this->groupBox4->Controls->Add(this->revolverAmmoTxtBox);
 			this->groupBox4->Controls->Add(this->hkAmmoTxtBox);
 			this->groupBox4->Controls->Add(this->uziAmmoTxtBox);
-			this->groupBox4->Location = System::Drawing::Point(244, 122);
+			this->groupBox4->Location = System::Drawing::Point(239, 101);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(263, 187);
 			this->groupBox4->TabIndex = 29;
@@ -992,7 +1054,7 @@ namespace TRCSaveEdit {
 			// 
 			// consoleTxtBox
 			// 
-			this->consoleTxtBox->Location = System::Drawing::Point(14, 317);
+			this->consoleTxtBox->Location = System::Drawing::Point(9, 296);
 			this->consoleTxtBox->Name = L"consoleTxtBox";
 			this->consoleTxtBox->ReadOnly = true;
 			this->consoleTxtBox->Size = System::Drawing::Size(494, 20);
@@ -1003,7 +1065,7 @@ namespace TRCSaveEdit {
 			this->groupBox1->Controls->Add(this->healthErrorLabel);
 			this->groupBox1->Controls->Add(this->healthLabel);
 			this->groupBox1->Controls->Add(this->healthBar);
-			this->groupBox1->Location = System::Drawing::Point(14, 242);
+			this->groupBox1->Location = System::Drawing::Point(9, 221);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(224, 67);
 			this->groupBox1->TabIndex = 31;
@@ -1042,7 +1104,7 @@ namespace TRCSaveEdit {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(518, 344);
+			this->ClientSize = System::Drawing::Size(508, 323);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->consoleTxtBox);
 			this->Controls->Add(this->groupBox4);
@@ -1180,8 +1242,9 @@ namespace TRCSaveEdit {
 		else WriteToSaveFile(crowbarOffset, 0);
 
 		const int maxHealth = 1000;
+		healthOffset = GetHealthOffset();
 		int newHealth = (int)(newHealthPercentage / 100.0 * maxHealth);
-		if (isHealthAddressValid) WriteValue(healthOffset, newHealth);
+		if (healthOffset != -1) WriteValue(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 		consoleTxtBox->Clear();
