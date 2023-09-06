@@ -12,9 +12,9 @@ to backup your savegame files as a precaution.
 ![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/db2c44a1-b1d8-4cdf-94be-bfe52f7205ba)
 
 ## Determining the correct health offset
-The health data is stored dynamically. There can be anywhere from 1 to 13 unique health offsets per level. Writing to the incorrect health offset may crash the game. To determine the correct health offset, this program uses heuristics.
-First, it stores the potential health offsets for each level on an array. If the array size is 0, it returns an error value. If the array size is 1, it returns the only value. When looping through the offsets, it checks for impossible health values
-as well as the surrounding data to determine validity. It returns an error value if nothing is found. This method detects the correct health offset ~90% of the time.
+The health data is stored dynamically. There can be anywhere from 1 to 13 unique health offsets per level. The offsets appear to shift based on level triggers. Writing to the incorrect health offset may crash the game. To determine the correct health
+offset, this program uses heuristics. First, it stores the potential health offsets for each level on an array. If the array size is 0, it returns an error value. If the array size is 1, it returns the only value. When looping through the offsets, it
+checks for impossible health values as well as the surrounding data to determine validity. It returns an error value if nothing is found. This method detects the correct health offset ~90% of the time.
 
 ```
 int GetHealthOffset()
