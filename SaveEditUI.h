@@ -37,8 +37,9 @@ namespace TRCSaveEdit {
 		const int hkOffset = 0x173;
 		const int revolverOffset = 0x174;
 		const int crowbarOffset = 0x178;
-		const int smallMedipacksOffset = 0x194;
-		const int lrgMedipacksOffset = 0x196;
+		const int healthOffset = 0x4F4;
+		const int smallMedipackOffset = 0x194;
+		const int lrgMedipackOffset = 0x196;
 		const int numFlaresOffset = 0x198;
 		const int uziAmmoOffset = 0x19C;
 		const int revolverAmmoOffset = 0x19E;
@@ -47,6 +48,9 @@ namespace TRCSaveEdit {
 		const int hkAmmoOffset = 0x1A4;
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
+	private: System::Windows::Forms::GroupBox^ groupBox1;
+	private: System::Windows::Forms::TrackBar^ healthBar;
+	private: System::Windows::Forms::Label^ healthLabel;
 
 	private: System::Windows::Forms::CheckBox^ pistolsCheckBox;
 	public:
@@ -72,6 +76,7 @@ namespace TRCSaveEdit {
 			crowbarCheckBox->Enabled = false;
 			pistolsCheckBox->Enabled = false;
 			numFlaresTxtBox->Enabled = false;
+			healthBar->Enabled = false;
 		}
 
 		void SetSaveFileName(String^ fileName)
@@ -178,7 +183,7 @@ namespace TRCSaveEdit {
 
 		void GetNumSmallMedipacks()
 		{
-			int numSmallMedipacks = GetValue(smallMedipacksOffset);
+			int numSmallMedipacks = GetValue(smallMedipackOffset);
 
 			smallMedipacksTxtBox->Clear();
 			smallMedipacksTxtBox->AppendText(numSmallMedipacks.ToString());
@@ -186,7 +191,7 @@ namespace TRCSaveEdit {
 
 		void GetNumLrgMedipacks()
 		{
-			int numLrgMedipacks = GetValue(lrgMedipacksOffset);
+			int numLrgMedipacks = GetValue(lrgMedipackOffset);
 
 			lrgMedipacksTxtBox->Clear();
 			lrgMedipacksTxtBox->AppendText(numLrgMedipacks.ToString());
@@ -238,6 +243,15 @@ namespace TRCSaveEdit {
 
 			revolverAmmoTxtBox->Clear();
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
+		}
+
+		void GetHealthValue()
+		{
+			const int maxHealth = 1000;
+			int health = GetValue(healthOffset);
+			double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
+			healthBar->Value = static_cast<int>(std::round(healthPercentage));
+			healthLabel->Text = healthPercentage.ToString("0.0") + "%";
 		}
 
 		void GetLvlInfo()
@@ -546,7 +560,8 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::Label^ label12;
 	private: System::Windows::Forms::GroupBox^ groupBox2;
 	private: System::Windows::Forms::GroupBox^ groupBox3;
-	private: System::Windows::Forms::Button^ saveBtn;
+	private: System::Windows::Forms::Button^ saveButton;
+
 	private: System::Windows::Forms::GroupBox^ groupBox4;
 	private: System::Windows::Forms::CheckBox^ revolverCheckBox;
 	private: System::Windows::Forms::CheckBox^ shotgunCheckBox;
@@ -570,10 +585,11 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ fileTxtBox;
 	private: System::Windows::Forms::TextBox^ lvlNameTxtBox;
+	private: System::Windows::Forms::Button^ browseButton;
 
 
 
-	private: System::Windows::Forms::Button^ browseBtn;
+
 
 	private:
 		System::ComponentModel::Container^ components;
@@ -590,7 +606,7 @@ namespace TRCSaveEdit {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->fileTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->lvlNameTxtBox = (gcnew System::Windows::Forms::TextBox());
-			this->browseBtn = (gcnew System::Windows::Forms::Button());
+			this->browseButton = (gcnew System::Windows::Forms::Button());
 			this->smallMedipacksTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->lrgMedipacksTxtBox = (gcnew System::Windows::Forms::TextBox());
@@ -608,7 +624,7 @@ namespace TRCSaveEdit {
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
-			this->saveBtn = (gcnew System::Windows::Forms::Button());
+			this->saveButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
 			this->pistolsCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->grapplingGunAmmoTxtBox = (gcnew System::Windows::Forms::TextBox());
@@ -619,9 +635,14 @@ namespace TRCSaveEdit {
 			this->uziCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->revolverCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->consoleTxtBox = (gcnew System::Windows::Forms::TextBox());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->healthLabel = (gcnew System::Windows::Forms::Label());
+			this->healthBar = (gcnew System::Windows::Forms::TrackBar());
 			this->groupBox2->SuspendLayout();
 			this->groupBox3->SuspendLayout();
 			this->groupBox4->SuspendLayout();
+			this->groupBox1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->healthBar))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -659,19 +680,19 @@ namespace TRCSaveEdit {
 			this->lvlNameTxtBox->TabIndex = 3;
 			this->lvlNameTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
-			// browseBtn
+			// browseButton
 			// 
-			this->browseBtn->Location = System::Drawing::Point(353, 20);
-			this->browseBtn->Name = L"browseBtn";
-			this->browseBtn->Size = System::Drawing::Size(75, 23);
-			this->browseBtn->TabIndex = 4;
-			this->browseBtn->Text = L"Browse";
-			this->browseBtn->UseVisualStyleBackColor = true;
-			this->browseBtn->Click += gcnew System::EventHandler(this, &SaveEditUI::browseBtn_Click);
+			this->browseButton->Location = System::Drawing::Point(353, 20);
+			this->browseButton->Name = L"browseButton";
+			this->browseButton->Size = System::Drawing::Size(75, 23);
+			this->browseButton->TabIndex = 4;
+			this->browseButton->Text = L"Browse";
+			this->browseButton->UseVisualStyleBackColor = true;
+			this->browseButton->Click += gcnew System::EventHandler(this, &SaveEditUI::browseButton_Click);
 			// 
 			// smallMedipacksTxtBox
 			// 
-			this->smallMedipacksTxtBox->Location = System::Drawing::Point(122, 31);
+			this->smallMedipacksTxtBox->Location = System::Drawing::Point(169, 25);
 			this->smallMedipacksTxtBox->Name = L"smallMedipacksTxtBox";
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
@@ -680,7 +701,7 @@ namespace TRCSaveEdit {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(26, 34);
+			this->label3->Location = System::Drawing::Point(6, 29);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(90, 13);
 			this->label3->TabIndex = 6;
@@ -688,7 +709,7 @@ namespace TRCSaveEdit {
 			// 
 			// lrgMedipacksTxtBox
 			// 
-			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(122, 90);
+			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(169, 50);
 			this->lrgMedipacksTxtBox->Name = L"lrgMedipacksTxtBox";
 			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedipacksTxtBox->TabIndex = 7;
@@ -697,7 +718,7 @@ namespace TRCSaveEdit {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(24, 92);
+			this->label4->Location = System::Drawing::Point(6, 53);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 13);
 			this->label4->TabIndex = 8;
@@ -779,7 +800,7 @@ namespace TRCSaveEdit {
 			// 
 			// numFlaresTxtBox
 			// 
-			this->numFlaresTxtBox->Location = System::Drawing::Point(122, 144);
+			this->numFlaresTxtBox->Location = System::Drawing::Point(169, 76);
 			this->numFlaresTxtBox->Name = L"numFlaresTxtBox";
 			this->numFlaresTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numFlaresTxtBox->TabIndex = 23;
@@ -788,7 +809,7 @@ namespace TRCSaveEdit {
 			// label12
 			// 
 			this->label12->AutoSize = true;
-			this->label12->Location = System::Drawing::Point(77, 146);
+			this->label12->Location = System::Drawing::Point(6, 76);
 			this->label12->Name = L"label12";
 			this->label12->Size = System::Drawing::Size(38, 13);
 			this->label12->TabIndex = 24;
@@ -819,21 +840,21 @@ namespace TRCSaveEdit {
 			this->groupBox3->Controls->Add(this->label4);
 			this->groupBox3->Location = System::Drawing::Point(14, 122);
 			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(224, 187);
+			this->groupBox3->Size = System::Drawing::Size(224, 114);
 			this->groupBox3->TabIndex = 27;
 			this->groupBox3->TabStop = false;
 			this->groupBox3->Text = L"Items";
 			// 
-			// saveBtn
+			// saveButton
 			// 
-			this->saveBtn->Enabled = false;
-			this->saveBtn->Location = System::Drawing::Point(431, 20);
-			this->saveBtn->Name = L"saveBtn";
-			this->saveBtn->Size = System::Drawing::Size(75, 23);
-			this->saveBtn->TabIndex = 28;
-			this->saveBtn->Text = L"Save";
-			this->saveBtn->UseVisualStyleBackColor = true;
-			this->saveBtn->Click += gcnew System::EventHandler(this, &SaveEditUI::saveBtn_Click);
+			this->saveButton->Enabled = false;
+			this->saveButton->Location = System::Drawing::Point(431, 20);
+			this->saveButton->Name = L"saveButton";
+			this->saveButton->Size = System::Drawing::Size(75, 23);
+			this->saveButton->TabIndex = 28;
+			this->saveButton->Text = L"Save";
+			this->saveButton->UseVisualStyleBackColor = true;
+			this->saveButton->Click += gcnew System::EventHandler(this, &SaveEditUI::saveButton_Click);
 			// 
 			// groupBox4
 			// 
@@ -943,15 +964,45 @@ namespace TRCSaveEdit {
 			this->consoleTxtBox->Size = System::Drawing::Size(494, 20);
 			this->consoleTxtBox->TabIndex = 30;
 			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->healthLabel);
+			this->groupBox1->Controls->Add(this->healthBar);
+			this->groupBox1->Location = System::Drawing::Point(14, 242);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(224, 67);
+			this->groupBox1->TabIndex = 31;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Health";
+			// 
+			// healthLabel
+			// 
+			this->healthLabel->AutoSize = true;
+			this->healthLabel->Location = System::Drawing::Point(181, 24);
+			this->healthLabel->Name = L"healthLabel";
+			this->healthLabel->Size = System::Drawing::Size(30, 13);
+			this->healthLabel->TabIndex = 1;
+			this->healthLabel->Text = L"0.0%";
+			// 
+			// healthBar
+			// 
+			this->healthBar->Location = System::Drawing::Point(5, 20);
+			this->healthBar->Maximum = 100;
+			this->healthBar->Name = L"healthBar";
+			this->healthBar->Size = System::Drawing::Size(179, 45);
+			this->healthBar->TabIndex = 0;
+			this->healthBar->Scroll += gcnew System::EventHandler(this, &SaveEditUI::healthBar_Scroll);
+			// 
 			// SaveEditUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(518, 344);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->consoleTxtBox);
 			this->Controls->Add(this->groupBox4);
-			this->Controls->Add(this->saveBtn);
-			this->Controls->Add(this->browseBtn);
+			this->Controls->Add(this->saveButton);
+			this->Controls->Add(this->browseButton);
 			this->Controls->Add(this->fileTxtBox);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->groupBox2);
@@ -967,12 +1018,15 @@ namespace TRCSaveEdit {
 			this->groupBox3->PerformLayout();
 			this->groupBox4->ResumeLayout(false);
 			this->groupBox4->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->healthBar))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void browseBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void browseButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		Stream^ myStream;
 		OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
 
@@ -990,11 +1044,12 @@ namespace TRCSaveEdit {
 				fileTxtBox->AppendText(GetSaveFileName());
 				myStream->Close();
 
-				saveBtn->Enabled = true;
+				saveButton->Enabled = true;
 				numSavesTxtBox->Enabled = true;
 				numSecretsTxtBox->Enabled = true;
 				smallMedipacksTxtBox->Enabled = true;
 				lrgMedipacksTxtBox->Enabled = true;
+				healthBar->Enabled = true;
 
 				GetLvlName();
 				GetNumSmallMedipacks();
@@ -1009,6 +1064,7 @@ namespace TRCSaveEdit {
 				GetNumFlares();
 				GetGrapplingGunAmmo();
 				GetWeaponsInfo();
+				GetHealthValue();
 				GetLvlInfo();
 
 				consoleTxtBox->Clear();
@@ -1016,13 +1072,13 @@ namespace TRCSaveEdit {
 			}
 		}
 	}
-	private: System::Void saveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-
+	private: System::Void saveButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		int newSmallMedipackVal = int::Parse(smallMedipacksTxtBox->Text);
 		int newLrgMedipackVal = int::Parse(lrgMedipacksTxtBox->Text);
 		int newFlaresVal = int::Parse(numFlaresTxtBox->Text);
 		int newSaveNumVal = int::Parse(numSavesTxtBox->Text);
 		int newSecretsVal = int::Parse(numSecretsTxtBox->Text);
+		double newHealthPercentage = (double)healthBar->Value;
 
 		int newRevolverAmmoVal = int::Parse(revolverAmmoTxtBox->Text);
 		int newUziAmmoVal = int::Parse(uziAmmoTxtBox->Text);
@@ -1044,8 +1100,8 @@ namespace TRCSaveEdit {
 		if (newShotgunWideshotAmmoVal > 10922) newShotgunWideshotAmmoVal = 10922;
 
 		WriteValue(hkAmmoOffset, newHkAmmoVal);
-		WriteValue(smallMedipacksOffset, newSmallMedipackVal);
-		WriteValue(lrgMedipacksOffset, newLrgMedipackVal);
+		WriteValue(smallMedipackOffset, newSmallMedipackVal);
+		WriteValue(lrgMedipackOffset, newLrgMedipackVal);
 		WriteValue(saveNumOffset, newSaveNumVal);
 		WriteValue(numFlaresOffset, newFlaresVal);
 		WriteValue(revolverAmmoOffset, newRevolverAmmoVal);
@@ -1053,6 +1109,7 @@ namespace TRCSaveEdit {
 		WriteValue(shotgunNormalAmmoOffset, newShotgunNormalAmmoVal * 6);
 		WriteValue(shotgunWideshotAmmoOffset, newShotgunWideshotAmmoVal * 6);
 		WriteValue(grapplingGunAmmoOffset, newGrapplingGunVal);
+		WriteToSaveFile(numSecretsOffset, newSecretsVal);
 
 		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(uziOffset, 0x9);
 		else WriteToSaveFile(uziOffset, 0);
@@ -1075,11 +1132,17 @@ namespace TRCSaveEdit {
 		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(crowbarOffset, 0x9);
 		else WriteToSaveFile(crowbarOffset, 0);
 
-		WriteToSaveFile(numSecretsOffset, newSecretsVal);
+		const int maxHealth = 1000;
+		int newHealth = (int)(newHealthPercentage / 100.0 * maxHealth);
+		WriteValue(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 		consoleTxtBox->Clear();
 		consoleTxtBox->AppendText("Patched save file!");
+	}
+	private: System::Void healthBar_Scroll(System::Object^ sender, System::EventArgs^ e) {
+		double healthPercentage = (double)healthBar->Value;
+		healthLabel->Text = healthPercentage.ToString("0.0") + "%";
 	}
 	};
 }
