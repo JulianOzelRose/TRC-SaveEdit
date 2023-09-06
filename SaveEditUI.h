@@ -29,24 +29,24 @@ namespace TRCSaveEdit {
 		String^ ssLvlName;
 		String^ saveFileName;
 		// Offsets
-		int saveNumOffset = 0x04B;
-		int pistolsOffset = 0x16F;
-		int uziOffset = 0x170;
-		int shotgunOffset = 0x171;
-		int grapplingGunOffset = 0x172;
-		int hkOffset = 0x173;
-		int revolverOffset = 0x174;
-		int crowbarOffset = 0x178;
-		int smallMedipacksOffset = 0x194;
-		int lrgMedipacksOffset = 0x196;
-		int numFlaresOffset = 0x198;
-		int uziAmmoOffset = 0x19C;
-		int revolverAmmoOffset = 0x19E;
-		int shotgunNormalAmmoOffset = 0x1A0;
-		int shotgunWideshotAmmoOffset = 0x1A2;
-		int hkAmmoOffset = 0x1A4;
-		int grapplingGunAmmoOffset = 0x1A6;
-		int numSecretsOffset = 0x1C3;
+		const int saveNumOffset = 0x04B;
+		const int pistolsOffset = 0x16F;
+		const int uziOffset = 0x170;
+		const int shotgunOffset = 0x171;
+		const int grapplingGunOffset = 0x172;
+		const int hkOffset = 0x173;
+		const int revolverOffset = 0x174;
+		const int crowbarOffset = 0x178;
+		const int smallMedipacksOffset = 0x194;
+		const int lrgMedipacksOffset = 0x196;
+		const int numFlaresOffset = 0x198;
+		const int uziAmmoOffset = 0x19C;
+		const int revolverAmmoOffset = 0x19E;
+		const int shotgunNormalAmmoOffset = 0x1A0;
+		const int shotgunWideshotAmmoOffset = 0x1A2;
+		const int hkAmmoOffset = 0x1A4;
+		const int grapplingGunAmmoOffset = 0x1A6;
+		const int numSecretsOffset = 0x1C3;
 
 	private: System::Windows::Forms::CheckBox^ pistolsCheckBox;
 	public:
@@ -474,6 +474,24 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
+			}
+
+			else
+			{
+				revolverCheckBox->Enabled = true;
+				revolverAmmoTxtBox->Enabled = true;
+				uziCheckBox->Enabled = true;
+				uziAmmoTxtBox->Enabled = true;
+				shotgunCheckBox->Enabled = true;
+				shotgunNormalAmmoTxtBox->Enabled = true;
+				shotgunWideshotAmmoTxtBox->Enabled = true;
+				grapplingGunCheckBox->Enabled = true;
+				grapplingGunAmmoTxtBox->Enabled = true;
+				hkCheckBox->Enabled = true;
+				hkAmmoTxtBox->Enabled = true;
+				crowbarCheckBox->Enabled = true;
+				pistolsCheckBox->Enabled = true;
+				numFlaresTxtBox->Enabled = true;
 			}
 		}
 
