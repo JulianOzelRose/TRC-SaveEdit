@@ -48,9 +48,12 @@ namespace TRCSaveEdit {
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
 		// Health
-		int healthOffset = -1;
+		const int MIN_HEALTH_VALUE = 0;
+		const int MAX_HEALTH_VALUE = 1000;
 		int MIN_HEALTH_OFFSET = 0;
 		int MAX_HEALTH_OFFSET = 1;
+		int healthOffset = -1;
+
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::TrackBar^ healthBar;
 	private: System::Windows::Forms::Label^ healthLabel;
@@ -295,7 +298,7 @@ namespace TRCSaveEdit {
 				{
 					int healthValue = GetValue(offset);
 
-					if (healthValue > 0 && healthValue <= 1000)
+					if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
 					{
 						return offset;
 					}
@@ -307,7 +310,6 @@ namespace TRCSaveEdit {
 
 		void GetHealthValue()
 		{
-			const int maxHealth = 1000;
 			healthOffset = GetHealthOffset();
 			
 			if (healthOffset == -1)
@@ -321,7 +323,7 @@ namespace TRCSaveEdit {
 			{
 				int health = GetValue(healthOffset);
 				healthBar->Enabled = true;
-				double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
+				double healthPercentage = static_cast<double>(health) / MAX_HEALTH_VALUE * 100.0;
 				healthBar->Value = static_cast<int>(std::round(healthPercentage));
 				healthLabel->Visible = true;
 				healthLabel->Text = healthPercentage.ToString("0.0") + "%";
@@ -1249,9 +1251,8 @@ namespace TRCSaveEdit {
 		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(crowbarOffset, 0x9);
 		else WriteToSaveFile(crowbarOffset, 0);
 
-		const int maxHealth = 1000;
 		healthOffset = GetHealthOffset();
-		int newHealth = (int)(newHealthPercentage / 100.0 * maxHealth);
+		int newHealth = (int)(newHealthPercentage / 100.0 * MAX_HEALTH_VALUE);
 		if (healthOffset != -1) WriteValue(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
