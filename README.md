@@ -31,7 +31,7 @@ int GetHealthOffset()
 		{
 			int healthValue = GetValue(offset);
 
-			if (healthValue > 0 && healthValue <= 1000)
+			if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
 			{
 				return offset;
 			}
