@@ -309,8 +309,7 @@ namespace TRCSaveEdit {
 		{
 			const int maxHealth = 1000;
 			healthOffset = GetHealthOffset();
-			int health = GetValue(healthOffset);
-
+			
 			if (healthOffset == -1)
 			{
 				healthBar->Enabled = false;
@@ -320,6 +319,7 @@ namespace TRCSaveEdit {
 			}
 			else
 			{
+				int health = GetValue(healthOffset);
 				healthBar->Enabled = true;
 				double healthPercentage = static_cast<double>(health) / maxHealth * 100.0;
 				healthBar->Value = static_cast<int>(std::round(healthPercentage));
