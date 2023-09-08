@@ -12,31 +12,27 @@ to backup your savegame files as a precaution.
 ![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/db2c44a1-b1d8-4cdf-94be-bfe52f7205ba)
 
 ## Determining the correct health offset
-The health data is stored dynamically. There can be anywhere from 1 to 13 unique health offsets per level. The offsets appear to shift based on level triggers. Writing to the incorrect health offset may crash the game. To determine the correct health
-offset, this program uses heuristics. First, it stores the potential health offsets for each level on an array. If the array size is 0, it returns an error value. If the array size is 1, it returns the only value. When looping through the offsets, it
-checks for impossible health values as well as the surrounding data to determine validity. It returns an error value if nothing is found. This method detects the correct health offset ~90% of the time.
+The health data is stored dynamically. There can be anywhere from 1 to 20 unique health offsets per level. The offsets appear to shift based on level triggers, and they shift around a lot. Writing to the incorrect health offset may crash the game.
+To get around this issue, this program uses a heuristic algorithm. It takes the health offset range unique to each level, then it loops through them and checks the surrounding data first. Since the character movement data is always stored 6 bytes away
+from the health, the algorithm checks the values 6 bytes from the health offset for known character movement byte flags. If a known pattern is found, it runs one more test to ensure validity by checking for an impossible health value (0 or greater than
+1000). If it passes the check, then it is returned as a valid health offset. Otherwise, an error code is returned. This method detects the correct health offset ~96% of the time.
 
 ```
 int GetHealthOffset()
 {
-	if (healthOffsets == nullptr)
+	for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 	{
-		return -1;
-	}
+		int byteFlag1 = GetSaveFileData(offset - 7);
+		int byteFlag2 = GetSaveFileData(offset - 6);
 
-	else if (healthOffsets->size() == 1)
-	{
-		return (*healthOffsets)[0];
-	}
-
-	for (int i = 0; i < healthOffsets->size(); i++)
-	{
-		int healthValue = GetValue((*healthOffsets)[i]);
-		int surroundingData = GetValue((*healthOffsets)[i] + 2);
-
-		if (healthValue > 0 && healthValue <= 1000 && surroundingData == 0)
+		if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 		{
-			return (*healthOffsets)[i];
+			int healthValue = GetValue(offset);
+
+			if (healthValue > 0 && healthValue <= 1000)
+			{
+				return offset;
+			}
 		}
 	}
 
@@ -44,13 +40,13 @@ int GetHealthOffset()
 }
 ```
 
-
-## Offset table ##
+## Offset tables and game data ##
 For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK and revolver guns,
 a value of 0xD will enable the gun along with the sight attached to it. Setting values like health and ammo to 0xFFFF (65535 in decimal) will make them unlimited.
 The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
 All of the offsets are static across levels, with the exception of the health offsets.
 
+#### General ####
 | **File Offset**     | **Variable**              |
 | :---                | :---                      |
 | 0x000               | Level Name                |
@@ -72,3 +68,50 @@ All of the offsets are static across levels, with the exception of the health of
 | 0x1A4               | HK Ammo                   |
 | 0x1A6               | Grappling Gun Ammo        |
 | 0x1C3               | Number of Secrets         |
+
+#### Health ####
+| **Level**           	| **Offset range**      |
+| :---                	| :---                  |
+| Streets of Rome     	| 0x4F4 - 0x4F8		|
+| Trajan's Markets    	| 0x542 - 0x5D7		|
+| The Colosseum	      	| 0x4D2 - 0x7FF		|
+| The Base		| 0x556 - 0x707		|
+| The Submarine		| 0x520 - 0x59A		|
+| Deepsea Dive		| 0x644 - 0x6DE		|
+| Sinking Submarine	| 0x5D2 - 0x66B		|
+| Gallows Tree		| 0x4F0 - 0x52D		|
+| Labyrinth		| 0x538 - 0x61A		|
+| Old Mill		| 0x512 - 0x624		|
+| The 13th Floor	| 0x52A - 0x53A		|
+| Escape with the Iris	| 0x6F6 - 0xC20		|
+| Red Alert!		| 0x52E - 0x58A		|
+
+#### Character movement byte flags ####
+| **First byte** | **Second byte** | **Meaning**       			|
+| :---           | :---            | :--               			|
+| 0x01           | 0x02            | Finishing running 			|
+| 0x02           | 0x02            | Standing				|
+| 0x03           | 0x47            | Running jump			|
+| 0x09           | 0x09            | Freefalling			|
+| 0x13           | 0x13            | Climbing up a ledge		|
+| 0x17           | 0x02            | Crouch-rolling			|
+| 0x18           | 0x18            | Sliding down a ledge		|
+| 0x19           | 0x19            | Doing a backflip			|
+| 0x21           | 0x21            | In water but, not underwater 	|
+| 0x47           | 0x47            | Crouching				|
+| 0x47           | 0x57            | Squatting				|
+| 0x49           | 0x49            | Sprinting				|
+| 0x0D           | 0x12            | Swimming				|
+| 0x12           | 0x12            | Swimming with suit			|
+| 0x0D           | 0x0D            | Underwater				|
+| 0x50           | 0x50            | Crouching forward			|
+| 0x59           | 0x16            | Searching a container		|
+| 0x59           | 0x15            | Searching a cabinet		|
+| 0x59           | 0x10            | About to search a container	|
+| 0x27           | 0x10            | Picking up an item			|
+| 0x29           | 0x00            | Pushing a button			|
+| 0x23           | 0x11            | Diving				|
+| 0x1C           | 0x0F            | Jumping				|
+| 0x51           | 0x50            | Crawling				|
+| 0x2B           | 0x16            | Placing an item in a recepticle	|
+| 0x62 		 | 0x15		   | Activating a switch		|
