@@ -9,8 +9,6 @@
 #include <fstream>
 #include <string>
 #include <msclr\marshal_cppstd.h>
-#include <vector>
-#include <vcclr.h> // Include for gcroot
 
 namespace TRCSaveEdit {
 
@@ -22,7 +20,6 @@ namespace TRCSaveEdit {
 	using namespace System::Drawing;
 	using namespace System::IO;
 	using namespace msclr::interop;
-	using namespace System::Diagnostics;
 
 	public ref class SaveEditUI : public System::Windows::Forms::Form
 	{
@@ -50,8 +47,10 @@ namespace TRCSaveEdit {
 		const int hkAmmoOffset = 0x1A4;
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
+		// Health
 		int healthOffset = -1;
-		std::vector<int>* healthOffsets;
+		int MIN_HEALTH_OFFSET = 0;
+		int MAX_HEALTH_OFFSET = 1;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::TrackBar^ healthBar;
 	private: System::Windows::Forms::Label^ healthLabel;
@@ -252,43 +251,54 @@ namespace TRCSaveEdit {
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
 
-		void SetValidHealthOffsets(std::vector<int>& offsets)
+		bool IsKnownByteFlagPattern(int byteFlag1, int byteFlag2)
 		{
-			if (!healthOffsets)
-			{
-				healthOffsets = new std::vector<int>();
-			}
-			else
-			{
-				healthOffsets->clear();
-			}
+			if (byteFlag1 == 0x01 && byteFlag2 == 0x02) return true;	// Finishing running
+			if (byteFlag1 == 0x02 && byteFlag2 == 0x02) return true;	// Standing
+			if (byteFlag1 == 0x03 && byteFlag2 == 0x47) return true;	// Running jump
+			if (byteFlag1 == 0x09 && byteFlag2 == 0x09) return true;	// Freefalling
+			if (byteFlag1 == 0x13 && byteFlag2 == 0x13) return true;	// Climbing up a ledge
+			if (byteFlag1 == 0x17 && byteFlag2 == 0x02) return true;	// Crouch-rolling
+			if (byteFlag1 == 0x18 && byteFlag2 == 0x18) return true;	// Sliding down a ledge
+			if (byteFlag1 == 0x19 && byteFlag2 == 0x19) return true;	// Doing a backflip
+			if (byteFlag1 == 0x21 && byteFlag2 == 0x21) return true;	// In water but not underwater
+			if (byteFlag1 == 0x47 && byteFlag2 == 0x47) return true;	// Crouching
+			if (byteFlag1 == 0x47 && byteFlag2 == 0x57) return true;	// Squatting
+			if (byteFlag1 == 0x49 && byteFlag2 == 0x49) return true;	// Sprinting
+			if (byteFlag1 == 0x0D && byteFlag2 == 0x12) return true;	// Swimming
+			if (byteFlag1 == 0x12 && byteFlag2 == 0x12) return true;	// Swimming (with suit)
+			if (byteFlag1 == 0x0D && byteFlag2 == 0x0D) return true;	// Underwater
+			if (byteFlag1 == 0x50 && byteFlag2 == 0x50) return true;	// Crouching forward
+			if (byteFlag1 == 0x59 && byteFlag2 == 0x16) return true;	// Searching a container
+			if (byteFlag1 == 0x59 && byteFlag2 == 0x15) return true;	// Searching a cabinet
+			if (byteFlag1 == 0x59 && byteFlag2 == 0x10) return true;	// About to search a container
+			if (byteFlag1 == 0x27 && byteFlag2 == 0x10) return true;	// Picking up an item
+			if (byteFlag1 == 0x29 && byteFlag2 == 0x00) return true;	// Pulling a lever
+			if (byteFlag1 == 0x28 && byteFlag2 == 0x10) return true;	// Pushing a button
+			if (byteFlag1 == 0x23 && byteFlag2 == 0x11) return true;	// Diving
+			if (byteFlag1 == 0x1C && byteFlag2 == 0x0F) return true;	// In air or jumping straight up
+			if (byteFlag1 == 0x51 && byteFlag2 == 0x50) return true;	// Crawling
+			if (byteFlag1 == 0x2B && byteFlag2 == 0x16) return true;	// Placing an item in a recepticle
+			if (byteFlag1 == 0x62 && byteFlag2 == 0x15) return true;	// Activating a switch
 
-			for (int i = 0; i < offsets.size(); i++)
-			{
-				healthOffsets->push_back(offsets[i]);
-			}
+			return false;
 		}
 
 		int GetHealthOffset()
 		{
-			if (healthOffsets == nullptr)
+			for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 			{
-				return -1;
-			}
+				int byteFlag1 = GetSaveFileData(offset - 7);
+				int byteFlag2 = GetSaveFileData(offset - 6);
 
-			else if (healthOffsets->size() == 1)
-			{
-				return (*healthOffsets)[0];
-			}
-
-			for (int i = 0; i < healthOffsets->size(); i++)
-			{
-				int healthValue = GetValue((*healthOffsets)[i]);
-				int surroundingData = GetValue((*healthOffsets)[i] + 2);
-
-				if (healthValue > 0 && healthValue <= 1000 && surroundingData == 0)
+				if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 				{
-					return (*healthOffsets)[i];
+					int healthValue = GetValue(offset);
+
+					if (healthValue > 0 && healthValue <= 1000)
+					{
+						return offset;
+					}
 				}
 			}
 
@@ -336,8 +346,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x4F4 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x4F4;
+				MAX_HEALTH_OFFSET = 0x4F8;
 			}
 
 			else if (ssLvlName == "Trajan`s markets")
@@ -356,8 +366,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x542, 0x556, 0x57F, 0x5C3, 0x5D5, 0x5D7 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x542;
+				MAX_HEALTH_OFFSET = 0x5D7;
 			}
 
 			else if (ssLvlName == "The Colosseum")
@@ -376,8 +386,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x4D2, 0x4D4, 0x4E8 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x4D2;
+				MAX_HEALTH_OFFSET = 0x7FF;
 			}
 
 			else if (ssLvlName == "The base")
@@ -396,8 +406,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x55A, 0x556, 0x57A, 0x5AF, 0x605, 0x611, 0x6A9, 0x707 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x556;
+				MAX_HEALTH_OFFSET = 0x707;
 			}
 
 			else if (ssLvlName == "The submarine")
@@ -416,8 +426,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x520, 0x568, 0x598, 0x59A };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x520;
+				MAX_HEALTH_OFFSET = 0x59A;
 			}
 
 			else if (ssLvlName == "Deepsea dive")
@@ -436,8 +446,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x644, 0x69A, 0x6DC, 0x6B1 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x644;
+				MAX_HEALTH_OFFSET = 0x6DE;
 			}
 
 			else if (ssLvlName == "Sinking submarine")
@@ -456,8 +466,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				std::vector<int> validHealthOffsets = { 0x5D2, 0x5F5, 0x60D, 0x645, 0x669, 0x66B };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x5D2;
+				MAX_HEALTH_OFFSET = 0x66B;
 			}
 
 			else if (ssLvlName == "Gallows tree")
@@ -476,8 +486,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x4F0, 0x501, 0x52D };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x4F0;
+				MAX_HEALTH_OFFSET = 0x52D;
 			}
 
 			else if (ssLvlName == "Labyrinth")
@@ -496,8 +506,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x538, 0x54A, 0x54C, 0x61A };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x538;
+				MAX_HEALTH_OFFSET = 0x61A;
 			}
 
 			else if (ssLvlName == "Old mill")
@@ -516,9 +526,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x512, 0x5B8, 0x5CE, 0x624 };
-				SetValidHealthOffsets(validHealthOffsets);
-
+				MIN_HEALTH_OFFSET = 0x512;
+				MAX_HEALTH_OFFSET = 0x624;
 			}
 
 			else if (ssLvlName == "The 13th floor")
@@ -537,8 +546,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x52A };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x52A;
+				MAX_HEALTH_OFFSET = 0x53A;
 			}
 
 			else if (ssLvlName == "Escape with the iris")
@@ -557,8 +566,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x6F6, 0x76C, 0x808, 0xA98, 0xAAA, 0xB04, 0xB3E, 0xB6E, 0xBBC, 0xBBE, 0xC04, 0xC18, 0xC20 };
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x6F6;
+				MAX_HEALTH_OFFSET = 0xC20;
 			}
 
 			else if (ssLvlName == "Red alert!")
@@ -577,13 +586,13 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				std::vector<int> validHealthOffsets = { 0x52E, 0x58A };
-				SetValidHealthOffsets(validHealthOffsets);
-
+				MIN_HEALTH_OFFSET = 0x52E;
+				MAX_HEALTH_OFFSET = 0x58A;
 			}
 
 			else
 			{
+				// For custom levels, health offset range here is a vague estimate
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
 				uziCheckBox->Enabled = true;
@@ -598,9 +607,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				healthOffset = -1;
-				std::vector<int> validHealthOffsets = {};
-				SetValidHealthOffsets(validHealthOffsets);
+				MIN_HEALTH_OFFSET = 0x4F0;
+				MAX_HEALTH_OFFSET = 0x6FF;
 			}
 		}
 
