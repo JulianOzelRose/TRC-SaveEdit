@@ -1,6 +1,6 @@
 /*
 	Julian O. Rose
-	TRC-SaveEditUI.h
+	TRC-SaveEdit
 	1-29-2023
 */
 
@@ -27,7 +27,6 @@ namespace TRCSaveEdit {
 		// Strings
 		String^ ssSavefileName;
 		String^ ssLvlName;
-		String^ saveFileName;
 		// Offsets
 		const int saveNumOffset = 0x04B;
 		const int pistolsOffset = 0x16F;
@@ -151,7 +150,7 @@ namespace TRCSaveEdit {
 			return value;
 		}
 
-		void GetLvlName()
+		void DisplayLvlName()
 		{
 			std::ifstream saveFile(marshal_as<std::string>(GetSaveFileName()));
 			std::string sData;
@@ -161,95 +160,83 @@ namespace TRCSaveEdit {
 			saveFile.close();
 
 			ssLvlName = gcnew String(sData.c_str());
-
 			lvlNameTxtBox->Clear();
 			lvlNameTxtBox->AppendText(ssLvlName);
 		}
 
-		void GetNumSecrets()
+		void DisplayNumSecrets()
 		{
 			int numSecrets = GetSaveFileData(numSecretsOffset);
-
 			numSecretsTxtBox->Clear();
 			numSecretsTxtBox->AppendText(numSecrets.ToString());
 		}
 
-		void GetSaveNum()
+		void DisplaySaveNum()
 		{
 			int saveNum = GetValue(saveNumOffset);
-
 			numSavesTxtBox->Clear();
 			numSavesTxtBox->AppendText(saveNum.ToString());
 		}
 
-		void GetNumFlares()
+		void DisplayNumFlares()
 		{
 			int numFlares = GetValue(numFlaresOffset);
-
 			numFlaresTxtBox->Clear();
 			numFlaresTxtBox->AppendText(numFlares.ToString());
 		}
 
-		void GetNumSmallMedipacks()
+		void DisplayNumSmallMedipacks()
 		{
 			int numSmallMedipacks = GetValue(smallMedipackOffset);
-
 			smallMedipacksTxtBox->Clear();
 			smallMedipacksTxtBox->AppendText(numSmallMedipacks.ToString());
 		}
 
-		void GetNumLrgMedipacks()
+		void DisplayNumLrgMedipacks()
 		{
 			int numLrgMedipacks = GetValue(lrgMedipackOffset);
-
 			lrgMedipacksTxtBox->Clear();
 			lrgMedipacksTxtBox->AppendText(numLrgMedipacks.ToString());
 		}
 
-		void GetShotgunNormalAmmo()
+		void DisplayShotgunNormalAmmo()
 		{
 			int shotgunNormalAmmo = GetValue(shotgunNormalAmmoOffset);
-
 			shotgunNormalAmmoTxtBox->Clear();
 			shotgunNormalAmmoTxtBox->AppendText((shotgunNormalAmmo / 6).ToString());
 		}
 
-		void GetShotgunWideshotAmmo()
+		void DisplayShotgunWideshotAmmo()
 		{
 			int shotgunWideshotAmmo = GetValue(shotgunWideshotAmmoOffset);
-
 			shotgunWideshotAmmoTxtBox->Clear();
 			shotgunWideshotAmmoTxtBox->AppendText((shotgunWideshotAmmo / 6).ToString());
 		}
 
-		void GetUziAmmo()
+		void DisplayUziAmmo()
 		{
 			int uziAmmo = GetValue(uziAmmoOffset);
-
 			uziAmmoTxtBox->Clear();
 			uziAmmoTxtBox->AppendText(uziAmmo.ToString());
 		}
 
-		void GetHKAmmo()
+		void DisplayHKAmmo()
 		{
 			int hkAmmo = GetValue(hkAmmoOffset);
-
 			hkAmmoTxtBox->Clear();
 			hkAmmoTxtBox->AppendText(hkAmmo.ToString());
 		}
 
-		void GetGrapplingGunAmmo()
+		void DisplayGrapplingGunAmmo()
 		{
 			int grapplingGunAmmo = GetValue(grapplingGunAmmoOffset);
-
 			grapplingGunAmmoTxtBox->Clear();
 			grapplingGunAmmoTxtBox->AppendText(grapplingGunAmmo.ToString());
 		}
 
-		void GetRevolverAmmo()
+		void DisplayRevolverAmmo()
 		{
 			int revolverAmmo = GetValue(revolverAmmoOffset);
-
 			revolverAmmoTxtBox->Clear();
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
@@ -308,10 +295,10 @@ namespace TRCSaveEdit {
 			return -1;
 		}
 
-		void GetHealthValue()
+		void DisplayHealthValue()
 		{
 			healthOffset = GetHealthOffset();
-			
+
 			if (healthOffset == -1)
 			{
 				healthBar->Enabled = false;
@@ -330,7 +317,7 @@ namespace TRCSaveEdit {
 			}
 		}
 
-		void GetLvlInfo()
+		void SetLvlParams()
 		{
 			if (ssLvlName == "Streets of Rome")
 			{
@@ -614,7 +601,7 @@ namespace TRCSaveEdit {
 			}
 		}
 
-		void GetWeaponsInfo()
+		void DisplayWeaponsInfo()
 		{
 			int uziVal = GetSaveFileData(uziOffset);
 			int shotgunVal = GetSaveFileData(shotgunOffset);
@@ -1170,21 +1157,21 @@ namespace TRCSaveEdit {
 				healthErrorLabel->Visible = false;
 				healthLabel->Visible = true;
 
-				GetLvlName();
-				GetLvlInfo();
-				GetNumSmallMedipacks();
-				GetNumLrgMedipacks();
-				GetNumSecrets();
-				GetRevolverAmmo();
-				GetSaveNum();
-				GetUziAmmo();
-				GetHKAmmo();
-				GetShotgunNormalAmmo();
-				GetShotgunWideshotAmmo();
-				GetNumFlares();
-				GetGrapplingGunAmmo();
-				GetWeaponsInfo();
-				GetHealthValue();
+				DisplayLvlName();
+				SetLvlParams();
+				DisplayNumSmallMedipacks();
+				DisplayNumLrgMedipacks();
+				DisplayNumSecrets();
+				DisplayRevolverAmmo();
+				DisplaySaveNum();
+				DisplayUziAmmo();
+				DisplayHKAmmo();
+				DisplayShotgunNormalAmmo();
+				DisplayShotgunWideshotAmmo();
+				DisplayNumFlares();
+				DisplayGrapplingGunAmmo();
+				DisplayWeaponsInfo();
+				DisplayHealthValue();
 
 				consoleTxtBox->Clear();
 				consoleTxtBox->AppendText("Loaded save file: " + openFileDialog1->SafeFileName);
