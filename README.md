@@ -42,7 +42,7 @@ int GetHealthOffset()
 }
 ```
 
-## Offset tables and game data ##
+## Offset tables ##
 For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK and revolver guns,
 a value of 0xD will enable the gun along with the sight attached to it. Setting values like health and ammo to 0xFFFF (65535 in decimal) will make them unlimited.
 The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
@@ -87,33 +87,3 @@ All of the offsets are static across levels, with the exception of the health of
 | The 13th Floor	| 0x52A - 0x53A		|
 | Escape with the Iris	| 0x6F6 - 0xC20		|
 | Red Alert!		| 0x52E - 0x58A		|
-
-#### Character movement byte flags ####
-| **First byte** | **Second byte** | **Meaning**       			|
-| :---           | :---            | :--               			|
-| 0x01           | 0x02            | Finishing running 			|
-| 0x02           | 0x02            | Standing				|
-| 0x03           | 0x47            | Running jump			|
-| 0x09           | 0x09            | Freefalling			|
-| 0x13           | 0x13            | Climbing up a ledge		|
-| 0x17           | 0x02            | Crouch-rolling			|
-| 0x18           | 0x18            | Sliding down a ledge		|
-| 0x19           | 0x19            | Doing a backflip			|
-| 0x21           | 0x21            | In water but, not underwater 	|
-| 0x47           | 0x47            | Crouching				|
-| 0x47           | 0x57            | Squatting				|
-| 0x49           | 0x49            | Sprinting				|
-| 0x0D           | 0x12            | Swimming				|
-| 0x12           | 0x12            | Swimming with suit			|
-| 0x0D           | 0x0D            | Underwater				|
-| 0x50           | 0x50            | Crouching forward			|
-| 0x59           | 0x16            | Searching a container		|
-| 0x59           | 0x15            | Searching a cabinet		|
-| 0x59           | 0x10            | About to search a container	|
-| 0x27           | 0x10            | Picking up an item			|
-| 0x29           | 0x00            | Pushing a button			|
-| 0x23           | 0x11            | Diving				|
-| 0x1C           | 0x0F            | Jumping				|
-| 0x51           | 0x50            | Crawling				|
-| 0x2B           | 0x16            | Placing an item in a recepticle	|
-| 0x62 		 | 0x15		   | Activating a switch		|
