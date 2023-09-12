@@ -15,9 +15,9 @@ to backup your savegame files as a precaution.
 The health data is stored dynamically. There can be anywhere from 1 to 20 unique health offsets per level. The offsets appear to shift based on level triggers, and they shift around a lot. Writing to the incorrect health offset may crash the game.
 To get around this issue, this program uses a heuristic algorithm. It takes the health offset range unique to each level, then it loops through them and checks the surrounding data first.
 
-Since the character movement data is always stored 6 bytes away
-from the health, the algorithm checks the values 6 bytes from the health offset for known character movement byte flags. If a known pattern is found, it runs one more test to ensure validity by checking for an impossible health value (0 or greater than
-1000). If it passes the check, then it is returned as a valid health offset. Otherwise, an error code is returned. This method detects the correct health offset ~96% of the time.
+Since the character animation data is always stored 6 bytes away
+from the health, the algorithm checks the values 6 bytes from the health offset for known character animation byte flags. If a known pattern is found, it runs one more test to ensure validity by checking for an impossible health value (0 or greater than
+1000). If it passes these checks, then it is returned as a valid health offset. Otherwise, an error code is returned. This method detects the correct health offset ~96% of the time.
 
 ```
 int GetHealthOffset()
