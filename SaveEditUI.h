@@ -1220,7 +1220,7 @@ namespace TRCSaveEdit {
 		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(uziOffset, 0x9);
 		else WriteToSaveFile(uziOffset, 0);
 
-		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(revolverOffset, 0x9);
+		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(revolverOffset, 0xD);
 		else WriteToSaveFile(revolverOffset, 0);
 
 		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteToSaveFile(shotgunOffset, 0x9);
