@@ -42,10 +42,10 @@ int GetHealthOffset()
 ```
 
 ## Offset tables ##
-For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK and revolver guns,
-a value of 0xD will enable the gun along with the sight attached to it. Setting values like health and ammo to 0xFFFF (65535 in decimal) will make them unlimited.
+For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK, grappling gun, revolver, and deagle,
+a value of 0xD will enable the gun along with the sight attached to it. Setting values like health, ammo, or flares to 0xFFFF (65535 in decimal) will make them unlimited.
 The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
-All of the offsets are static across levels, with the exception of the health offsets.
+All of the offsets are static across levels, with the exception of the health offsets, which are dynamically allocated.
 
 #### General ####
 | **File Offset**     | **Variable**              |
