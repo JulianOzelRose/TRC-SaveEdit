@@ -614,7 +614,7 @@ namespace TRCSaveEdit {
 			if (uziVal == 0x9) uziCheckBox->Checked = true;
 			else uziCheckBox->Checked = false;
 
-			if (shotgunVal == 0x9) shotgunCheckBox->Checked = true;
+			if (shotgunVal == 0x9 || shotgunVal == 0x11) shotgunCheckBox->Checked = true;
 			else shotgunCheckBox->Checked = false;
 
 			if (grapplingGunVal == 0xD) grapplingGunCheckBox->Checked = true;
