@@ -416,7 +416,7 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
 				MIN_HEALTH_OFFSET = 0x520;
-				MAX_HEALTH_OFFSET = 0x59A;
+				MAX_HEALTH_OFFSET = 0x5D2;
 			}
 
 			else if (ssLvlName == "Deepsea dive")
@@ -455,7 +455,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
-				MIN_HEALTH_OFFSET = 0x5D2;
+				MIN_HEALTH_OFFSET = 0x5CC;
 				MAX_HEALTH_OFFSET = 0x66B;
 			}
 
@@ -556,7 +556,7 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
 				MIN_HEALTH_OFFSET = 0x6F6;
-				MAX_HEALTH_OFFSET = 0xC20;
+				MAX_HEALTH_OFFSET = 0xC47;
 			}
 
 			else if (ssLvlName == "Red alert!")
@@ -575,8 +575,8 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = false;
 				numFlaresTxtBox->Enabled = false;
-				MIN_HEALTH_OFFSET = 0x52E;
-				MAX_HEALTH_OFFSET = 0x58A;
+				MIN_HEALTH_OFFSET = 0x52C;
+				MAX_HEALTH_OFFSET = 0x5D6;
 			}
 
 			else
@@ -620,7 +620,7 @@ namespace TRCSaveEdit {
 			if (grapplingGunVal == 0xD) grapplingGunCheckBox->Checked = true;
 			else grapplingGunCheckBox->Checked = false;
 
-			if (hkVal == 0x9 || hkVal == 0xD) hkCheckBox->Checked = true;
+			if (hkVal == 0x9 || hkVal == 0xD || hkVal == 0x21) hkCheckBox->Checked = true;
 			else hkCheckBox->Checked = false;
 
 			if (revolverVal == 0x9 || revolverVal == 0xD) revolverCheckBox->Checked = true;
