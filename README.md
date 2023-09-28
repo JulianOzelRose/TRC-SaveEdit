@@ -43,7 +43,7 @@ int GetHealthOffset()
 
 ## Offset tables ##
 For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK, grappling gun, revolver, and deagle,
-a value of 0xD will enable the gun along with the sight attached to it. Setting values like health, ammo, or flares to 0xFFFF (65535 in decimal) will make them unlimited.
+a value of 0xD will enable the gun along with the sight attached to it. Setting values like ammo, medipacks, or flares to 0xFFFF (65535 in decimal) will make them unlimited.
 The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
 All of the offsets are static across levels, with the exception of the health offsets, which are dynamically allocated.
 
@@ -77,12 +77,12 @@ All of the offsets are static across levels, with the exception of the health of
 | Trajan's Markets    	| 0x542 - 0x5D7		|
 | The Colosseum	      	| 0x4D2 - 0x7FF		|
 | The Base		| 0x556 - 0x707		|
-| The Submarine		| 0x520 - 0x59A		|
+| The Submarine		| 0x520 - 0x5D2		|
 | Deepsea Dive		| 0x644 - 0x6DE		|
-| Sinking Submarine	| 0x5D2 - 0x66B		|
+| Sinking Submarine	| 0x5CC - 0x66B		|
 | Gallows Tree		| 0x4F0 - 0x52D		|
 | Labyrinth		| 0x538 - 0x61A		|
 | Old Mill		| 0x512 - 0x624		|
 | The 13th Floor	| 0x52A - 0x53A		|
-| Escape with the Iris	| 0x6F6 - 0xC20		|
-| Red Alert!		| 0x52E - 0x58A		|
+| Escape with the Iris	| 0x6F6 - 0xC47		|
+| Red Alert!		| 0x52C - 0x5D6		|
