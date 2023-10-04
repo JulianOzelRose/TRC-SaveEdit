@@ -63,28 +63,6 @@ namespace TRCSaveEdit {
 		SaveEditUI(void)
 		{
 			InitializeComponent();
-
-			numSavesTxtBox->Enabled = false;
-			numSecretsTxtBox->Enabled = false;
-			smallMedipacksTxtBox->Enabled = false;
-			lrgMedipacksTxtBox->Enabled = false;
-			revolverCheckBox->Enabled = false;
-			revolverAmmoTxtBox->Enabled = false;
-			uziCheckBox->Enabled = false;
-			uziAmmoTxtBox->Enabled = false;
-			shotgunCheckBox->Enabled = false;
-			shotgunNormalAmmoTxtBox->Enabled = false;
-			shotgunWideshotAmmoTxtBox->Enabled = false;
-			grapplingGunCheckBox->Enabled = false;
-			grapplingGunAmmoTxtBox->Enabled = false;
-			hkCheckBox->Enabled = false;
-			hkAmmoTxtBox->Enabled = false;
-			crowbarCheckBox->Enabled = false;
-			pistolsCheckBox->Enabled = false;
-			numFlaresTxtBox->Enabled = false;
-			healthBar->Enabled = false;
-			healthErrorLabel->Visible = false;
-			healthLabel->Visible = true;
 		}
 
 		void SetSaveFileName(String^ fileName)
@@ -303,16 +281,17 @@ namespace TRCSaveEdit {
 			{
 				healthBar->Enabled = false;
 				healthErrorLabel->Visible = true;
-				healthBar->Value = 0;
 				healthLabel->Visible = false;
+				healthBar->Value = 0;
 			}
 			else
 			{
 				int health = GetValue(healthOffset);
-				healthBar->Enabled = true;
 				double healthPercentage = static_cast<double>(health) / MAX_HEALTH_VALUE * 100.0;
-				healthBar->Value = static_cast<int>(std::round(healthPercentage));
+				healthBar->Enabled = true;
 				healthLabel->Visible = true;
+				healthErrorLabel->Visible = false;
+				healthBar->Value = static_cast<int>(std::round(healthPercentage));
 				healthLabel->Text = healthPercentage.ToString("0.0") + "%";
 			}
 		}
@@ -597,7 +576,7 @@ namespace TRCSaveEdit {
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
 				MIN_HEALTH_OFFSET = 0x4F0;
-				MAX_HEALTH_OFFSET = 0x6FF;
+				MAX_HEALTH_OFFSET = 0x7FF;
 			}
 		}
 
@@ -790,6 +769,7 @@ namespace TRCSaveEdit {
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
 			this->smallMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->smallMedipacksTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::smallMedipacksTxtBox_KeyPress);
 			// 
 			// label3
 			// 
@@ -807,6 +787,7 @@ namespace TRCSaveEdit {
 			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedipacksTxtBox->TabIndex = 7;
 			this->lrgMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->lrgMedipacksTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::lrgMedipacksTxtBox_KeyPress);
 			// 
 			// label4
 			// 
@@ -824,6 +805,7 @@ namespace TRCSaveEdit {
 			this->numSecretsTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSecretsTxtBox->TabIndex = 9;
 			this->numSecretsTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numSecretsTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numSecretsTxtBox_KeyPress);
 			// 
 			// label5
 			// 
@@ -841,6 +823,7 @@ namespace TRCSaveEdit {
 			this->revolverAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->revolverAmmoTxtBox->TabIndex = 11;
 			this->revolverAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->revolverAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::revolverAmmoTxtBox_KeyPress);
 			// 
 			// numSavesTxtBox
 			// 
@@ -849,6 +832,7 @@ namespace TRCSaveEdit {
 			this->numSavesTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSavesTxtBox->TabIndex = 13;
 			this->numSavesTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numSavesTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numSavesTxtBox_KeyPress);
 			// 
 			// label7
 			// 
@@ -866,6 +850,7 @@ namespace TRCSaveEdit {
 			this->uziAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->uziAmmoTxtBox->TabIndex = 15;
 			this->uziAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->uziAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::uziAmmoTxtBox_KeyPress);
 			// 
 			// hkAmmoTxtBox
 			// 
@@ -874,6 +859,7 @@ namespace TRCSaveEdit {
 			this->hkAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->hkAmmoTxtBox->TabIndex = 17;
 			this->hkAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->hkAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::hkAmmoTxtBox_KeyPress);
 			// 
 			// shotgunWideshotAmmoTxtBox
 			// 
@@ -882,6 +868,7 @@ namespace TRCSaveEdit {
 			this->shotgunWideshotAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->shotgunWideshotAmmoTxtBox->TabIndex = 19;
 			this->shotgunWideshotAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->shotgunWideshotAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::shotgunWideshotAmmoTxtBox_KeyPress);
 			// 
 			// shotgunNormalAmmoTxtBox
 			// 
@@ -890,6 +877,7 @@ namespace TRCSaveEdit {
 			this->shotgunNormalAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->shotgunNormalAmmoTxtBox->TabIndex = 20;
 			this->shotgunNormalAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->shotgunNormalAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::shotgunNormalAmmoTxtBox_KeyPress);
 			// 
 			// numFlaresTxtBox
 			// 
@@ -898,6 +886,7 @@ namespace TRCSaveEdit {
 			this->numFlaresTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numFlaresTxtBox->TabIndex = 23;
 			this->numFlaresTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numFlaresTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numFlaresTxtBox_KeyPress);
 			// 
 			// label12
 			// 
@@ -988,6 +977,7 @@ namespace TRCSaveEdit {
 			this->grapplingGunAmmoTxtBox->Size = System::Drawing::Size(66, 20);
 			this->grapplingGunAmmoTxtBox->TabIndex = 22;
 			this->grapplingGunAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->grapplingGunAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::grapplingGunAmmoTxtBox_KeyPress);
 			// 
 			// grapplingGunCheckBox
 			// 
@@ -1078,6 +1068,7 @@ namespace TRCSaveEdit {
 			this->healthErrorLabel->Size = System::Drawing::Size(136, 13);
 			this->healthErrorLabel->TabIndex = 32;
 			this->healthErrorLabel->Text = L"Unable to find health bytes.";
+			this->healthErrorLabel->Visible = false;
 			// 
 			// healthLabel
 			// 
@@ -1115,6 +1106,7 @@ namespace TRCSaveEdit {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"SaveEditUI";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Tomb Raider Chronicles - Savegame Editor";
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
@@ -1148,15 +1140,6 @@ namespace TRCSaveEdit {
 				fileTxtBox->AppendText(GetSaveFileName());
 				myStream->Close();
 
-				saveButton->Enabled = true;
-				numSavesTxtBox->Enabled = true;
-				numSecretsTxtBox->Enabled = true;
-				smallMedipacksTxtBox->Enabled = true;
-				lrgMedipacksTxtBox->Enabled = true;
-				healthBar->Enabled = true;
-				healthErrorLabel->Visible = false;
-				healthLabel->Visible = true;
-
 				DisplayLvlName();
 				SetLvlParams();
 				DisplayNumSmallMedipacks();
@@ -1172,6 +1155,8 @@ namespace TRCSaveEdit {
 				DisplayGrapplingGunAmmo();
 				DisplayWeaponsInfo();
 				DisplayHealthValue();
+
+				saveButton->Enabled = true;
 
 				consoleTxtBox->Clear();
 				consoleTxtBox->AppendText("Loaded save file: " + openFileDialog1->SafeFileName);
@@ -1249,6 +1234,72 @@ namespace TRCSaveEdit {
 	private: System::Void healthBar_Scroll(System::Object^ sender, System::EventArgs^ e) {
 		double healthPercentage = (double)healthBar->Value;
 		healthLabel->Text = healthPercentage.ToString("0.0") + "%";
+	}
+	private: System::Void numSavesTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void numSecretsTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void smallMedipacksTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void lrgMedipacksTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void numFlaresTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void revolverAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void uziAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void hkAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void grapplingGunAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void shotgunNormalAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
+	}
+	private: System::Void shotgunWideshotAmmoTxtBox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar))
+		{
+			e->Handled = true;
+		}
 	}
 	};
 }
