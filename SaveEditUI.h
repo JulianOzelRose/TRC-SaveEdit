@@ -57,6 +57,8 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::TrackBar^ healthBar;
 	private: System::Windows::Forms::Label^ healthLabel;
 	private: System::Windows::Forms::Label^ healthErrorLabel;
+	private: System::Windows::Forms::StatusStrip^ statusStrip;
+	private: System::Windows::Forms::ToolStripStatusLabel^ toolStripStatusLabel;
 
 	private: System::Windows::Forms::CheckBox^ pistolsCheckBox;
 	public:
@@ -639,7 +641,7 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::CheckBox^ hkCheckBox;
 	private: System::Windows::Forms::CheckBox^ uziCheckBox;
 	private: System::Windows::Forms::CheckBox^ grapplingGunCheckBox;
-	private: System::Windows::Forms::TextBox^ consoleTxtBox;
+
 	private: System::Windows::Forms::CheckBox^ crowbarCheckBox;
 	private: System::Windows::Forms::TextBox^ grapplingGunAmmoTxtBox;
 
@@ -705,16 +707,18 @@ namespace TRCSaveEdit {
 			this->hkCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->uziCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->revolverCheckBox = (gcnew System::Windows::Forms::CheckBox());
-			this->consoleTxtBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->healthErrorLabel = (gcnew System::Windows::Forms::Label());
 			this->healthLabel = (gcnew System::Windows::Forms::Label());
 			this->healthBar = (gcnew System::Windows::Forms::TrackBar());
+			this->statusStrip = (gcnew System::Windows::Forms::StatusStrip());
+			this->toolStripStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->groupBox2->SuspendLayout();
 			this->groupBox3->SuspendLayout();
 			this->groupBox4->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->healthBar))->BeginInit();
+			this->statusStrip->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -764,11 +768,11 @@ namespace TRCSaveEdit {
 			// 
 			// smallMedipacksTxtBox
 			// 
-			this->smallMedipacksTxtBox->Location = System::Drawing::Point(176, 25);
+			this->smallMedipacksTxtBox->Location = System::Drawing::Point(169, 25);
 			this->smallMedipacksTxtBox->Name = L"smallMedipacksTxtBox";
 			this->smallMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->smallMedipacksTxtBox->TabIndex = 5;
-			this->smallMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->smallMedipacksTxtBox->Text = L"0";
 			this->smallMedipacksTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::smallMedipacksTxtBox_KeyPress);
 			// 
 			// label3
@@ -782,11 +786,11 @@ namespace TRCSaveEdit {
 			// 
 			// lrgMedipacksTxtBox
 			// 
-			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(176, 50);
+			this->lrgMedipacksTxtBox->Location = System::Drawing::Point(169, 50);
 			this->lrgMedipacksTxtBox->Name = L"lrgMedipacksTxtBox";
 			this->lrgMedipacksTxtBox->Size = System::Drawing::Size(42, 20);
 			this->lrgMedipacksTxtBox->TabIndex = 7;
-			this->lrgMedipacksTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->lrgMedipacksTxtBox->Text = L"0";
 			this->lrgMedipacksTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::lrgMedipacksTxtBox_KeyPress);
 			// 
 			// label4
@@ -800,17 +804,17 @@ namespace TRCSaveEdit {
 			// 
 			// numSecretsTxtBox
 			// 
-			this->numSecretsTxtBox->Location = System::Drawing::Point(445, 19);
+			this->numSecretsTxtBox->Location = System::Drawing::Point(436, 19);
 			this->numSecretsTxtBox->Name = L"numSecretsTxtBox";
 			this->numSecretsTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSecretsTxtBox->TabIndex = 9;
-			this->numSecretsTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numSecretsTxtBox->Text = L"0";
 			this->numSecretsTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numSecretsTxtBox_KeyPress);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(393, 22);
+			this->label5->Location = System::Drawing::Point(384, 22);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(46, 13);
 			this->label5->TabIndex = 10;
@@ -818,26 +822,26 @@ namespace TRCSaveEdit {
 			// 
 			// revolverAmmoTxtBox
 			// 
-			this->revolverAmmoTxtBox->Location = System::Drawing::Point(122, 72);
+			this->revolverAmmoTxtBox->Location = System::Drawing::Point(158, 72);
 			this->revolverAmmoTxtBox->Name = L"revolverAmmoTxtBox";
-			this->revolverAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->revolverAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->revolverAmmoTxtBox->TabIndex = 11;
-			this->revolverAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->revolverAmmoTxtBox->Text = L"0";
 			this->revolverAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::revolverAmmoTxtBox_KeyPress);
 			// 
 			// numSavesTxtBox
 			// 
-			this->numSavesTxtBox->Location = System::Drawing::Point(323, 19);
+			this->numSavesTxtBox->Location = System::Drawing::Point(318, 19);
 			this->numSavesTxtBox->Name = L"numSavesTxtBox";
 			this->numSavesTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numSavesTxtBox->TabIndex = 13;
-			this->numSavesTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numSavesTxtBox->Text = L"0";
 			this->numSavesTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numSavesTxtBox_KeyPress);
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(244, 22);
+			this->label7->Location = System::Drawing::Point(239, 22);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(75, 13);
 			this->label7->TabIndex = 14;
@@ -845,47 +849,47 @@ namespace TRCSaveEdit {
 			// 
 			// uziAmmoTxtBox
 			// 
-			this->uziAmmoTxtBox->Location = System::Drawing::Point(122, 94);
+			this->uziAmmoTxtBox->Location = System::Drawing::Point(158, 94);
 			this->uziAmmoTxtBox->Name = L"uziAmmoTxtBox";
-			this->uziAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->uziAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->uziAmmoTxtBox->TabIndex = 15;
-			this->uziAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->uziAmmoTxtBox->Text = L"0";
 			this->uziAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::uziAmmoTxtBox_KeyPress);
 			// 
 			// hkAmmoTxtBox
 			// 
-			this->hkAmmoTxtBox->Location = System::Drawing::Point(122, 116);
+			this->hkAmmoTxtBox->Location = System::Drawing::Point(158, 116);
 			this->hkAmmoTxtBox->Name = L"hkAmmoTxtBox";
-			this->hkAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->hkAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->hkAmmoTxtBox->TabIndex = 17;
-			this->hkAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->hkAmmoTxtBox->Text = L"0";
 			this->hkAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::hkAmmoTxtBox_KeyPress);
 			// 
 			// shotgunWideshotAmmoTxtBox
 			// 
-			this->shotgunWideshotAmmoTxtBox->Location = System::Drawing::Point(191, 160);
+			this->shotgunWideshotAmmoTxtBox->Location = System::Drawing::Point(206, 160);
 			this->shotgunWideshotAmmoTxtBox->Name = L"shotgunWideshotAmmoTxtBox";
-			this->shotgunWideshotAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->shotgunWideshotAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->shotgunWideshotAmmoTxtBox->TabIndex = 19;
-			this->shotgunWideshotAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->shotgunWideshotAmmoTxtBox->Text = L"0";
 			this->shotgunWideshotAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::shotgunWideshotAmmoTxtBox_KeyPress);
 			// 
 			// shotgunNormalAmmoTxtBox
 			// 
-			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(122, 160);
+			this->shotgunNormalAmmoTxtBox->Location = System::Drawing::Point(158, 160);
 			this->shotgunNormalAmmoTxtBox->Name = L"shotgunNormalAmmoTxtBox";
-			this->shotgunNormalAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->shotgunNormalAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->shotgunNormalAmmoTxtBox->TabIndex = 20;
-			this->shotgunNormalAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->shotgunNormalAmmoTxtBox->Text = L"0";
 			this->shotgunNormalAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::shotgunNormalAmmoTxtBox_KeyPress);
 			// 
 			// numFlaresTxtBox
 			// 
-			this->numFlaresTxtBox->Location = System::Drawing::Point(176, 76);
+			this->numFlaresTxtBox->Location = System::Drawing::Point(169, 76);
 			this->numFlaresTxtBox->Name = L"numFlaresTxtBox";
 			this->numFlaresTxtBox->Size = System::Drawing::Size(42, 20);
 			this->numFlaresTxtBox->TabIndex = 23;
-			this->numFlaresTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->numFlaresTxtBox->Text = L"0";
 			this->numFlaresTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::numFlaresTxtBox_KeyPress);
 			// 
 			// label12
@@ -955,7 +959,7 @@ namespace TRCSaveEdit {
 			this->groupBox4->Controls->Add(this->uziAmmoTxtBox);
 			this->groupBox4->Location = System::Drawing::Point(239, 101);
 			this->groupBox4->Name = L"groupBox4";
-			this->groupBox4->Size = System::Drawing::Size(263, 187);
+			this->groupBox4->Size = System::Drawing::Size(263, 190);
 			this->groupBox4->TabIndex = 29;
 			this->groupBox4->TabStop = false;
 			this->groupBox4->Text = L"Weapons";
@@ -972,11 +976,11 @@ namespace TRCSaveEdit {
 			// 
 			// grapplingGunAmmoTxtBox
 			// 
-			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(122, 138);
+			this->grapplingGunAmmoTxtBox->Location = System::Drawing::Point(158, 138);
 			this->grapplingGunAmmoTxtBox->Name = L"grapplingGunAmmoTxtBox";
-			this->grapplingGunAmmoTxtBox->Size = System::Drawing::Size(66, 20);
+			this->grapplingGunAmmoTxtBox->Size = System::Drawing::Size(42, 20);
 			this->grapplingGunAmmoTxtBox->TabIndex = 22;
-			this->grapplingGunAmmoTxtBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->grapplingGunAmmoTxtBox->Text = L"0";
 			this->grapplingGunAmmoTxtBox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &SaveEditUI::grapplingGunAmmoTxtBox_KeyPress);
 			// 
 			// grapplingGunCheckBox
@@ -1039,14 +1043,6 @@ namespace TRCSaveEdit {
 			this->revolverCheckBox->Text = L"Revolver/Deagle:";
 			this->revolverCheckBox->UseVisualStyleBackColor = true;
 			// 
-			// consoleTxtBox
-			// 
-			this->consoleTxtBox->Location = System::Drawing::Point(9, 296);
-			this->consoleTxtBox->Name = L"consoleTxtBox";
-			this->consoleTxtBox->ReadOnly = true;
-			this->consoleTxtBox->Size = System::Drawing::Size(494, 20);
-			this->consoleTxtBox->TabIndex = 30;
-			// 
 			// groupBox1
 			// 
 			this->groupBox1->Controls->Add(this->healthErrorLabel);
@@ -1054,7 +1050,7 @@ namespace TRCSaveEdit {
 			this->groupBox1->Controls->Add(this->healthBar);
 			this->groupBox1->Location = System::Drawing::Point(9, 221);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(224, 67);
+			this->groupBox1->Size = System::Drawing::Size(224, 70);
 			this->groupBox1->TabIndex = 31;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Health";
@@ -1063,7 +1059,7 @@ namespace TRCSaveEdit {
 			// 
 			this->healthErrorLabel->AutoSize = true;
 			this->healthErrorLabel->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->healthErrorLabel->Location = System::Drawing::Point(33, 50);
+			this->healthErrorLabel->Location = System::Drawing::Point(34, 50);
 			this->healthErrorLabel->Name = L"healthErrorLabel";
 			this->healthErrorLabel->Size = System::Drawing::Size(136, 13);
 			this->healthErrorLabel->TabIndex = 32;
@@ -1081,20 +1077,35 @@ namespace TRCSaveEdit {
 			// 
 			// healthBar
 			// 
-			this->healthBar->Location = System::Drawing::Point(5, 20);
+			this->healthBar->Location = System::Drawing::Point(6, 20);
 			this->healthBar->Maximum = 100;
 			this->healthBar->Name = L"healthBar";
 			this->healthBar->Size = System::Drawing::Size(179, 45);
 			this->healthBar->TabIndex = 0;
 			this->healthBar->Scroll += gcnew System::EventHandler(this, &SaveEditUI::healthBar_Scroll);
 			// 
+			// statusStrip
+			// 
+			this->statusStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->toolStripStatusLabel });
+			this->statusStrip->Location = System::Drawing::Point(0, 299);
+			this->statusStrip->Name = L"statusStrip";
+			this->statusStrip->Size = System::Drawing::Size(508, 22);
+			this->statusStrip->SizingGrip = false;
+			this->statusStrip->TabIndex = 32;
+			this->statusStrip->Text = L"statusStrip";
+			// 
+			// toolStripStatusLabel
+			// 
+			this->toolStripStatusLabel->Name = L"toolStripStatusLabel";
+			this->toolStripStatusLabel->Size = System::Drawing::Size(0, 17);
+			// 
 			// SaveEditUI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(508, 323);
+			this->ClientSize = System::Drawing::Size(508, 321);
+			this->Controls->Add(this->statusStrip);
 			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->consoleTxtBox);
 			this->Controls->Add(this->groupBox4);
 			this->Controls->Add(this->saveButton);
 			this->Controls->Add(this->browseButton);
@@ -1117,6 +1128,8 @@ namespace TRCSaveEdit {
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->healthBar))->EndInit();
+			this->statusStrip->ResumeLayout(false);
+			this->statusStrip->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -1158,8 +1171,7 @@ namespace TRCSaveEdit {
 
 				saveButton->Enabled = true;
 
-				consoleTxtBox->Clear();
-				consoleTxtBox->AppendText("Loaded save file: " + openFileDialog1->SafeFileName);
+				toolStripStatusLabel->Text = "Loaded save file: " + openFileDialog1->SafeFileName;
 			}
 		}
 	}
@@ -1228,8 +1240,8 @@ namespace TRCSaveEdit {
 		if (healthOffset != -1) WriteValue(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
-		consoleTxtBox->Clear();
-		consoleTxtBox->AppendText("Patched save file!");
+
+		toolStripStatusLabel->Text = "Patched save file!";
 	}
 	private: System::Void healthBar_Scroll(System::Object^ sender, System::EventArgs^ e) {
 		double healthPercentage = (double)healthBar->Value;
