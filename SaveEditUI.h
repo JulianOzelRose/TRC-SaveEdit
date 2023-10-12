@@ -1176,13 +1176,26 @@ namespace TRCSaveEdit {
 		}
 	}
 	private: System::Void saveButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		// Adjust invalid entries
+		if (smallMedipacksTxtBox->Text == "") smallMedipacksTxtBox->Text = "0";
+		if (lrgMedipacksTxtBox->Text == "") lrgMedipacksTxtBox->Text = "0";
+		if (numFlaresTxtBox->Text == "") numFlaresTxtBox->Text = "0";
+		if (numSavesTxtBox->Text == "") numSavesTxtBox->Text = "0";
+		if (numSecretsTxtBox->Text == "") numSecretsTxtBox->Text = "0";
+		if (revolverAmmoTxtBox->Text == "") revolverAmmoTxtBox->Text = "0";
+		if (uziAmmoTxtBox->Text == "") uziAmmoTxtBox->Text = "0";
+		if (hkAmmoTxtBox->Text == "") hkAmmoTxtBox->Text = "0";
+		if (grapplingGunAmmoTxtBox->Text == "") grapplingGunAmmoTxtBox->Text = "0";
+		if (shotgunNormalAmmoTxtBox->Text == "") shotgunNormalAmmoTxtBox->Text = "0";
+		if (shotgunWideshotAmmoTxtBox->Text == "") shotgunWideshotAmmoTxtBox->Text = "0";
+
+		// Parse new values
 		int newSmallMedipackVal = int::Parse(smallMedipacksTxtBox->Text);
 		int newLrgMedipackVal = int::Parse(lrgMedipacksTxtBox->Text);
 		int newFlaresVal = int::Parse(numFlaresTxtBox->Text);
 		int newSaveNumVal = int::Parse(numSavesTxtBox->Text);
 		int newSecretsVal = int::Parse(numSecretsTxtBox->Text);
 		double newHealthPercentage = (double)healthBar->Value;
-
 		int newRevolverAmmoVal = int::Parse(revolverAmmoTxtBox->Text);
 		int newUziAmmoVal = int::Parse(uziAmmoTxtBox->Text);
 		int newHkAmmoVal = int::Parse(hkAmmoTxtBox->Text);
@@ -1190,17 +1203,71 @@ namespace TRCSaveEdit {
 		int newShotgunNormalAmmoVal = int::Parse(shotgunNormalAmmoTxtBox->Text);
 		int newShotgunWideshotAmmoVal = int::Parse(shotgunWideshotAmmoTxtBox->Text);
 
-		if (newSmallMedipackVal > 65535) newSmallMedipackVal = 65535;
-		if (newLrgMedipackVal > 65535) newLrgMedipackVal = 65535;
-		if (newFlaresVal > 65535) newFlaresVal = 65535;
-		if (newSecretsVal > 36) newSecretsVal = 36;
+		if (newSmallMedipackVal > 65535)
+		{
+			smallMedipacksTxtBox->Text = "65535";
+			newSmallMedipackVal = 65535;
+		}
 
-		if (newRevolverAmmoVal > 65535) newRevolverAmmoVal = 65535;
-		if (newUziAmmoVal > 65535) newUziAmmoVal = 65535;
-		if (newHkAmmoVal > 65535) newHkAmmoVal = 65535;
-		if (newGrapplingGunVal > 65535) newGrapplingGunVal = 65535;
-		if (newShotgunNormalAmmoVal > 10922) newShotgunNormalAmmoVal = 10922;
-		if (newShotgunWideshotAmmoVal > 10922) newShotgunWideshotAmmoVal = 10922;
+		if (newLrgMedipackVal > 65535)
+		{
+			lrgMedipacksTxtBox->Text = "65535";
+			newLrgMedipackVal = 65535;
+		}
+
+		if (newFlaresVal > 65535)
+		{
+			numFlaresTxtBox->Text = "65535";
+			newFlaresVal = 65535;	
+		}
+
+		if (newSaveNumVal > 65535)
+		{
+			numSavesTxtBox->Text = "65535";
+			newSaveNumVal = 65535;	
+		}
+		
+		if (newSecretsVal > 36)
+		{
+			numSecretsTxtBox->Text = "36";
+			newSecretsVal = 36;
+		}
+
+		if (newRevolverAmmoVal > 65535)
+		{
+			revolverAmmoTxtBox->Text = "65535";
+			newRevolverAmmoVal = 65535;
+		}
+
+		if (newUziAmmoVal > 65535)
+		{
+			uziAmmoTxtBox->Text = "65535";
+			newUziAmmoVal = 65535;
+		}
+
+		if (newHkAmmoVal > 65535)
+		{
+			hkAmmoTxtBox->Text = "65535";
+			newHkAmmoVal = 65535;
+		}
+
+		if (newGrapplingGunVal > 65535)
+		{
+			grapplingGunAmmoTxtBox->Text = "65535";
+			newGrapplingGunVal = 65535;
+		}
+
+		if (newShotgunNormalAmmoVal > 10922)
+		{
+			shotgunNormalAmmoTxtBox->Text = "10922";
+			newShotgunNormalAmmoVal = 10922;
+		}
+
+		if (newShotgunWideshotAmmoVal > 10922)
+		{
+			shotgunWideshotAmmoTxtBox->Text = "10922";
+			newShotgunWideshotAmmoVal = 10922;
+		}
 
 		WriteValue(hkAmmoOffset, newHkAmmoVal);
 		WriteValue(smallMedipackOffset, newSmallMedipackVal);
