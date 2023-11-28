@@ -25,12 +25,13 @@ namespace TRCSaveEdit {
 	{
 	private:
 		// Strings
-		String^ ssSavefileName;
-		String^ ssLvlName;
+		String^ strSavefileName;
+		String^ strLvlName;
+
 		// Offsets
 		const int saveNumOffset = 0x04B;
 		const int pistolsOffset = 0x16F;
-		const int uziOffset = 0x170;
+		const int uzisOffset = 0x170;
 		const int shotgunOffset = 0x171;
 		const int grapplingGunOffset = 0x172;
 		const int hkOffset = 0x173;
@@ -46,6 +47,7 @@ namespace TRCSaveEdit {
 		const int hkAmmoOffset = 0x1A4;
 		const int grapplingGunAmmoOffset = 0x1A6;
 		const int numSecretsOffset = 0x1C3;
+
 		// Health
 		const int MIN_HEALTH_VALUE = 0;
 		const int MAX_HEALTH_VALUE = 1000;
@@ -69,15 +71,15 @@ namespace TRCSaveEdit {
 
 		void SetSaveFileName(String^ fileName)
 		{
-			ssSavefileName = fileName;
+			strSavefileName = fileName;
 		}
 
 		String^ GetSaveFileName()
 		{
-			return ssSavefileName;
+			return strSavefileName;
 		}
 
-		int GetSaveFileData(int offset)
+		int ReadByte(int offset)
 		{
 			std::fstream saveFile(marshal_as<std::string>(GetSaveFileName()), std::ios::in | std::ios::out | std::ios::binary);
 			saveFile.seekp(offset);
@@ -86,7 +88,25 @@ namespace TRCSaveEdit {
 			return iData;
 		}
 
-		void WriteToSaveFile(int offset, int value)
+		int ReadUInt16(int offset)
+		{
+			int value = 0;
+
+			if (ReadByte(offset + 1) == 0)
+			{
+				value = ReadByte(offset);
+			}
+			else
+			{
+				int upperByte = ReadByte(offset + 1);
+				int lowerByte = ReadByte(offset);
+				value = upperByte * 256 + lowerByte;
+			}
+
+			return value;
+		}
+
+		void WriteByte(int offset, int value)
 		{
 			std::fstream saveFile(marshal_as<std::string>(GetSaveFileName()), std::ios::in | std::ios::out | std::ios::binary);
 			saveFile.seekg(offset, std::ios::beg);
@@ -95,39 +115,21 @@ namespace TRCSaveEdit {
 			saveFile.close();
 		}
 
-		void WriteValue(int offset, int value)
+		void WriteUInt16(int offset, int value)
 		{
 			if (value > 255)
 			{
-				int firstHalf = value / 256;
-				int secondHalf = value % 256;
+				int upperByte = value / 256;
+				int lowerByte = value % 256;
 
-				WriteToSaveFile(offset + 1, firstHalf);
-				WriteToSaveFile(offset, secondHalf);
+				WriteByte(offset + 1, upperByte);
+				WriteByte(offset, lowerByte);
 			}
 			else
 			{
-				WriteToSaveFile(offset, value);
-				WriteToSaveFile(offset + 1, 0);
+				WriteByte(offset, value);
+				WriteByte(offset + 1, 0);
 			}
-		}
-
-		int GetValue(int offset)
-		{
-			int value = 0;
-
-			if (GetSaveFileData(offset + 1) == 0)
-			{
-				value = GetSaveFileData(offset);
-			}
-			else
-			{
-				int firstHalf = GetSaveFileData(offset + 1);
-				int secondHalf = GetSaveFileData(offset);
-				value = firstHalf * 256 + secondHalf;
-			}
-
-			return value;
 		}
 
 		void DisplayLvlName()
@@ -139,84 +141,84 @@ namespace TRCSaveEdit {
 
 			saveFile.close();
 
-			ssLvlName = gcnew String(sData.c_str());
+			strLvlName = gcnew String(sData.c_str());
 			lvlNameTxtBox->Clear();
-			lvlNameTxtBox->AppendText(ssLvlName);
+			lvlNameTxtBox->AppendText(strLvlName);
 		}
 
 		void DisplayNumSecrets()
 		{
-			int numSecrets = GetSaveFileData(numSecretsOffset);
+			int numSecrets = ReadByte(numSecretsOffset);
 			numSecretsTxtBox->Clear();
 			numSecretsTxtBox->AppendText(numSecrets.ToString());
 		}
 
 		void DisplaySaveNum()
 		{
-			int saveNum = GetValue(saveNumOffset);
+			int saveNum = ReadUInt16(saveNumOffset);
 			numSavesTxtBox->Clear();
 			numSavesTxtBox->AppendText(saveNum.ToString());
 		}
 
 		void DisplayNumFlares()
 		{
-			int numFlares = GetValue(numFlaresOffset);
+			int numFlares = ReadUInt16(numFlaresOffset);
 			numFlaresTxtBox->Clear();
 			numFlaresTxtBox->AppendText(numFlares.ToString());
 		}
 
 		void DisplayNumSmallMedipacks()
 		{
-			int numSmallMedipacks = GetValue(smallMedipackOffset);
+			int numSmallMedipacks = ReadUInt16(smallMedipackOffset);
 			smallMedipacksTxtBox->Clear();
 			smallMedipacksTxtBox->AppendText(numSmallMedipacks.ToString());
 		}
 
 		void DisplayNumLrgMedipacks()
 		{
-			int numLrgMedipacks = GetValue(lrgMedipackOffset);
+			int numLrgMedipacks = ReadUInt16(lrgMedipackOffset);
 			lrgMedipacksTxtBox->Clear();
 			lrgMedipacksTxtBox->AppendText(numLrgMedipacks.ToString());
 		}
 
 		void DisplayShotgunNormalAmmo()
 		{
-			int shotgunNormalAmmo = GetValue(shotgunNormalAmmoOffset);
+			int shotgunNormalAmmo = ReadUInt16(shotgunNormalAmmoOffset);
 			shotgunNormalAmmoTxtBox->Clear();
 			shotgunNormalAmmoTxtBox->AppendText((shotgunNormalAmmo / 6).ToString());
 		}
 
 		void DisplayShotgunWideshotAmmo()
 		{
-			int shotgunWideshotAmmo = GetValue(shotgunWideshotAmmoOffset);
+			int shotgunWideshotAmmo = ReadUInt16(shotgunWideshotAmmoOffset);
 			shotgunWideshotAmmoTxtBox->Clear();
 			shotgunWideshotAmmoTxtBox->AppendText((shotgunWideshotAmmo / 6).ToString());
 		}
 
 		void DisplayUziAmmo()
 		{
-			int uziAmmo = GetValue(uziAmmoOffset);
+			int uziAmmo = ReadUInt16(uziAmmoOffset);
 			uziAmmoTxtBox->Clear();
 			uziAmmoTxtBox->AppendText(uziAmmo.ToString());
 		}
 
 		void DisplayHKAmmo()
 		{
-			int hkAmmo = GetValue(hkAmmoOffset);
+			int hkAmmo = ReadUInt16(hkAmmoOffset);
 			hkAmmoTxtBox->Clear();
 			hkAmmoTxtBox->AppendText(hkAmmo.ToString());
 		}
 
 		void DisplayGrapplingGunAmmo()
 		{
-			int grapplingGunAmmo = GetValue(grapplingGunAmmoOffset);
+			int grapplingGunAmmo = ReadUInt16(grapplingGunAmmoOffset);
 			grapplingGunAmmoTxtBox->Clear();
 			grapplingGunAmmoTxtBox->AppendText(grapplingGunAmmo.ToString());
 		}
 
 		void DisplayRevolverAmmo()
 		{
-			int revolverAmmo = GetValue(revolverAmmoOffset);
+			int revolverAmmo = ReadUInt16(revolverAmmoOffset);
 			revolverAmmoTxtBox->Clear();
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
@@ -236,7 +238,7 @@ namespace TRCSaveEdit {
 			if (byteFlag1 == 0x47 && byteFlag2 == 0x57) return true;	// Squatting
 			if (byteFlag1 == 0x49 && byteFlag2 == 0x49) return true;	// Sprinting
 			if (byteFlag1 == 0x0D && byteFlag2 == 0x12) return true;	// Swimming
-			if (byteFlag1 == 0x12 && byteFlag2 == 0x12) return true;	// Swimming (with suit)
+			if (byteFlag1 == 0x12 && byteFlag2 == 0x12) return true;	// Swimming (with diving suit)
 			if (byteFlag1 == 0x0D && byteFlag2 == 0x0D) return true;	// Underwater
 			if (byteFlag1 == 0x50 && byteFlag2 == 0x50) return true;	// Crouching forward
 			if (byteFlag1 == 0x59 && byteFlag2 == 0x16) return true;	// Searching a container
@@ -258,12 +260,12 @@ namespace TRCSaveEdit {
 		{
 			for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 			{
-				int byteFlag1 = GetSaveFileData(offset - 7);
-				int byteFlag2 = GetSaveFileData(offset - 6);
+				int byteFlag1 = ReadByte(offset - 7);
+				int byteFlag2 = ReadByte(offset - 6);
 
 				if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 				{
-					int healthValue = GetValue(offset);
+					int healthValue = ReadUInt16(offset);
 
 					if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
 					{
@@ -288,7 +290,7 @@ namespace TRCSaveEdit {
 			}
 			else
 			{
-				int health = GetValue(healthOffset);
+				int health = ReadUInt16(healthOffset);
 				double healthPercentage = static_cast<double>(health) / MAX_HEALTH_VALUE * 100.0;
 				healthBar->Enabled = true;
 				healthLabel->Visible = true;
@@ -300,11 +302,11 @@ namespace TRCSaveEdit {
 
 		void SetLvlParams()
 		{
-			if (ssLvlName == "Streets of Rome")
+			if (strLvlName == "Streets of Rome")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -319,12 +321,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x4F4;
 				MAX_HEALTH_OFFSET = 0x4F8;
 			}
-
-			else if (ssLvlName == "Trajan`s markets")
+			else if (strLvlName == "Trajan`s markets")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -339,12 +340,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x542;
 				MAX_HEALTH_OFFSET = 0x5D7;
 			}
-
-			else if (ssLvlName == "The Colosseum")
+			else if (strLvlName == "The Colosseum")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = true;
+				uzisCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -359,12 +359,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x4D2;
 				MAX_HEALTH_OFFSET = 0x7FF;
 			}
-
-			else if (ssLvlName == "The base")
+			else if (strLvlName == "The base")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = true;
+				uzisCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -379,12 +378,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x556;
 				MAX_HEALTH_OFFSET = 0x707;
 			}
-
-			else if (ssLvlName == "The submarine")
+			else if (strLvlName == "The submarine")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -399,12 +397,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x520;
 				MAX_HEALTH_OFFSET = 0x5D2;
 			}
-
-			else if (ssLvlName == "Deepsea dive")
+			else if (strLvlName == "Deepsea dive")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -419,12 +416,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x644;
 				MAX_HEALTH_OFFSET = 0x6DE;
 			}
-
-			else if (ssLvlName == "Sinking submarine")
+			else if (strLvlName == "Sinking submarine")
 			{
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = true;
+				uzisCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -439,12 +435,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x5CC;
 				MAX_HEALTH_OFFSET = 0x66B;
 			}
-
-			else if (ssLvlName == "Gallows tree")
+			else if (strLvlName == "Gallows tree")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -459,12 +454,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x4F0;
 				MAX_HEALTH_OFFSET = 0x52D;
 			}
-
-			else if (ssLvlName == "Labyrinth")
+			else if (strLvlName == "Labyrinth")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -479,12 +473,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x538;
 				MAX_HEALTH_OFFSET = 0x61A;
 			}
-
-			else if (ssLvlName == "Old mill")
+			else if (strLvlName == "Old mill")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -499,12 +492,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x512;
 				MAX_HEALTH_OFFSET = 0x624;
 			}
-
-			else if (ssLvlName == "The 13th floor")
+			else if (strLvlName == "The 13th floor")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -519,12 +511,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x52A;
 				MAX_HEALTH_OFFSET = 0x53A;
 			}
-
-			else if (ssLvlName == "Escape with the iris")
+			else if (strLvlName == "Escape with the iris")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -539,12 +530,11 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x6F6;
 				MAX_HEALTH_OFFSET = 0xC47;
 			}
-
-			else if (ssLvlName == "Red alert!")
+			else if (strLvlName == "Red alert!")
 			{
 				revolverCheckBox->Enabled = false;
 				revolverAmmoTxtBox->Enabled = false;
-				uziCheckBox->Enabled = false;
+				uzisCheckBox->Enabled = false;
 				uziAmmoTxtBox->Enabled = false;
 				shotgunCheckBox->Enabled = false;
 				shotgunNormalAmmoTxtBox->Enabled = false;
@@ -559,13 +549,12 @@ namespace TRCSaveEdit {
 				MIN_HEALTH_OFFSET = 0x52C;
 				MAX_HEALTH_OFFSET = 0x5D6;
 			}
-
 			else
 			{
 				// For custom levels, health offset range here is a vague estimate
 				revolverCheckBox->Enabled = true;
 				revolverAmmoTxtBox->Enabled = true;
-				uziCheckBox->Enabled = true;
+				uzisCheckBox->Enabled = true;
 				uziAmmoTxtBox->Enabled = true;
 				shotgunCheckBox->Enabled = true;
 				shotgunNormalAmmoTxtBox->Enabled = true;
@@ -584,34 +573,13 @@ namespace TRCSaveEdit {
 
 		void DisplayWeaponsInfo()
 		{
-			int uziVal = GetSaveFileData(uziOffset);
-			int shotgunVal = GetSaveFileData(shotgunOffset);
-			int grapplingGunVal = GetSaveFileData(grapplingGunOffset);
-			int hkVal = GetSaveFileData(hkOffset);
-			int revolverVal = GetSaveFileData(revolverOffset);
-			int crowbarVal = GetSaveFileData(crowbarOffset);
-			int pistolsVal = GetSaveFileData(pistolsOffset);
-
-			if (uziVal == 0x9) uziCheckBox->Checked = true;
-			else uziCheckBox->Checked = false;
-
-			if (shotgunVal == 0x9 || shotgunVal == 0x11) shotgunCheckBox->Checked = true;
-			else shotgunCheckBox->Checked = false;
-
-			if (grapplingGunVal == 0xD) grapplingGunCheckBox->Checked = true;
-			else grapplingGunCheckBox->Checked = false;
-
-			if (hkVal == 0x9 || hkVal == 0xD || hkVal == 0x21) hkCheckBox->Checked = true;
-			else hkCheckBox->Checked = false;
-
-			if (revolverVal == 0x9 || revolverVal == 0xD) revolverCheckBox->Checked = true;
-			else revolverCheckBox->Checked = false;
-
-			if (crowbarVal == 0x9 || crowbarVal == 0x1) crowbarCheckBox->Checked = true;
-			else crowbarCheckBox->Checked = false;
-
-			if (pistolsVal == 0x9) pistolsCheckBox->Checked = true;
-			else pistolsCheckBox->Checked = false;
+			uzisCheckBox->Checked = ReadByte(uzisOffset) != 0;
+			shotgunCheckBox->Checked = ReadByte(shotgunOffset) != 0;
+			grapplingGunCheckBox->Checked = ReadByte(grapplingGunOffset) != 0;
+			hkCheckBox->Checked = ReadByte(hkOffset) != 0;
+			revolverCheckBox->Checked = ReadByte(revolverOffset) != 0;
+			crowbarCheckBox->Checked = ReadByte(crowbarOffset) != 0;
+			pistolsCheckBox->Checked = ReadByte(pistolsOffset) != 0;
 		}
 
 	private: System::Windows::Forms::TextBox^ smallMedipacksTxtBox;
@@ -639,7 +607,8 @@ namespace TRCSaveEdit {
 	private: System::Windows::Forms::CheckBox^ revolverCheckBox;
 	private: System::Windows::Forms::CheckBox^ shotgunCheckBox;
 	private: System::Windows::Forms::CheckBox^ hkCheckBox;
-	private: System::Windows::Forms::CheckBox^ uziCheckBox;
+	private: System::Windows::Forms::CheckBox^ uzisCheckBox;
+
 	private: System::Windows::Forms::CheckBox^ grapplingGunCheckBox;
 
 	private: System::Windows::Forms::CheckBox^ crowbarCheckBox;
@@ -705,7 +674,7 @@ namespace TRCSaveEdit {
 			this->shotgunCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->crowbarCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->hkCheckBox = (gcnew System::Windows::Forms::CheckBox());
-			this->uziCheckBox = (gcnew System::Windows::Forms::CheckBox());
+			this->uzisCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->revolverCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->healthErrorLabel = (gcnew System::Windows::Forms::Label());
@@ -950,7 +919,7 @@ namespace TRCSaveEdit {
 			this->groupBox4->Controls->Add(this->shotgunCheckBox);
 			this->groupBox4->Controls->Add(this->crowbarCheckBox);
 			this->groupBox4->Controls->Add(this->hkCheckBox);
-			this->groupBox4->Controls->Add(this->uziCheckBox);
+			this->groupBox4->Controls->Add(this->uzisCheckBox);
 			this->groupBox4->Controls->Add(this->revolverCheckBox);
 			this->groupBox4->Controls->Add(this->shotgunNormalAmmoTxtBox);
 			this->groupBox4->Controls->Add(this->shotgunWideshotAmmoTxtBox);
@@ -1023,15 +992,15 @@ namespace TRCSaveEdit {
 			this->hkCheckBox->Text = L"HK:";
 			this->hkCheckBox->UseVisualStyleBackColor = true;
 			// 
-			// uziCheckBox
+			// uzisCheckBox
 			// 
-			this->uziCheckBox->AutoSize = true;
-			this->uziCheckBox->Location = System::Drawing::Point(10, 94);
-			this->uziCheckBox->Name = L"uziCheckBox";
-			this->uziCheckBox->Size = System::Drawing::Size(44, 17);
-			this->uziCheckBox->TabIndex = 1;
-			this->uziCheckBox->Text = L"Uzi:";
-			this->uziCheckBox->UseVisualStyleBackColor = true;
+			this->uzisCheckBox->AutoSize = true;
+			this->uzisCheckBox->Location = System::Drawing::Point(10, 94);
+			this->uzisCheckBox->Name = L"uzisCheckBox";
+			this->uzisCheckBox->Size = System::Drawing::Size(49, 17);
+			this->uzisCheckBox->TabIndex = 1;
+			this->uzisCheckBox->Text = L"Uzis:";
+			this->uzisCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// revolverCheckBox
 			// 
@@ -1218,15 +1187,15 @@ namespace TRCSaveEdit {
 		if (newFlaresVal > 65535)
 		{
 			numFlaresTxtBox->Text = "65535";
-			newFlaresVal = 65535;	
+			newFlaresVal = 65535;
 		}
 
 		if (newSaveNumVal > 65535)
 		{
 			numSavesTxtBox->Text = "65535";
-			newSaveNumVal = 65535;	
+			newSaveNumVal = 65535;
 		}
-		
+
 		if (newSecretsVal > 36)
 		{
 			numSecretsTxtBox->Text = "36";
@@ -1269,42 +1238,42 @@ namespace TRCSaveEdit {
 			newShotgunWideshotAmmoVal = 10922;
 		}
 
-		WriteValue(hkAmmoOffset, newHkAmmoVal);
-		WriteValue(smallMedipackOffset, newSmallMedipackVal);
-		WriteValue(lrgMedipackOffset, newLrgMedipackVal);
-		WriteValue(saveNumOffset, newSaveNumVal);
-		WriteValue(numFlaresOffset, newFlaresVal);
-		WriteValue(revolverAmmoOffset, newRevolverAmmoVal);
-		WriteValue(uziAmmoOffset, newUziAmmoVal);
-		WriteValue(shotgunNormalAmmoOffset, newShotgunNormalAmmoVal * 6);
-		WriteValue(shotgunWideshotAmmoOffset, newShotgunWideshotAmmoVal * 6);
-		WriteValue(grapplingGunAmmoOffset, newGrapplingGunVal);
-		WriteToSaveFile(numSecretsOffset, newSecretsVal);
+		WriteUInt16(hkAmmoOffset, newHkAmmoVal);
+		WriteUInt16(smallMedipackOffset, newSmallMedipackVal);
+		WriteUInt16(lrgMedipackOffset, newLrgMedipackVal);
+		WriteUInt16(saveNumOffset, newSaveNumVal);
+		WriteUInt16(numFlaresOffset, newFlaresVal);
+		WriteUInt16(revolverAmmoOffset, newRevolverAmmoVal);
+		WriteUInt16(uziAmmoOffset, newUziAmmoVal);
+		WriteUInt16(shotgunNormalAmmoOffset, newShotgunNormalAmmoVal * 6);
+		WriteUInt16(shotgunWideshotAmmoOffset, newShotgunWideshotAmmoVal * 6);
+		WriteUInt16(grapplingGunAmmoOffset, newGrapplingGunVal);
+		WriteByte(numSecretsOffset, newSecretsVal);
 
-		if (uziCheckBox->Enabled && uziCheckBox->Checked) WriteToSaveFile(uziOffset, 0x9);
-		else WriteToSaveFile(uziOffset, 0);
+		if (uzisCheckBox->Enabled && uzisCheckBox->Checked) WriteByte(uzisOffset, 0x9);
+		else WriteByte(uzisOffset, 0);
 
-		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteToSaveFile(revolverOffset, 0xD);
-		else WriteToSaveFile(revolverOffset, 0);
+		if (revolverCheckBox->Enabled && revolverCheckBox->Checked) WriteByte(revolverOffset, 0xD);
+		else WriteByte(revolverOffset, 0);
 
-		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteToSaveFile(shotgunOffset, 0x9);
-		else WriteToSaveFile(shotgunOffset, 0);
+		if (shotgunCheckBox->Enabled && shotgunCheckBox->Checked) WriteByte(shotgunOffset, 0x9);
+		else WriteByte(shotgunOffset, 0);
 
-		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) WriteToSaveFile(grapplingGunOffset, 0xD);
-		else WriteToSaveFile(grapplingGunOffset, 0);
+		if (grapplingGunCheckBox->Enabled && grapplingGunCheckBox->Checked) WriteByte(grapplingGunOffset, 0xD);
+		else WriteByte(grapplingGunOffset, 0);
 
-		if (hkCheckBox->Enabled && hkCheckBox->Checked) WriteToSaveFile(hkOffset, 0x9);
-		else WriteToSaveFile(hkOffset, 0);
+		if (hkCheckBox->Enabled && hkCheckBox->Checked) WriteByte(hkOffset, 0x9);
+		else WriteByte(hkOffset, 0);
 
-		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) WriteToSaveFile(pistolsOffset, 0x9);
-		else WriteToSaveFile(pistolsOffset, 0);
+		if (pistolsCheckBox->Enabled && pistolsCheckBox->Checked) WriteByte(pistolsOffset, 0x9);
+		else WriteByte(pistolsOffset, 0);
 
-		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteToSaveFile(crowbarOffset, 0x9);
-		else WriteToSaveFile(crowbarOffset, 0);
+		if (crowbarCheckBox->Enabled && crowbarCheckBox->Checked) WriteByte(crowbarOffset, 0x9);
+		else WriteByte(crowbarOffset, 0);
 
 		healthOffset = GetHealthOffset();
 		int newHealth = (int)(newHealthPercentage / 100.0 * MAX_HEALTH_VALUE);
-		if (healthOffset != -1) WriteValue(healthOffset, newHealth);
+		if (healthOffset != -1) WriteUInt16(healthOffset, newHealth);
 
 		MessageBox::Show("Save file patched!", "SUCCESS");
 
