@@ -991,9 +991,9 @@ namespace TRCSaveEdit {
 			this->hkCheckBox->AutoSize = true;
 			this->hkCheckBox->Location = System::Drawing::Point(10, 117);
 			this->hkCheckBox->Name = L"hkCheckBox";
-			this->hkCheckBox->Size = System::Drawing::Size(44, 17);
+			this->hkCheckBox->Size = System::Drawing::Size(67, 17);
 			this->hkCheckBox->TabIndex = 2;
-			this->hkCheckBox->Text = L"HK:";
+			this->hkCheckBox->Text = L"HK Gun:";
 			this->hkCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// uzisCheckBox
