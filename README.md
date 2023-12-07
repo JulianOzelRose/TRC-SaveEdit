@@ -1,5 +1,5 @@
 # Tomb Raider: Chronicles - Savegame Editor
-This is a standalone savegame editor for Tomb Raider: Chronicles. It has been tested and works on both the multi-patched verison of the game, as well as the Steam version. To download the editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download ```TRC-SaveEdit.exe```. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click ```Browse```, then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
+This is a standalone savegame editor for Tomb Raider: Chronicles. It has been tested and works with the Steam version of the game, as well as the multi-patched version. To download the editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download ```TRC-SaveEdit.exe```. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click ```Browse```, then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
 
 Steam install directory: ```Program Files\Steam\steamapps\common\Tomb Raider (V) Chronicles\```
 
@@ -8,7 +8,9 @@ CD install directory: ```Program Files\Core Design\Tomb Raider Chronicles\```
 Once you have selected a savegame file, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked savegame file with an HK Gun in inventory on Streets of Rome will result in the game crashing. Once you are finished entering the desired changes, click ```Save``` to apply them to the savegame file. To set medipacks or ammo to unlimited, set their values to 65535. Shotgun ammo values higher than 5461 will appear as negative in game. Make sure
 to backup your savegame files as a precaution.
 
-![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/d06c0443-9b74-4d6c-8bf4-d546760ffab8)
+
+![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/5ff70682-c7f5-4929-8f43-d2328a95f91f)
+
 
 
 ## Determining the correct health offset
