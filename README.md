@@ -8,7 +8,7 @@ CD install directory: ```Program Files\Core Design\Tomb Raider Chronicles\```
 Once you have selected a save game file, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked save game file with an HK gun in inventory on Streets of Rome, will result in the game crashing. Once you are finished entering the desired changes, click ```Save``` to apply them to the save file. To set medipacks or ammo to unlimited, set their values to 65535. Shotgun ammo values higher than 5461 will appear as negative in game. Make sure
 to backup your savegame files as a precaution.
 
-![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/68b37574-96ea-405e-aa68-892beae1aee0)
+![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/d06c0443-9b74-4d6c-8bf4-d546760ffab8)
 
 
 ## Determining the correct health offset
@@ -54,11 +54,13 @@ All of the offsets are static across levels, with the exception of the health of
 | 0x000               | Level Name                |
 | 0x04B               | Save Number               |
 | 0x16F               | Pistols                   |
-| 0x170               | Uzis                      |
+| 0x170               | Uzi                       |
 | 0x171               | Shotgun                   |
 | 0x172               | Grappling Gun             |
 | 0x173               | HK Gun                    |
 | 0x174               | Revolver/Deagle           |
+| 0x175               | LaserSight                |
+| 0x177               | Binoculars/Headset	  |
 | 0x178               | Crowbar                   |
 | 0x194               | Small Medipacks           |
 | 0x196               | Large Medipacks           |
