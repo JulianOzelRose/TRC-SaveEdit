@@ -318,6 +318,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				revolverCheckBox->Text = "Revolver:";
 				MIN_HEALTH_OFFSET = 0x4F4;
 				MAX_HEALTH_OFFSET = 0x4F8;
 			}
@@ -337,6 +338,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				revolverCheckBox->Text = "Revolver:";
 				MIN_HEALTH_OFFSET = 0x542;
 				MAX_HEALTH_OFFSET = 0x5D7;
 			}
@@ -356,6 +358,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = true;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				revolverCheckBox->Text = "Revolver:";
 				MIN_HEALTH_OFFSET = 0x4D2;
 				MAX_HEALTH_OFFSET = 0x7FF;
 			}
@@ -375,6 +378,7 @@ namespace TRCSaveEdit {
 				crowbarCheckBox->Enabled = false;
 				pistolsCheckBox->Enabled = true;
 				numFlaresTxtBox->Enabled = true;
+				revolverCheckBox->Text = "Desert Eagle:";
 				MIN_HEALTH_OFFSET = 0x556;
 				MAX_HEALTH_OFFSET = 0x707;
 			}
@@ -997,9 +1001,9 @@ namespace TRCSaveEdit {
 			this->uzisCheckBox->AutoSize = true;
 			this->uzisCheckBox->Location = System::Drawing::Point(10, 94);
 			this->uzisCheckBox->Name = L"uzisCheckBox";
-			this->uzisCheckBox->Size = System::Drawing::Size(49, 17);
+			this->uzisCheckBox->Size = System::Drawing::Size(44, 17);
 			this->uzisCheckBox->TabIndex = 1;
-			this->uzisCheckBox->Text = L"Uzis:";
+			this->uzisCheckBox->Text = L"Uzi:";
 			this->uzisCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// revolverCheckBox
@@ -1087,7 +1091,7 @@ namespace TRCSaveEdit {
 			this->MaximizeBox = false;
 			this->Name = L"SaveEditUI";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Tomb Raider Chronicles - Savegame Editor";
+			this->Text = L"Tomb Raider: Chronicles - Savegame Editor";
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
 			this->groupBox3->ResumeLayout(false);
