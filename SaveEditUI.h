@@ -223,7 +223,7 @@ namespace TRCSaveEdit {
 			revolverAmmoTxtBox->AppendText(revolverAmmo.ToString());
 		}
 
-		bool IsKnownByteFlagPattern(int byteFlag1, int byteFlag2)
+		bool IsKnownByteFlagPattern(byte byteFlag1, byte byteFlag2)
 		{
 			if (byteFlag1 == 0x01 && byteFlag2 == 0x02) return true;	// Finishing running
 			if (byteFlag1 == 0x02 && byteFlag2 == 0x02) return true;	// Standing
@@ -260,8 +260,8 @@ namespace TRCSaveEdit {
 		{
 			for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 			{
-				int byteFlag1 = ReadByte(offset - 7);
-				int byteFlag2 = ReadByte(offset - 6);
+				byte byteFlag1 = ReadByte(offset - 7);
+				byte byteFlag2 = ReadByte(offset - 6);
 
 				if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 				{
