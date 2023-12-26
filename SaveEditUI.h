@@ -1279,7 +1279,7 @@ namespace TRCSaveEdit {
 		int newHealth = (int)(newHealthPercentage / 100.0 * MAX_HEALTH_VALUE);
 		if (healthOffset != -1) WriteUInt16(healthOffset, newHealth);
 
-		MessageBox::Show("Save file patched!", "SUCCESS");
+		MessageBox::Show("Save file patched!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 		toolStripStatusLabel->Text = "Patched save file!";
 	}
