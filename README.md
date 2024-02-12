@@ -5,13 +5,13 @@ instructions on how to use this program. For a more robust and well-maintained s
 ![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/aabb5128-c131-4f44-8c11-91c0ded866a8)
 
 ## Installation and use
-To download this editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download ```TRC-SaveEdit.exe```. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click ```Browse```, then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
+To download this editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download `TRC-SaveEdit.exe`. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click "Browse", then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
 
-Steam install directory: ```C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider (V) Chronicles\```
+Steam install directory: `C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider (V) Chronicles`
 
-CD install directory: ```C:\Program Files (x86)\Core Design\Tomb Raider Chronicles\```
+CD install directory: `C:\Program Files (x86)\Core Design\Tomb Raider Chronicles`
 
-Once you have selected a savegame file, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked savegame file with an HK Gun in inventory on Streets of Rome will result in the game crashing. Once you are finished entering the desired changes, click ```Save``` to apply them to the savegame file. To set medipacks or ammo to unlimited, set their values to 65535. Shotgun ammo values higher than 5461 will appear as negative in game. Make sure
+Once you have selected a savegame file, you can give yourself extra ammo, extra weapons, extra medipacks, and more. You can give yourself guns that are "enabled" on a given level -- but unfortunately, certain guns had to be disabled for certain levels in this editor. This is because enabling guns that aren't supposed to be used on certain levels will crash the game. For example, trying to use a hacked savegame file with an HK Gun in inventory on Streets of Rome will result in the game crashing. Once you are finished entering the desired changes, click "Save" to apply them to the savegame file. To set medipacks or ammo to unlimited, set their values to 65535. Shotgun ammo values higher than 5461 will appear as negative in game. Make sure
 to backup your savegame files as a precaution.
 
 ## Determining the correct health offset
@@ -48,7 +48,7 @@ int GetHealthOffset()
 ## Offset tables ##
 For the weapons variables, a value of 0 means disabled, and a value of 0x9 will enable the weapon in inventory. For the HK, grappling gun, revolver, and deagle,
 a value of 0xD will enable the gun along with the sight attached to it. Setting values like ammo, medipacks, or flares to 0xFFFF (65535 in decimal) will make them unlimited.
-The shotgun ammo variables on offsets ```0x1A0``` and ```0x1A2``` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
+The shotgun ammo variables on offsets `0x1A0` and `0x1A2` use a multiplier of 6. Meaning, a value of 36 in the save file will yield a value of 6 in game.
 All of the offsets are static across levels, with the exception of the health offsets, which are dynamically allocated.
 
 #### General ####
