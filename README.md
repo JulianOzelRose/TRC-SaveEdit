@@ -15,26 +15,24 @@ Once you have selected a savegame file, you can give yourself extra ammo, extra 
 to backup your savegame files as a precaution.
 
 ## Determining the correct health offset
-The health data is stored dynamically. There can be anywhere from 1 to 20 unique health offsets per level. The offsets appear to shift based on level triggers, and they shift around a lot. Writing to the incorrect health offset may crash the game.
-To get around this issue, this program uses a heuristic algorithm. It takes the health offset range unique to each level, then it loops through them and checks the surrounding data first.
+The health data is stored dynamically, with anywhere from 1 to 20 unique health offsets per level. These offsets appear to shift based on level triggers and change frequently. Writing to the incorrect health offset may cause the game to crash. To find
+the correct health offset, this program uses a heuristic algorithm. It takes the health offset range unique to each level, then loops through them, performing two heuristic checks.
 
-Since the character animation data is always stored 6 bytes away
-from the health, the algorithm checks the values 6 bytes from the health offset for known character animation byte flags. If a known pattern is found, it runs one more test to ensure validity by checking for an impossible health value (0 or greater than
-1000). If it passes these checks, then it is returned as a valid health offset. Otherwise, an error code is returned. This method detects the correct health offset ~96% of the time.
+First, it checks for a valid health value (greater than 0 and less than or equal to 1000). If the first check is passed, it performs one more check by examining the surrounding data. Since the character animation data is always stored 6 bytes away from the health value, the algorithm checks the values 6 bytes from the health offset for known character animation byte flags. If a known pattern is found, the offset is returned as a valid health offset. Otherwise, an error code is returned. This method detects the correct health offset approximately 96% of the time.
 
 ```
 int GetHealthOffset()
 {
 	for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 	{
-		byte byteFlag1 = ReadByte(offset - 7);
-		byte byteFlag2 = ReadByte(offset - 6);
+		int healthValue = ReadUInt16(offset);
 
-		if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
+		if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
 		{
-			int healthValue = ReadUInt16(offset);
+			byte byteFlag1 = ReadByte(offset - 7);
+			byte byteFlag2 = ReadByte(offset - 6);
 
-			if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
+			if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 			{
 				return offset;
 			}
