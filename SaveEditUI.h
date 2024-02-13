@@ -266,14 +266,14 @@ namespace TRCSaveEdit {
 		{
 			for (int offset = MIN_HEALTH_OFFSET; offset <= MAX_HEALTH_OFFSET; offset++)
 			{
-				byte byteFlag1 = ReadByte(offset - 7);
-				byte byteFlag2 = ReadByte(offset - 6);
+				int healthValue = ReadUInt16(offset);
 
-				if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
+				if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
 				{
-					int healthValue = ReadUInt16(offset);
+					byte byteFlag1 = ReadByte(offset - 7);
+					byte byteFlag2 = ReadByte(offset - 6);
 
-					if (healthValue > MIN_HEALTH_VALUE && healthValue <= MAX_HEALTH_VALUE)
+					if (IsKnownByteFlagPattern(byteFlag1, byteFlag2))
 					{
 						return offset;
 					}
