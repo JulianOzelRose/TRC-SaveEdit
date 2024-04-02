@@ -2,10 +2,10 @@
 This is a standalone savegame editor for Tomb Raider: Chronicles. It has been tested and works with the Steam version of the game, as well as the CD and multi-patched versions. Scroll down to the next section below for
 instructions on how to use this program. For a more robust and well-maintained savegame editor that supports the entire Tomb Raider classic series, check out [TR-SaveMaster](https://github.com/JulianOzelRose/TR-SaveMaster).
 
-![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/aabb5128-c131-4f44-8c11-91c0ded866a8)
+![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/1940d8d8-64cc-4a75-bb9a-da42ff3a0538)
 
 ## Installation and use
-To download this editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download `TRC-SaveEdit.exe`. You can run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click "Browse", then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
+To download and use this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download `TRC-SaveEdit.exe`. You can save and run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click "Browse", then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
 
 Steam install directory: `C:\Program Files (x86)\Steam\steamapps\common\Tomb Raider (V) Chronicles`
 
@@ -50,19 +50,19 @@ The shotgun ammo variables on offsets `0x1A0` and `0x1A2` use a multiplier of 6.
 All of the offsets are static across levels, with the exception of the health offsets, which are dynamically allocated.
 
 #### General ####
-| **File offset**         | **Type**         | **Variable**          |
+| **Offset**              | **Type**         | **Variable**          |
 | :---                	  | :---             | :---                  |
 | 0x000     	          | String           | Level Name            |
-| 0x04B                   | UInt16           | Save Number           |
-| 0x16F     	          | BYTE             | Pistols               |
-| 0x170     	          | BYTE  	     | Uzi                   |
-| 0x171     	          | BYTE  	     | Shotgun               |
-| 0x172     	          | BYTE  	     | Grappling Gun         |
-| 0x173     	          | BYTE  	     | HK Gun                |
-| 0x174     	          | BYTE  	     | Revolver/Deagle       |
-| 0x175     	          | BYTE  	     | LaserSight            |
-| 0x177     	          | BYTE  	     | Binoculars/Headset    |
-| 0x178     	          | BYTE             | Crowbar               |
+| 0x04B                   | Int32            | Save Number           |
+| 0x16F     	          | UInt8            | Pistols               |
+| 0x170     	          | UInt8 	     | Uzi                   |
+| 0x171     	          | UInt8 	     | Shotgun               |
+| 0x172     	          | UInt8 	     | Grappling Gun         |
+| 0x173     	          | UInt8 	     | HK Gun                |
+| 0x174     	          | UInt8 	     | Revolver/Deagle       |
+| 0x175     	          | UInt8 	     | LaserSight            |
+| 0x177     	          | UInt8 	     | Binoculars/Headset    |
+| 0x178     	          | UInt8            | Crowbar               |
 | 0x194     	          | UInt16  	     | Small Medipack        |
 | 0x196     	          | UInt16  	     | Large Medipack        |
 | 0x198     	          | UInt16  	     | Flares                |
@@ -72,7 +72,8 @@ All of the offsets are static across levels, with the exception of the health of
 | 0x1A2     	          | UInt16  	     | Shotgun Wideshot Ammo |
 | 0x1A4     	          | UInt16  	     | HK Ammo               |
 | 0x1A6     	          | UInt16  	     | Grappling Gun Ammo    |
-| 0x1C3     	          | BYTE    	     | Secrets               |
+| 0x1C3     	          | UInt8   	     | Secrets               |
+| 0x1EC                   | UInt8            | Level Index           |
 
 #### Health ####
 | **Level**           	| **Offset range**      |
