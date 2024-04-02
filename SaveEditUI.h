@@ -1078,6 +1078,7 @@ namespace TRCSaveEdit {
 			this->trbHealth->Name = L"trbHealth";
 			this->trbHealth->Size = System::Drawing::Size(179, 45);
 			this->trbHealth->TabIndex = 0;
+			this->trbHealth->TickStyle = System::Windows::Forms::TickStyle::None;
 			this->trbHealth->Scroll += gcnew System::EventHandler(this, &SaveEditUI::trbHealth_Scroll);
 			// 
 			// ssrStatusStrip
