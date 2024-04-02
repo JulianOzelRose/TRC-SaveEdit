@@ -2,7 +2,7 @@
 This is a standalone savegame editor for Tomb Raider: Chronicles. It has been tested and works with the Steam version of the game, as well as the CD and multi-patched versions. Scroll down to the next section below for
 instructions on how to use this program. For a more robust and well-maintained savegame editor that supports the entire Tomb Raider classic series, check out [TR-SaveMaster](https://github.com/JulianOzelRose/TR-SaveMaster).
 
-![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/1940d8d8-64cc-4a75-bb9a-da42ff3a0538)
+![TRC-SaveEdit-UI](https://github.com/JulianOzelRose/TRC-SaveEdit/assets/95890436/037ee27e-7ece-4a31-9f84-41912b4c19a1)
 
 ## Installation and use
 To download and use this savegame editor, simply navigate to the [Release](https://github.com/JulianOzelRose/TRC-SaveEdit/tree/master/x64/Release) folder on this repo, then download `TRC-SaveEdit.exe`. You can save and run the .exe from anywhere on your computer. It is not necessary to launch the file with administrator privileges. To select a savegame to modify, click "Browse", then navigate to your game directory. Your game directory location depends on whether you installed by CD or through Steam.
