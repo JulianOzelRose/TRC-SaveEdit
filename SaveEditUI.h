@@ -27,6 +27,7 @@ namespace TRCSaveEdit {
 		// Strings
 		String^ strSavefileName;
 		String^ strLvlName;
+		String^ savegameDirectory = "c:\\";
 
 		// Offsets
 		const int saveNumOffset = 0x04B;
@@ -1136,7 +1137,7 @@ namespace TRCSaveEdit {
 		Stream^ myStream;
 		OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
 
-		openFileDialog1->InitialDirectory = "c:\\";
+		openFileDialog1->InitialDirectory = savegameDirectory;
 		openFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 		openFileDialog1->FilterIndex = 2;
 		openFileDialog1->RestoreDirectory = true;
@@ -1146,6 +1147,8 @@ namespace TRCSaveEdit {
 			if ((myStream = openFileDialog1->OpenFile()) != nullptr)
 			{
 				SetSaveFileName(openFileDialog1->FileName);
+				savegameDirectory = System::IO::Path::GetDirectoryName(openFileDialog1->FileName);
+
 				txtFilePath->Clear();
 				txtFilePath->AppendText(GetSaveFileName());
 				myStream->Close();
