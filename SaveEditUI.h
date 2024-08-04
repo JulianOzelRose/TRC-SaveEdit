@@ -921,7 +921,7 @@ namespace TRCSaveEdit {
 			this->grpItems->Controls->Add(this->lblSmallMedipacks);
 			this->grpItems->Controls->Add(this->txtLargeMedipacks);
 			this->grpItems->Controls->Add(this->lblLargeMedipacks);
-			this->grpItems->Location = System::Drawing::Point(9, 101);
+			this->grpItems->Location = System::Drawing::Point(9, 99);
 			this->grpItems->Name = L"grpItems";
 			this->grpItems->Size = System::Drawing::Size(224, 114);
 			this->grpItems->TabIndex = 27;
@@ -954,7 +954,7 @@ namespace TRCSaveEdit {
 			this->grpWeapons->Controls->Add(this->txtRevolverOrDeagleAmmo);
 			this->grpWeapons->Controls->Add(this->txtHkAmmo);
 			this->grpWeapons->Controls->Add(this->txtUziAmmo);
-			this->grpWeapons->Location = System::Drawing::Point(239, 101);
+			this->grpWeapons->Location = System::Drawing::Point(239, 99);
 			this->grpWeapons->Name = L"grpWeapons";
 			this->grpWeapons->Size = System::Drawing::Size(263, 190);
 			this->grpWeapons->TabIndex = 29;
@@ -1045,7 +1045,7 @@ namespace TRCSaveEdit {
 			this->grpHealth->Controls->Add(this->lblHealthError);
 			this->grpHealth->Controls->Add(this->lblHealth);
 			this->grpHealth->Controls->Add(this->trbHealth);
-			this->grpHealth->Location = System::Drawing::Point(9, 221);
+			this->grpHealth->Location = System::Drawing::Point(9, 219);
 			this->grpHealth->Name = L"grpHealth";
 			this->grpHealth->Size = System::Drawing::Size(224, 70);
 			this->grpHealth->TabIndex = 31;
@@ -1087,7 +1087,7 @@ namespace TRCSaveEdit {
 			this->ssrStatusStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->slblStatus });
 			this->ssrStatusStrip->Location = System::Drawing::Point(0, 299);
 			this->ssrStatusStrip->Name = L"ssrStatusStrip";
-			this->ssrStatusStrip->Size = System::Drawing::Size(508, 22);
+			this->ssrStatusStrip->Size = System::Drawing::Size(510, 22);
 			this->ssrStatusStrip->SizingGrip = false;
 			this->ssrStatusStrip->TabIndex = 32;
 			this->ssrStatusStrip->Text = L"statusStrip";
@@ -1101,7 +1101,7 @@ namespace TRCSaveEdit {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(508, 321);
+			this->ClientSize = System::Drawing::Size(510, 321);
 			this->Controls->Add(this->ssrStatusStrip);
 			this->Controls->Add(this->grpHealth);
 			this->Controls->Add(this->grpWeapons);
